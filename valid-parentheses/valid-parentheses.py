@@ -1,6 +1,11 @@
 from typing import List 
 
 """
+time: O(N)
+space: O(N) 
+"""
+
+"""
 - use a stack
 - add open brace/bracket opts to stack
 - when encounter a closing brace/bracket pop() from stack
