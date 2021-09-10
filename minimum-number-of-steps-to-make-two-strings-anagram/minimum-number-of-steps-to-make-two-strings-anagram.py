@@ -1,7 +1,7 @@
 """
 time is len(s) + len(t)
 time: O(N + M)
-space: O(N)
+space: O(1); since size 26 arr stays constant 
 
 """
 class Solution:
