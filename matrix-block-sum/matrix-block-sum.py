@@ -17,6 +17,11 @@ c >= 0 and c <= 1
 
 """
 
+"""
+time: O(n^4)
+space: O(n*m)
+
+"""
 
 class Solution:
     def matrixBlockSum(self, mat: List[List[int]], k: int) -> List[List[int]]:
