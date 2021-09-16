@@ -1,3 +1,6 @@
+//time: O(len(list)) ~ O(n)
+// space: O(1); we're only maintaining 3 vars that are constant regardless of the size of the linked-list
+
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
