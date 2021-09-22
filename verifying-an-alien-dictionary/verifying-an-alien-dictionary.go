@@ -1,6 +1,6 @@
 /*
 time: O(n^2)
-space: O(n)
+space: O(1) since hashMap is always constant space 26 char bytes
 */
 
 import "fmt"
