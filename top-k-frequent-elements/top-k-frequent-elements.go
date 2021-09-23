@@ -1,5 +1,6 @@
 /*
-
+time: O(n)
+space: O(n)
 */
 
 import "fmt"
