@@ -13,7 +13,6 @@ const (
 )
 
 func dfs(adjList [][]int, statusArr []status, node int) error {
-    fmt.Println("calling node:", node)
     statusArr[node] = processing
     for _, child := range adjList[node] {
         switch statusArr[child] {
@@ -41,10 +40,8 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
         prereq, nextCourse := prerequisites[i][1], prerequisites[i][0]
         graph[prereq] = append(graph[prereq], nextCourse)
     }
-    fmt.Println(graph)
     // maintain a status slice as we process dfs calls
     statusArr := make([]status, numCourses)
-    fmt.Println(statusArr)
     for i := range statusArr {
         if statusArr[i] != processed {
             err := dfs(graph, statusArr, i)
