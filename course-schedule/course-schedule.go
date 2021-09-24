@@ -18,7 +18,6 @@ func dfs(adjList [][]int, statusArr []status, node int) error {
         switch statusArr[child] {
             case processing:
                 return fmt.Errorf("cycle detected")
-                break
             case unprocessed:
                 err := dfs(adjList, statusArr, child)
                 if err != nil { //dag is false
@@ -44,9 +43,8 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
     statusArr := make([]status, numCourses)
     for i := range statusArr {
         if statusArr[i] != processed {
-            err := dfs(graph, statusArr, i)
-            if err != nil { //dag is false
-                return false
+            if err := dfs(graph, statusArr, i); err != nil {
+                return false //dag is false
             }
         }
     }
