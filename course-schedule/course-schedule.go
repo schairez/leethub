@@ -16,27 +16,19 @@ func dfs(adjList [][]int, statusArr []status, node int) error {
     fmt.Println("calling node:", node)
     statusArr[node] = processing
     for _, child := range adjList[node] {
-        fmt.Println(child)
         switch statusArr[child] {
             case processing:
-            fmt.Println("node", node)
-            fmt.Println(statusArr)
                 return fmt.Errorf("cycle detected")
                 break
             case unprocessed:
                 err := dfs(adjList, statusArr, child)
                 if err != nil { //dag is false
                     return fmt.Errorf("cycle detected")
-                    //return false
-                //res = false 
-                //break
                 }
-                //dfs(adjList, statusArr, child)
             case processed:
                 continue
         }
     } 
-    fmt.Println("----")
     statusArr[node] = processed
     return nil 
 }        
@@ -58,8 +50,6 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
             err := dfs(graph, statusArr, i)
             if err != nil { //dag is false
                 return false
-                //res = false 
-                //break
             }
         }
     }
