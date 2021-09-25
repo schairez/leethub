@@ -1,3 +1,9 @@
+/*
+adding each node is a log(n) operation but for n nodes so time: O(nlogn)
+space: O(n)
+
+*/
+
 import "fmt"
 
 /*
