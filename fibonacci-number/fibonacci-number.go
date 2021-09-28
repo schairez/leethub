@@ -42,7 +42,7 @@ func fib(n int) int {
 
 
 //memo top-down approach
-// time: O(log(n)); space: O(n) implicit recursive stack and memo table
+// time: O(N); space: O(n) implicit recursive stack and memo table
 /*
 
 
