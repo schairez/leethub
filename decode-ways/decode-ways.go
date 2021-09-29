@@ -1,4 +1,58 @@
 /*
+time: O(n)
+space: O(n)
+*/
+
+import "strconv"
+
+
+func numDecodings(s string) int {
+    if len(s) == 0 || s[0] == '0' {
+        return 0
+    }
+    memo := make([]int, len(s) + 1)
+    return helper(s,memo, 0, 1 )
+}
+
+
+//dfs preorder-inspired
+// recursion memo-ized
+func helper(s string, memo []int,  i, j int) int {
+    if !validByte(s[i:j]) {
+        return 0
+    }
+    if j == len(s) {
+        return 1 
+    }
+    if i == len(s) -1 {
+        return 1 
+    }
+    if memo[i] != 0 {
+        return memo[i]
+    }
+    res := helper(s, memo, j, j+1)
+    if validByte(s[i:j+1]) {
+        res += helper(s, memo, i, j+1 )
+    }
+    memo[i] = res 
+    return res 
+}
+
+
+
+//only A-Z range
+//func validByte(b []byte) bool {
+func validByte(b string) bool {
+    if b[0] == '0' { return false} //no leading 0's
+    num, _ := strconv.Atoi(string(b)) //input contains only digits and zeros (no invalid in)
+    if num >= 1 && num <= 26 {
+        return true 
+    } 
+    return false
+}
+
+
+/*
 postorder traversal (LRD)
 -left -> choose 1
 -right -> choose 2 
@@ -35,64 +89,23 @@ r -> s[i: i+2]
 */
 // no leading zeroes
 
-import "strconv"
+
+/*
+
+// below is recursion; non-optimized
+//dfs preorder-inspired
 
 
 func numDecodings(s string) int {
     if len(s) == 0 || s[0] == '0' {
         return 0
     }
-    //res := 0
-    //helper(s, &res, 0, 1)
-    //memo := make([]int, 0, len(s) + 1)
-    memo := make([]int, len(s) + 1)
-    return helper(s,memo, 0, 1 )
-    //return res
+    res := 0
+    helper(s, &res, 0, 1)
+    return res
     
 }
 
-
-//dfs preorder-inspired
-// recursion memo-ized
-func helper(s string, memo []int,  i, j int) int {
-    if !validByte(s[i:j]) {
-        return 0
-    }
-    if j == len(s) {
-        return 1 
-        //*res = (*res) + 1 
-    }
-    if i == len(s) -1 {
-        return 1 
-    }
-    if memo[i] != 0 {
-        return memo[i]
-    }
-    res := helper(s, memo, j, j+1)
-    if validByte(s[i:j+1]) {
-        res += helper(s, memo, i, j+1 )
-    }
-    memo[i] = res 
-    return res 
-}
-
-
-
-//only A-Z range
-//func validByte(b []byte) bool {
-func validByte(b string) bool {
-    if b[0] == '0' { return false} //no leading 0's
-    num, _ := strconv.Atoi(string(b)) //input contains only digits and zeros (no invalid in)
-    if num >= 1 && num <= 26 {
-        return true 
-    } 
-    return false
-}
-
-/*
-
-// below is recursion; non-optimized
-//dfs preorder-inspired
 func helper(s string, res *int,  i, j int) {
     if !validByte(s[i:j]) {
         return
