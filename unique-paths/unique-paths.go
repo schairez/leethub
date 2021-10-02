@@ -1,3 +1,8 @@
+/*
+time: O(m*n) number of nodes in graph
+space: O(n) for aux memo
+*/
+
 
 import "strconv"
 
