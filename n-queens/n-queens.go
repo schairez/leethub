@@ -1,3 +1,7 @@
+/*
+time: O(n!)
+space: O(n^2)
+*/
 
 /*
 In chess, a queen can attack horizontally, vertically, and diagonally
@@ -62,9 +66,7 @@ func isValid(board [][]byte, row, col, sideLen int) bool {
 func solve(res *[][]string, board [][]byte, currRow int, nLeft int, sideLen int) {
     if nLeft == 0 {
         tmp := make([]string, sideLen)
-        //idx :dd= 0
         for i:=0; i <len(board); i++ {
-            //copy(tmp[i], string(board[i]))
             tmp[i] = string(board[i])
         }
         *res = append(*res, tmp)
