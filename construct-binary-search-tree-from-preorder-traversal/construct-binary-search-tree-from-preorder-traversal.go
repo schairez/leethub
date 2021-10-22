@@ -6,6 +6,10 @@
  *     Right *TreeNode
  * }
  */
+
+// time: O(NlogN)
+// space: O(1)
+
 func bstFromPreorder(preorder []int) *TreeNode {
     //var curr *TreeNode
     root := &TreeNode{Val: preorder[0], Left: nil, Right: nil}
@@ -14,7 +18,7 @@ func bstFromPreorder(preorder []int) *TreeNode {
         arrVal := preorder[i]
         curr := root
         newNode :=  &TreeNode{Val: arrVal, Left: nil, Right: nil} 
-        for curr != nil {
+        for curr != nil { //time: log(N) 
             if arrVal < curr.Val {
                 if curr.Left == nil { 
                     curr.Left = newNode
