@@ -19,9 +19,7 @@ func findMin(nums []int) int {
 }
 
 /*
-
-
-        if nums[mid] > nums[lo] {
+        if nums[mid] >= nums[lo] {
             lo = mid+1
         } else {
             hi = mid
