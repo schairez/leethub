@@ -1,3 +1,6 @@
+//time: O(nlogn + n) ~ O(nlogn)
+//space: O(1)
+
 import "sort"
 
 func canAttendMeetings(intervals [][]int) bool {
@@ -18,12 +21,4 @@ func canAttendMeetings(intervals [][]int) bool {
     return true
 }
 
-/*
-
-[[16,22],[28,45],[3,9],[46,50],[13,14]]
-
-
-
-
-*/
 
