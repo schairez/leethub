@@ -1,3 +1,5 @@
+//time: O(V+E); in this case the number of rooms + total keys
+//space: O(n)
 
 func canVisitAllRooms(rooms [][]int) bool {
     n := len(rooms)
@@ -20,9 +22,3 @@ func canVisitAllRooms(rooms [][]int) bool {
     return true
 }
 
-//rooms = [[1],[2],[3],[]]
-/*
-       dfs(0, visited)
-        visited[room] = true
-
-*/
