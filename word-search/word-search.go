@@ -1,44 +1,10 @@
 
-// time: O(2^n)
-// space: O(n)
-/*
+//naive backtracking approach
+// time: O(N * 3^L); N is number of cells, L is length of word to search; 3 since we ignore the prev cell
+// space: O(L); L is length of word to be matched
 
-*/
+//TODO: faster approach with search pruning 
 
-/*
-
-
-[["A","B","S","G"]
-["S","F", "E","D"]
-[["A","B","C","E"]
-
-word = "ABCCED"
- ^
-<->
- v
-[["A","B","C","E"]
-["S","F","C","S"]
-["A","D","E","E"]]
-
-@(0,0); 'A' == wordBytes[0] 
-visited['A'] = true
-                
-                    /         \
-                 dfs(-1, 0)    dfs(1,0)
-       dfs**right
-       dfs(1, i->1, 0) ; board[1][0] == wordBytes[1] 
-       visited['B'] = true
-       
-       right again; i->2; j ->0;
-       
-    for i := range wordBytes {
-        if !visited[wordBytes[i]] {
-            return false
-        }
-    }
-    return true
-
-*/
 
 func exist(board [][]byte, word string) bool {
     wordBytes := []byte(word)    
@@ -96,5 +62,40 @@ func dfs(res *bool, board [][]byte, wordBytes []byte, visited map[string]bool, c
     
 }
     
+
+/*
+
+
+[["A","B","S","G"]
+["S","F", "E","D"]
+[["A","B","C","E"]
+
+word = "ABCCED"
+ ^
+<->
+ v
+[["A","B","C","E"]
+["S","F","C","S"]
+["A","D","E","E"]]
+
+@(0,0); 'A' == wordBytes[0] 
+visited['A'] = true
+                
+                    /         \
+                 dfs(-1, 0)    dfs(1,0)
+       dfs**right
+       dfs(1, i->1, 0) ; board[1][0] == wordBytes[1] 
+       visited['B'] = true
+       
+       right again; i->2; j ->0;
+       
+    for i := range wordBytes {
+        if !visited[wordBytes[i]] {
+            return false
+        }
+    }
+    return true
+
+*/
 
 
