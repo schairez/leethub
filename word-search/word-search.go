@@ -22,11 +22,11 @@ func exist(board [][]byte, word string) bool {
     n := len(board[0]) //cols
     
     var res bool
-    for i:=0; i < m; i++ {
-        for j:=0; j < n; j++ {
-            if board[i][j] == wordBytes[0] {
+    for x:=0; x < m; x++ {
+        for y:=0; y < n; y++ {
+            if board[x][y] == wordBytes[0] {
                 if res { return true }
-                dfs(&res, dirs, board, wordBytes, visited, 0, i, j, m, n)
+                dfs(&res, dirs, board, wordBytes, visited, 0, x, y, m, n)
             }  
         }
     }
@@ -43,22 +43,23 @@ func isValid(curRow, curCol, numRows, numCols int) bool {
 } 
 
 
-func dfs(res *bool, dirs [4][2]int, board [][]byte, wordBytes []byte, visited map[string]bool, curByte, i, j, m, n int ) {
-    rowColStr := string(i) + "_" + string(j)
-    if !isValid(i, j, m, n) || visited[rowColStr] {
+func dfs(res *bool, dirs [4][2]int, board [][]byte, wordBytes []byte, visited map[string]bool, curByte, x, y, m, n int ) {
+    rowColStr := string(x) + "_" + string(y)
+    if !isValid(x, y, m, n) || visited[rowColStr] {
         return 
     }
-    if wordBytes[curByte] != board[i][j] {
+    if wordBytes[curByte] != board[x][y] {
         return 
     }
-    if curByte == len(wordBytes)-1 && wordBytes[curByte] == board[i][j] {
+    if curByte == len(wordBytes)-1 && wordBytes[curByte] == board[x][y] {
         *res = true
         return
     }
     visited[rowColStr] = true
     
     for _, dir := range dirs {
-        curR, curC := i + dir[0], j + dir[1]
+        dx, dy := dir[0], dir[1]
+        curR, curC := x + dx, y + dy
         if !isValid(curR, curC, m, n) { continue }
         dfs(res, dirs,board, wordBytes, visited, curByte+1, curR, curC, m, n)
     }
