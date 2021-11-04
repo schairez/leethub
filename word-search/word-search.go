@@ -43,8 +43,7 @@ func isValid(curRow, curCol, numRows, numCols int) bool {
 } 
 
 
-func dfs(res *bool, dirs [4][2]int, board [][]byte, wordBytes []byte,
-         visited map[string]bool, curByte, i, j, m, n int ) {
+func dfs(res *bool, dirs [4][2]int, board [][]byte, wordBytes []byte, visited map[string]bool, curByte, i, j, m, n int ) {
     rowColStr := string(i) + "_" + string(j)
     if !isValid(i, j, m, n) || visited[rowColStr] {
         return 
