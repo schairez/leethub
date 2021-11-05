@@ -14,13 +14,12 @@ func rangeSumBST(root *TreeNode, low int, high int) int {
     var helper func(node *TreeNode)
     helper = func(node *TreeNode) {
         if node == nil { return }
-        var sendLeft, sendRight bool
-        if node.Val >= low || node.Val <= high {
-            if node.Val >= low && node.Val <= high {
-                sumRange += node.Val
-            }
-            sendLeft = node.Val >= low
-            sendRight = node.Val <= high
+        var sendLeft, sendRight, addToRange bool
+        addToRange = node.Val >= low && node.Val <= high 
+        sendLeft = node.Val >= low
+        sendRight = node.Val <= high
+        if addToRange { 
+            sumRange += node.Val
         }
         if sendLeft {
             helper(node.Left)
