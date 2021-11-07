@@ -1,5 +1,6 @@
 //union find via weighted quick find approach
-
+//time: (|V| + |E| )
+// space: O(N)
 
 func isBipartite(graph [][]int) bool {
     n := len(graph)
@@ -7,7 +8,6 @@ func isBipartite(graph [][]int) bool {
         if len(graph[0]) == 0 { return true }
         return true 
     }
-    //if len(graph[0]) == 0 { return true }
     uf := NewUF(n)
     for node := range graph {
         if len(graph[node]) == 0 { continue }
