@@ -1,5 +1,6 @@
-//m*n = total cells in grid
-//time: O(m*n*log(m*n) + n ) ~ O(M*N*log(M*N))
+//m*n = total cells in grid; possible dirs = 4
+//path compressed UF GetRoot() fn time: O(logM*N)
+//time: O(m*n*4log(m*n) + n ) ~ O(M*N*log(M*N))
 //space: O(N)
 
 func numIslands(grid [][]byte) int {
