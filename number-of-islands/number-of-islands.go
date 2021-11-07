@@ -15,7 +15,7 @@ func numIslands(grid [][]byte) int {
     }
     //total cells
     totalItems := numR * numC
-    uf := &UF{Parent: make([]int, totalItems), Sze: make([]int, totalItems)}
+    uf := &UF{Parent: make([]int, totalItems), Sze: make([]int, totalItems), ValidVisitedItemMap: make(map[int]bool)}
     for i := range uf.Parent {
         uf.Parent[i] = -1
     }
@@ -32,7 +32,6 @@ func numIslands(grid [][]byte) int {
         for x:=0; x < numC; x++ {
             if grid[y][x] == '0' { continue }
             idxA := get1DRep(y, x)
-            //if alreadyValid := uf.Parent[idxA]; alreadyValid != -1 { continue }
             uf.ValidateNode(idxA)
             for _, dir := range dirs {
                 dy, dx := dir[0], dir[1]
@@ -65,12 +64,19 @@ func numIslands(grid [][]byte) int {
 type UF struct {
     Parent []int
     Sze []int
+    ValidVisitedItemMap map[int]bool
 }
 func (uf *UF) CntConnectedComponents() int {
     set := make(map[int]bool)
+    /*
     for _, v := range uf.Parent {
         if v == -1 { continue } 
         root := uf.Root(v)
+        set[root] = true
+    }
+    */
+    for key := range uf.ValidVisitedItemMap {
+        root := uf.Root(key)
         set[root] = true
     }
     fmt.Println()
@@ -81,6 +87,7 @@ func (uf *UF) CntConnectedComponents() int {
 //make node valid
 func (uf *UF) ValidateNode(p int) {
     if sentinel := uf.Parent[p]; sentinel == -1 {
+        uf.ValidVisitedItemMap[p] = true
         uf.Parent[p] = p
     }
 }
