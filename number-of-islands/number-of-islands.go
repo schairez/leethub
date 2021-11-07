@@ -1,3 +1,6 @@
+//m*n = total cells in grid
+//time: O(m*n*log(m*n) + n ) ~ O(M*N*log(M*N))
+//space: O(N)
 
 func numIslands(grid [][]byte) int {
     fmt.Println(grid)
@@ -27,7 +30,7 @@ func numIslands(grid [][]byte) int {
                       {1, 0}, //up
                       {-1, 0}, //down
                      }
-    for y := 0; y < numR; y++ {
+    for y:=0; y < numR; y++ {
         for x:=0; x < numC; x++ {
             if grid[y][x] == '0' { continue }
             idxA := get1DRep(y, x)
