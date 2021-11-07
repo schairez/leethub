@@ -1,4 +1,3 @@
-import "fmt"
 
 func numIslands(grid [][]byte) int {
     fmt.Println(grid)
@@ -15,7 +14,7 @@ func numIslands(grid [][]byte) int {
     }
     //total cells
     totalItems := numR * numC
-    uf := &UF{Parent: make([]int, totalItems), Sze: make([]int, totalItems), ValidVisitedItemMap: make(map[int]bool)}
+    uf := &UF{Parent: make([]int, totalItems), Sze: make([]int, totalItems)} //ValidVisitedItemMap: make(map[int]bool)}
     for i := range uf.Parent {
         uf.Parent[i] = -1
     }
@@ -44,50 +43,26 @@ func numIslands(grid [][]byte) int {
             }
         }
     }
-    fmt.Println(uf.Parent)
-    fmt.Println(uf.Sze)
    
-    /*
-    connComponentsMap := make(map[int]int)
-    for key := range uf.ValidVisitedItemMap {
-        connComponentsMap[uf.Root(key)] += 1
-    }
-    
-    fmt.Println(uf.Parent)
-    fmt.Println(uf.ValidVisitedItemMap)
-    fmt.Println(connComponentsMap)
-    return len(connComponentsMap) // returns number of islands
-    */
     return uf.CntConnectedComponents()
 }
 
 type UF struct {
     Parent []int
     Sze []int
-    ValidVisitedItemMap map[int]bool
 }
 func (uf *UF) CntConnectedComponents() int {
     set := make(map[int]bool)
-    /*
     for _, v := range uf.Parent {
         if v == -1 { continue } 
         root := uf.Root(v)
         set[root] = true
     }
-    */
-    for key := range uf.ValidVisitedItemMap {
-        root := uf.Root(key)
-        set[root] = true
-    }
-    fmt.Println()
-    fmt.Println(uf.Parent)
-    fmt.Println(set)
     return len(set)
 }
 //make node valid
 func (uf *UF) ValidateNode(p int) {
     if sentinel := uf.Parent[p]; sentinel == -1 {
-        uf.ValidVisitedItemMap[p] = true
         uf.Parent[p] = p
     }
 }
