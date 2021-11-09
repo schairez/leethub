@@ -4,9 +4,6 @@ space: O(1)
 
 */
 
-import "fmt"
-
-
 
 func findKthLargest(nums []int, k int) int {
     n := len(nums)
@@ -47,7 +44,6 @@ func findKthLargest(nums []int, k int) int {
         }
     }
     heapSort( n)
-    fmt.Println(nums)
     return nums[n-k]
     
 }
