@@ -1,6 +1,6 @@
 import "sort"
 //time: O(nlogn)
-//space: O(1)
+//space: O(logN)
 
 //an array of intervals where intervals[i] = [starti, endi]
 
@@ -34,6 +34,5 @@ func max(a,b int) int {
     if a >= b { return a }
     return b
 }
-
 
 
