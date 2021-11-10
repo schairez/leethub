@@ -3,8 +3,8 @@
 
 import (
     "fmt"
-    "strconv"
-    "strings"
+    //"strconv"
+    //"strings"
 )
 
 /**
@@ -16,8 +16,30 @@ import (
  * }
  */
 
+func findDuplicateSubtrees(root *TreeNode) []*TreeNode {
+    res := []*TreeNode{}
+    pathMap := map[string]int{}
+    //postorder
+    var dfs func(node *TreeNode ) string
+    dfs = func(node *TreeNode) string {
+        if node == nil { return "#" }
+        
+        left, right := dfs(node.Left), dfs(node.Right)
+        pathStr := fmt.Sprintf("(%s)(%v)(%s)", left, node.Val, right)
+        pathMap[pathStr]++
+        if pathMap[pathStr] == 2 {
+            res = append(res, node)
+        }
+        return pathStr
+    }
+    dfs(root)
+    fmt.Println(pathMap)
+    return res
+}
 
 
+
+/*
 func findDuplicateSubtrees(root *TreeNode) []*TreeNode {
     res := []*TreeNode{}
     pathMap := map[string]int{}
@@ -49,6 +71,7 @@ func findDuplicateSubtrees(root *TreeNode) []*TreeNode {
     fmt.Println(pathMap)
     return res
 }
+*/
 
 /*
 
