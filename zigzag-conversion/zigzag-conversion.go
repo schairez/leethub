@@ -1,3 +1,5 @@
+//time: O(n)
+//space: O(n)
 
 import "strings"
 
@@ -11,7 +13,6 @@ const (
 func convert(s string, numRows int) string {
     if numRows == 1 { return s }
     
-    
     nextIdxAndDir := func(idx int, curDir dir) (int, dir) {
         switch curDir {
             case north:
@@ -22,6 +23,7 @@ func convert(s string, numRows int) string {
         if curDir == north { return idx-1, curDir }
         return idx+1, curDir
     }
+    
     arrSBs := make([]strings.Builder, numRows)
     for i :=0; i < numRows; i++ {
         sb := strings.Builder{}
