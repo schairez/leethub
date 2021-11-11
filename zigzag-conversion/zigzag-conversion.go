@@ -24,7 +24,7 @@ func convert(s string, numRows int) string {
         return idx+1, curDir
     }
     
-    arrSBs := make([]strings.Builder, numRows)
+    arrSBs := make([]strings.Builder, 0, numRows)
     for i :=0; i < numRows; i++ {
         sb := strings.Builder{}
         arrSBs = append(arrSBs, sb )
