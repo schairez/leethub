@@ -24,6 +24,9 @@
  * func (n NestedInteger) GetList() []*NestedInteger {}
  */
 
+//time: O(n)
+//space:O(n)
+//bfs approach
 
 func depthSum(nestedList []*NestedInteger) int {
     fmt.Println(nestedList)
