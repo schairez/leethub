@@ -1,3 +1,6 @@
+//time: O(n)
+//space: O(1)
+
 func abs(a int) int {
     if a < 0 { return -a }
     return a
