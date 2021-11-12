@@ -23,9 +23,9 @@ func reverse(x int) int {
     for x > 0 {
         reverse_x = reverse_x * 10 + x % 10 
         x = x / 10
-    }
-    if !checkValidI32(reverse_x) {
-        return 0
+        if !checkValidI32(reverse_x) {
+            return 0
+        }
     }
     if isNegative {
         return -1 * reverse_x
