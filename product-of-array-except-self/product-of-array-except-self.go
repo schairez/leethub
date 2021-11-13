@@ -1,3 +1,5 @@
+//time: O(n)
+//space:O(1)
 func productExceptSelf(nums []int) []int {
     res := make([]int, len(nums))
     tmp := 1
