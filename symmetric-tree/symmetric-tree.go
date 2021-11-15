@@ -8,6 +8,7 @@
  * }
  */
 
+//recursive approach
 //n, m total nodes in tree a and b ( copy of tree a)
 //time: O(n + n) -> (O(2n)) -> O(n)
 //space: O(n)
