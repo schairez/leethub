@@ -1,5 +1,6 @@
-//space:
-//time: O()
+//m = numRows; n = numCols
+//space: O(1)
+//time: O(mlog(n))
 
 func searchMatrix(matrix [][]int, target int) bool {
     binSearch := func(arr []int, t int) bool {
