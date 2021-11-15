@@ -1,3 +1,6 @@
+//time : O(|V| + |E|)
+//space: O(N) b/c of recursion stack and visited ad cloneNodeMap aux D.S.
+
 /**
  * Definition for a Node.
  * type Node struct {
