@@ -3,7 +3,7 @@
 
 type Trie struct {
     children [26]*Trie
-    isLeaf bool
+    isWord bool
     
 }
 
@@ -22,7 +22,7 @@ func (this *Trie) Insert(word string)  {
         }
         curr = curr.children[idx]
     }
-    curr.isLeaf = true
+    curr.isWord = true
     return
 }
 
@@ -36,7 +36,7 @@ func (this *Trie) Search(word string) bool {
         }
         curr = curr.children[idx]
     }
-    return curr.isLeaf
+    return curr.isWord
 }
 
 
