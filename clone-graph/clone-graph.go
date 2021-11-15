@@ -10,10 +10,9 @@
 func cloneGraph(node *Node) *Node {
     if node == nil { return nil }
     
+    //The number of nodes in the graph is in the range [0, 100].
     var visited [101]bool
-    var cloneNodeMap [101]*Node
-    //cloneNodeMap := map[int]*Node{}
-    
+    var cloneNodeMap [101]*Node  //cloneNodeMap := map[int]*Node{}
     
     var dfs func(node *Node)
     dfs = func(node *Node) {
