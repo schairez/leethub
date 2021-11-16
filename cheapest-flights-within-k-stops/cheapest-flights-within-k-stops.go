@@ -1,7 +1,6 @@
 import (
     "math"
     "container/heap"
-    "fmt"
 )
 
 /*
@@ -12,11 +11,30 @@ if new_dist < dist[v]:
 
 */
 
+type Node struct {
+    Id int
+    DistCost int
+    Stops int
+}
+
+type PQ []*Node
+
+func (pq PQ) Len() int { return len(pq)}
+func (pq PQ) Less(i, j int) bool { return pq[i].DistCost < pq[j].DistCost }
+func (pq PQ) Swap(i, j int) { pq[i], pq[j] = pq[j], pq[i] }
+func (pq *PQ) Push(x interface{}) { *pq = append(*pq, x.(*Node)) }
+func (pq *PQ) Pop() interface{} {
+    old := *pq
+    n := len(old)
+    x := old[n-1]
+    *pq = old[:n-1]
+    return x
+}
+
 type Edge struct {
     DstId int
     Weight int
 }
-
 
 
 func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
@@ -43,74 +61,39 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     
     dist[src] = 0
     stops[src] = 0
-    
-    fmt.Println(graph)
     //pq := &PQ{}
     pq := make(PQ, 0, n)
     heap.Init(&pq)
-    heap.Push(&pq, Node{Id: src, PriceSoFar: 0, Stops: 0})
+    heap.Push(&pq, &Node{Id: src, DistCost: 0, Stops: 0})
     for pq.Len() > 0 {
-        fmt.Println(pq)
-        city := heap.Pop(&pq).(Node)
-        fmt.Println(city.Id)
+        city := heap.Pop(&pq).(*Node)
         if city.Id == dst {
-            return city.PriceSoFar
+            return city.DistCost
         }
         if city.Stops == k + 1 {
             continue
         }
         dU := dist[city.Id]
-        numStops := city.Stops
         neighborEdges := graph[city.Id]
         for _, edge := range neighborEdges {
             dV, wUV := dist[edge.DstId], edge.Weight
-            addToHeap := dU+wUV < dV || numStops < stops[edge.DstId] 
+            addToHeapCond := dU+wUV < dV || stops[edge.DstId] > city.Stops +1 
             //if (dU + wUV < dV) //minimize cost distance
             //if stops < stops[dstId] // minimize number of stops
             dist[edge.DstId] = min(dist[edge.DstId], dU+wUV)
-            if addToHeap {
-                heap.Push(&pq, Node{
+            if addToHeapCond {
+                heap.Push(&pq, &Node{
                         Id: edge.DstId,
-                        PriceSoFar: city.PriceSoFar+ edge.Weight,
+                        DistCost: city.DistCost+ edge.Weight,
                         Stops: city.Stops +1,
                     })
             }
-            stops[edge.DstId] = numStops 
+            stops[edge.DstId] = city.Stops + 1 
         }
     }
     return -1
 }
 
-type Node struct {
-    Id int
-    PriceSoFar int
-    Stops int
-}
-
-type PQ []Node
-
-func (pq PQ) Len() int { return len(pq)}
-
-func (pq PQ) Swap(i, j int) {
-    pq[i], pq[j] = pq[j], pq[i]
-}
-
-func (pq PQ) Less (i, j int) bool {
-    return pq[i].PriceSoFar < pq[j].PriceSoFar
-}
-
-func (pq *PQ) Push(x interface{}) {
-    *pq = append(*pq, x.(Node))
-}
-
-
-func (pq *PQ) Pop() interface{} {
-    old := *pq
-    n := len(old)
-    x := old[n-1]
-    *pq = old[:n-1]
-    return x
-}
 
 
 
