@@ -25,33 +25,33 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
         return b
     }
     graph := make(map[int][]Edge, n)
-    for i := range flights {
-        srcId := flights[i][0]
-        if _, ok := graph[srcId]; !ok {
-            graph[srcId] = make([]Edge, 0)
-        }
-        dstId, weight := flights[i][1], flights[i][2]
-        graph[srcId] = append(graph[srcId], Edge{dstId, weight})
+    stops := make([]int, n) //minimize number of stops, s.t. K
+    dist := make([]int, n) //minimize distance dV = min(dU + wUV, dV)
+    for i:=0; i < n; i++ {
+        dist[i] = int(math.MaxInt64)
+        stops[i] = int(math.MaxInt64)
     }
     
-    //minimize number of stops, s.t. K
-    numStops := make([]int, n)
-    //minimize distance
-    //dV = dU + wUV
-    dist := make([]int, n)
-    for i:=0; i < n; i++ {
-        dist[i] = math.MaxInt64
-        numStops[i] = math.MaxInt64
+    for i := range flights {
+        u := flights[i][0]
+        if _, ok := graph[u]; !ok {
+            graph[u] = make([]Edge, 0)
+        }
+        v, wUV := flights[i][1], flights[i][2]
+        graph[u] = append(graph[u], Edge{DstId: v, Weight: wUV})
     }
+    
     dist[src] = 0
-    numStops[src] = 0
+    stops[src] = 0
     
     fmt.Println(graph)
+    //pq := &PQ{}
     pq := make(PQ, 0, n)
-    heap.Push(&pq, &Node{Id: src, PriceSoFar: 0, Stops: 0})
+    heap.Init(&pq)
+    heap.Push(&pq, Node{Id: src, PriceSoFar: 0, Stops: 0})
     for pq.Len() > 0 {
         fmt.Println(pq)
-        city := heap.Pop(&pq).(*Node)
+        city := heap.Pop(&pq).(Node)
         fmt.Println(city.Id)
         if city.Id == dst {
             return city.PriceSoFar
@@ -60,22 +60,22 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
             continue
         }
         dU := dist[city.Id]
-        stops := city.Stops
+        numStops := city.Stops
         neighborEdges := graph[city.Id]
         for _, edge := range neighborEdges {
             dV, wUV := dist[edge.DstId], edge.Weight
-            addToHeap := dU+wUV < dV || stops < numStops[edge.DstId] 
+            addToHeap := dU+wUV < dV || numStops < stops[edge.DstId] 
             //if (dU + wUV < dV) //minimize cost distance
-            //if stops < numStops[dstId] // minimize number of stops
+            //if stops < stops[dstId] // minimize number of stops
             dist[edge.DstId] = min(dist[edge.DstId], dU+wUV)
             if addToHeap {
-                heap.Push(&pq, &Node{
+                heap.Push(&pq, Node{
                         Id: edge.DstId,
                         PriceSoFar: city.PriceSoFar+ edge.Weight,
                         Stops: city.Stops +1,
                     })
             }
-            numStops[edge.DstId] = stops
+            stops[edge.DstId] = numStops 
         }
     }
     return -1
@@ -87,7 +87,7 @@ type Node struct {
     Stops int
 }
 
-type PQ []*Node
+type PQ []Node
 
 func (pq PQ) Len() int { return len(pq)}
 
@@ -100,15 +100,16 @@ func (pq PQ) Less (i, j int) bool {
 }
 
 func (pq *PQ) Push(x interface{}) {
-    tmp := x.(*Node)
-    *pq = append(*pq, tmp)
+    *pq = append(*pq, x.(Node))
 }
 
 
 func (pq *PQ) Pop() interface{} {
-    tmp := (*pq)[len(*pq)-1]
-    *pq = (*pq)[0 : len(*pq)-1]
-	return tmp
+    old := *pq
+    n := len(old)
+    x := old[n-1]
+    *pq = old[:n-1]
+    return x
 }
 
 
