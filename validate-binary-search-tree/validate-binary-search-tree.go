@@ -12,6 +12,9 @@ space: O(n)
  * }
  */
 
+//time :O(N)
+//space:O(N)
+
 func isValidBST(root *TreeNode) bool {
     //constraint: -2^31 <= Node.val <= 2^31 - 1
     minInt32 := -1*(1 << 31)
@@ -30,6 +33,8 @@ func isValidBST(root *TreeNode) bool {
 }
 
 //iterative stack
+//time :O(N)
+//space:O(N)
 func isValidBSTIterative(root *TreeNode) bool {
     //precondition: numNodes in [1,10^4]
     stack := []*TreeNode{}
