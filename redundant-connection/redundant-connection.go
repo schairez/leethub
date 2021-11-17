@@ -1,3 +1,6 @@
+//time: O(N)
+//space:O(N)
+
 /*
 
 Return an edge that can be removed so that the resulting graph
