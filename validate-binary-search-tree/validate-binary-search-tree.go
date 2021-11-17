@@ -13,6 +13,24 @@ space: O(n)
  */
 
 func isValidBST(root *TreeNode) bool {
+    //constraint: -2^31 <= Node.val <= 2^31 - 1
+    minInt32 := -1*(1 << 31)
+    maxInt32 := (1 << 31) - 1
+    var helper func(node *TreeNode, minV, maxV int) bool
+    helper = func(node *TreeNode, minV, maxV int) bool {
+        if node == nil {
+            return true
+        }
+        cond := node.Val >= minV && node.Val <= maxV
+        return cond && 
+        helper(node.Left, minV, node.Val-1) && 
+        helper(node.Right, node.Val+1, maxV)
+    }
+    return helper(root, minInt32, maxInt32)
+}
+
+//iterative stack
+func isValidBSTIterative(root *TreeNode) bool {
     //precondition: numNodes in [1,10^4]
     stack := []*TreeNode{}
     var pre *TreeNode
@@ -43,33 +61,5 @@ root = [5,1,4,null,null,3,6]
               1  4
                  /\
                 3  6
-           #append 
-           st -> [5] 
-           st -> [5,1]
-           #pop
-           r -> st.pop()-> 1; st=[5]
-           #assignment
-           pre -> r -> 1
-           r -> nil
-           #pop
-           r -> st.pop() -> 5 ; st =[]
-           
-           
-           #assignment
-           pre -> r -> 5
-           r -> r.right -> 4
-           
-           
-           #append
-           st -> [4]; -> [4,3]
-           r -> st.pop() -> 3
-           
-           *****check
-           if r != nil && pre.Val >= r.Val { -> F}
-           -----> return False
-           
-           
-           
-           
 
 */
