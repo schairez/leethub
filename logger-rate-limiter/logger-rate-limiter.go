@@ -11,7 +11,6 @@ func Constructor() Logger {
 
 
 func (this *Logger) ShouldPrintMessage(timestamp int, message string) bool {
-    fmt.Println(this.KVStore)
     switch _, exists := this.KVStore[message]; exists {
     case true:
         if timestamp - this.KVStore[message] >= 10 {
