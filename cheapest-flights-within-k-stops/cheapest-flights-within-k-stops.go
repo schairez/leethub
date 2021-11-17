@@ -17,17 +17,17 @@ type Node struct {
     Stops int
 }
 
-type PQ []*Node
+type MinHeap []*Node
 
-func (pq PQ) Len() int { return len(pq)}
-func (pq PQ) Less(i, j int) bool { return pq[i].DistCost < pq[j].DistCost }
-func (pq PQ) Swap(i, j int) { pq[i], pq[j] = pq[j], pq[i] }
-func (pq *PQ) Push(x interface{}) { *pq = append(*pq, x.(*Node)) }
-func (pq *PQ) Pop() interface{} {
-    old := *pq
+func (h MinHeap) Len() int { return len(h)}
+func (h MinHeap) Less(i, j int) bool { return h[i].DistCost < h[j].DistCost }
+func (h MinHeap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+func (h *MinHeap) Push(x interface{}) { *h = append(*h, x.(*Node)) }
+func (h *MinHeap) Pop() interface{} {
+    old := *h
     n := len(old)
     x := old[n-1]
-    *pq = old[:n-1]
+    *h = old[:n-1]
     return x
 }
 
@@ -61,12 +61,12 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     
     dist[src] = 0
     stops[src] = 0
-    //pq := &PQ{}
-    pq := make(PQ, 0, n)
-    heap.Init(&pq)
-    heap.Push(&pq, &Node{Id: src, DistCost: 0, Stops: 0})
-    for pq.Len() > 0 {
-        city := heap.Pop(&pq).(*Node)
+    //h := &MinHeap{}
+    h := make(MinHeap, 0, n)
+    heap.Init(&h)
+    heap.Push(&h, &Node{Id: src, DistCost: 0, Stops: 0})
+    for h.Len() > 0 {
+        city := heap.Pop(&h).(*Node)
         if city.Id == dst {
             return city.DistCost
         }
@@ -82,7 +82,7 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
             //if stops < stops[dstId] // minimize number of stops
             dist[edge.DstId] = min(dist[edge.DstId], dU+wUV)
             if addToHeapCond {
-                heap.Push(&pq, &Node{
+                heap.Push(&h, &Node{
                         Id: edge.DstId,
                         DistCost: city.DistCost+ edge.Weight,
                         Stops: city.Stops +1,
