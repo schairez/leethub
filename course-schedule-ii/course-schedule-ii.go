@@ -18,9 +18,6 @@ type Graph struct {
 
 func NewGraph(prereqs [][]int, n int) *Graph {
     adj := make([][]int, n)
-    for i := range adj {
-        adj[i] = make([]int, 0, n)
-    }
     for i := range prereqs {
         dst, src := prereqs[i][0], prereqs[i][1]
         adj[src] = append(adj[src], dst)
@@ -44,18 +41,14 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
     if err == ErrCycleDetected { 
         return []int{} 
     }
-    revSlice(&res)
+    //rev Slice
+    for i, j := 0, len(res)-1; i < j; i, j = i+1, j-1 {
+        res[i], res[j] = res[j], res[i]
+    }
     
     return res
 } 
     
-func revSlice( arr *[]int) {
-    for i, j := 0, len(*arr)-1; i < j; i, j = i+1, j-1 {
-        (*arr)[i], (*arr)[j] = (*arr)[j], (*arr)[i]
-    }
-}
-
-
 
 func TopSort(g *Graph, visited map[int]Status, n int) ([]int, error) {
     res := make([]int, 0, n)
