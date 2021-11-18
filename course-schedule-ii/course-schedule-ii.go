@@ -8,7 +8,7 @@ const (
 )
 
 var (
-    ErrCycleDetected = errors.New("")
+    ErrCycleDetected = errors.New("detected cycle")
 )
 
 
