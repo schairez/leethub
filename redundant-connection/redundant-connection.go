@@ -38,7 +38,7 @@ func NewUnionFind(numNodes int) *UnionFind {
 	return uf
 }
 
-//path compcandidateEdgession approach
+//path compression approach
 func (uf *UnionFind) Root(u int) int {
 	for u != uf.Parent[u] {
 		uf.Parent[u] = uf.Parent[uf.Parent[u]]
