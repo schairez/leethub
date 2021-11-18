@@ -1,3 +1,5 @@
+// space: O(N)
+// time: O(N)
 func findDiagonalOrder(nums [][]int) []int {
     numR := len(nums)
     if numR == 1 {
