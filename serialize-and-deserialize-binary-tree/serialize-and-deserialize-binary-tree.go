@@ -19,8 +19,8 @@ type Codec struct {
 
 func Constructor() Codec {
     //-1000 <= Node.val <= 1000
-    dummyV := -1001
-    return Codec{dummyV}
+
+    return Codec{-1001}
 }
 
 func (this *Codec) genDummyNode() *TreeNode { return &TreeNode{this.dummyV, nil, nil} }
@@ -61,17 +61,18 @@ func (this *Codec) serializeNode(node *TreeNode) *TreeNode {
 func (this *Codec) deserialize(data string) *TreeNode {    
     if data == "" { return nil }
     
-    deque := &Deque{[]*TreeNode{}}
-    var arrData []string
-    arrData = strings.Split(data, "|")
-    lenData := len(arrData)
-    v, _ := strconv.Atoi(arrData[0])
+    var nodeVals []string
+    nodeVals = strings.Split(data, "|")
+    deque := &Deque{make([]*TreeNode, 0, len(nodeVals))}
+    
+    v, _ := strconv.Atoi(nodeVals[0])
     root := &TreeNode{v,nil,nil}
+    
     deque.addLast(root)
-    for i:=1;i<lenData-1; i+=2 {
+    for i:=1; i<len(nodeVals)-1; i+=2 {
         pollNode := deque.popFirst()
-        lChild, _ := strconv.Atoi(arrData[i])
-        rChild, _ := strconv.Atoi(arrData[i+1])
+        lChild, _ := strconv.Atoi(nodeVals[i])
+        rChild, _ := strconv.Atoi(nodeVals[i+1])
         if lChild != this.dummyV {
             pollNode.Left = &TreeNode{lChild, nil, nil}
             deque.addLast(pollNode.Left)
