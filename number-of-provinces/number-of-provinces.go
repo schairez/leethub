@@ -1,29 +1,30 @@
-//time: O(N^2)
-//space: O(N)
+//n*n matrcityAx
+//time: O(n*n) ~ O(n^2)
+//space: O(n)
 
 func findCircleNum(isConnected [][]int) int {
-    isVisited := make([]int, len(isConnected))
-    provinceCnt := 0 
-    m := len(isConnected)
+    cityVisited := make([]int, len(isConnected))
+    providenceCnt := 0
+    m := len(cityVisited)
     n := len(isConnected[0])
-    var dfs func(i int)
-    dfs = func(i int) {
-        for j := 0; j < n; j++ {
-            if isConnected[i][j] == 1 && isVisited[j] == 0 {
-                isVisited[j] = 1
-                dfs(j)
+    var dfs func(cityA int)
+    dfs = func(cityA int) {
+        for cityB := 0; cityB < n; cityB++ {
+            if isConnected[cityA][cityB] == 1 && cityVisited[cityB] == 0 {
+                cityVisited[cityB] = 1
+                dfs(cityB)
+                
             }
         }
     }
-    
-    for i :=0; i < m; i++ { 
-        if isVisited[i] == 0 {
-            dfs(i)
-            provinceCnt++
+    for cityA :=0; cityA < m; cityA++ { 
+        if cityVisited[cityA] == 0 {
+            dfs(cityA)
+            providenceCnt++
         }
   
     }    
     
-    return provinceCnt 
+    return providenceCnt
     
 }
