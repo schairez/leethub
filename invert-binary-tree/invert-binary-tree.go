@@ -7,6 +7,8 @@
  * }
  */
 
+//time: O(n)
+//space: O(n)
 
 func invertTree(root *TreeNode) *TreeNode {
     if root == nil { return root }
@@ -18,18 +20,15 @@ func invertTree(root *TreeNode) *TreeNode {
         nodePar.Left = nodeR
         nodePar.Right = nodeL
         if nodeL != nil { 
-        //if nodeL != nil && (node.Left != nil || node.Right != nil ) { 
             q = append(q, nodeL)
             q = append(q, nodeL.Left)
             q = append(q, nodeL.Right)
         }
         if nodeR != nil { 
-        //if nodeR != nil && (node.Left != nil || node.Right != nil ) { 
             q = append(q, nodeR)
             q = append(q, nodeR.Left)
             q = append(q, nodeR.Right)
         }
-        
     }
     return root
     
