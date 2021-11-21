@@ -1,6 +1,3 @@
-//time: O(N)
-//space: O(N)
-
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -9,7 +6,32 @@
  *     Right *TreeNode
  * }
  */
+
+//time: O(n)
+//space:O(n)
+//iterative inorder LDR
 func rangeSumBST(root *TreeNode, low int, high int) int {
+    res := 0
+    stack := []*TreeNode{}
+    for root != nil || len(stack) > 0 {
+        for root != nil {
+            stack = append(stack, root)
+            root = root.Left
+        }
+        root = stack[len(stack)-1]
+        stack = stack[:len(stack)-1]
+        addToSumCond := root.Val >= low && root.Val <= high
+        if addToSumCond { res += root.Val }
+        root = root.Right
+    }
+    return res
+}
+
+
+//time: O(N)
+//space: O(N)
+//recursive DLR preorder
+func rangeSumBSTRecursive(root *TreeNode, low int, high int) int {
     sumRange := 0
     var helper func(node *TreeNode)
     helper = func(node *TreeNode) {
