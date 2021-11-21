@@ -9,10 +9,10 @@ func islandPerimeter(grid [][]int) int {
         for c:=0; c < numCols; c++ {
             if grid[r][c]==1 {
                 res +=4
-                if c > 0 && grid[r][c] == grid[r][c-1] {
+                if c > 0 && grid[r][c] == grid[r][c-1] {//left
                     res -= 2
                 }
-                if r > 0 && grid[r][c] == grid[r-1][c] {
+                if r > 0 && grid[r][c] == grid[r-1][c] {//down
                     res -= 2
                 }
             }
