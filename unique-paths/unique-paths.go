@@ -1,11 +1,11 @@
-
+//bottom up 2D tabular approach
+//time: O(m*n)
+//space: O(m*n)
 func uniquePaths(m int, n int) int {
     dp := make([][]int, m)
-    for row := range dp {
-        dp[row] = make([]int, n)
-    }
-    dp[0][0] = 1
+    
     for i:=0; i < m; i++ {
+        dp[i] = make([]int, n)
         dp[i][0] = 1
     }
     for j:=0; j < n; j++ {
@@ -19,23 +19,6 @@ func uniquePaths(m int, n int) int {
     
     return dp[m-1][n-1]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
