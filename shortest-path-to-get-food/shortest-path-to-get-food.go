@@ -1,0 +1,73 @@
+//time:O(m*n)
+//space:O(m*n)
+
+func getFood(grid [][]byte) int {
+    numR := len(grid)
+    numC := len(grid[0])
+    //The grid contains exactly one '*'.
+    findStartLoc := func() (int,int) {
+        var startR, startC int
+        notFound := true
+        for notFound {
+            for i:=0; i<numR; i++ {
+                for j:=0; j<numC; j++ {
+                    if grid[i][j] == byte('*') {
+                        startR, startC = i, j
+                        notFound = false
+                    }
+                }
+            }
+        }  
+        return startR, startC
+    }
+    
+    
+    visited := make([][]bool, numR)
+    for i := range visited {
+        visited[i] = make([]bool, numC)
+    }
+    dirRowOps := [4]int{0, 1, 0, -1}
+    dirColOps := [4]int{1, 0, -1, 0}
+    startR, startC := findStartLoc() 
+    visited[startR][startC] = true
+    queue := [][2]int{}
+    queue = append(queue, [2]int{startR, startC})
+    step := 0
+    
+    for len(queue) > 0 {
+        curLen := len(queue)
+        for i:=0; i < curLen; i++ {
+            poll := queue[0]
+            queue = queue[1:]
+            x, y := poll[0], poll[1]
+            if grid[x][y] == byte('#') { return step }
+            //travel to adj cell
+            for cell:=0; cell < 4; cell++ { 
+                newX, newY := x + dirRowOps[cell], y + dirColOps[cell]
+                //check if (x,y) inArea
+                if !(newX >= 0 && newX <= numR-1 && newY >=0 && newY <= numC-1) {
+                    continue
+                } 
+                //already visited or an obstacle
+                if visited[newX][newY] || grid[newX][newY] == byte('X') { continue }
+                queue = append(queue, [2]int{newX, newY})
+                visited[newX][newY] = true
+            }
+        }
+        step++    
+    } 
+    return -1
+}
+
+
+/*
+                   loc  obst   free    food
+grid[row][col] is '*', 'X',   'O', or  '#'.
+
+grid = 
+[["X","X","X","X","X","X"],
+["X","*","O","O","O","X"],
+["X","O","O","#","O","X"],
+["X","X","X","X","X","X"]]
+
+*/
