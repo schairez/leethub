@@ -26,8 +26,8 @@ func getFood(grid [][]byte) int {
         visited[i] = make([]bool, numC)
     }
     visited[startR][startC] = true
-    dirRowOps := [4]int{0, 1, 0, -1}
-    dirColOps := [4]int{1, 0, -1, 0}
+    dx := [4]int{0, 1, 0, -1}
+    dy := [4]int{1, 0, -1, 0}
     queue := [][2]int{}
     queue = append(queue, [2]int{startR, startC})
     level := 0
@@ -39,9 +39,9 @@ func getFood(grid [][]byte) int {
             queue = queue[1:]
             x, y := poll[0], poll[1]
             //if grid[x][y] == byte('#') { return level }
-            //travel to adj cell
-            for cell:=0; cell < 4; cell++ { 
-                newX, newY := x + dirRowOps[cell], y + dirColOps[cell]
+            //travel to adj dir
+            for dir:=0; dir < 4; dir++ { 
+                newX, newY := x + dx[dir], y + dy[dir]
                 //check if (x,y) inArea
                 if !(newX >= 0 && newX <= numR-1 && newY >=0 && newY <= numC-1) {
                     continue
