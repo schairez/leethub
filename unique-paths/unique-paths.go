@@ -1,11 +1,57 @@
+
+func uniquePaths(m int, n int) int {
+    dp := make([][]int, m)
+    for row := range dp {
+        dp[row] = make([]int, n)
+    }
+    dp[0][0] = 1
+    for i:=0; i < m; i++ {
+        dp[i][0] = 1
+    }
+    for j:=0; j < n; j++ {
+        dp[0][j] = 1
+    }
+    for r:=1; r < len(dp); r++ {
+        for c:=1; c < len(dp[0]); c++ {
+            dp[r][c] = dp[r][c-1] + dp[r-1][c]
+        }
+    } 
+    
+    return dp[m-1][n-1]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
+prev version
 time: O(m*n) number of nodes in graph
-space: O(n) for aux memo
+space: O(n) for aux memo + O(n) for recursion stack
 */
 
+/*
 
-import "strconv"
-
+import (
+    "strconv"
+    "fmt"
+)
 
 func uniquePaths(m int, n int) int {
     memo := make(map[string]int)
@@ -35,91 +81,8 @@ func dfs(memo map[string]int, i, j, m, n int) int {
     path += dfs(memo,i+1, j, m, n)
     path  += dfs(memo,i, j+1, m, n)
     memo[key] = path
-    
+    fmt.Println(memo)
     return memo[key]
     
 }
-
-//dfs helper; preorder(DLR)
-
-
-/*
-down or right           [0,0]
-                    dfs(0,0)
-                   /
-               dfs(1,0)
-               
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-m=3; n = 2
-down, right
-                    start ->[0][0]
-                    end -> [m-1][n-1]
-                   
-                   down -> [currRow+1][0]
-                   //down terminating -> when currRow == m-1
-                   |-----v
-                   | ----v
-                   |---- e_
-     3x2
-       visited[m][n] = [[0, 0 ]
-                        [0, 0]
-                  "R0C0"
-        dfs([0,0],str, memo)
-            if memo[str] exists
-               return
-            if i==m-1 && j == n-1: //
-                res++ 
-            if isValid(i,j) //f(2,0)
-                dfs([i+1,j]) //down
-                dfs([i,j+1]) //right
-            
-             (0,0)
-              /
-             (1,0)          memo[1][0] = 1 
-             /    \
-            (2,0)  (1,1)
-            /    \ 
-          (3,0)  (2,1)
-          
-             memo[i][j] ---> memo[i][j]       R0C0
-            path = "R0C0R1C0R2C0R2C1" 
-            map[str]bool
-            memo
-          
-          
-            
-  func isValid()
-     if row != m && if col != n
-        
-*/
-
