@@ -7,19 +7,18 @@ func getFood(grid [][]byte) int {
     //The grid contains exactly one '*'.
     findStartLoc := func() (int,int) {
         var startR, startC int
-        notFound := true
-        for notFound {
-            for i:=0; i<numR; i++ {
-                for j:=0; j<numC; j++ {
-                    if grid[i][j] == byte('*') {
-                        startR, startC = i, j
-                        notFound = false
-                    }
+        notFoundLoop:
+        for i:=0; i<numR; i++ {
+            for j:=0; j<numC; j++ {
+                if grid[i][j] == byte('*') {
+                    startR, startC = i, j
+                    break notFoundLoop
                 }
             }
         }  
         return startR, startC
     }
+    startR, startC := findStartLoc() 
     
     
     visited := make([][]bool, numR)
@@ -28,7 +27,6 @@ func getFood(grid [][]byte) int {
     }
     dirRowOps := [4]int{0, 1, 0, -1}
     dirColOps := [4]int{1, 0, -1, 0}
-    startR, startC := findStartLoc() 
     visited[startR][startC] = true
     queue := [][2]int{}
     queue = append(queue, [2]int{startR, startC})
