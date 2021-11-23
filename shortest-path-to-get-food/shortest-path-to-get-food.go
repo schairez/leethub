@@ -25,12 +25,12 @@ func getFood(grid [][]byte) int {
     for i := range visited {
         visited[i] = make([]bool, numC)
     }
+    visited[startR][startC] = true
     dirRowOps := [4]int{0, 1, 0, -1}
     dirColOps := [4]int{1, 0, -1, 0}
-    visited[startR][startC] = true
     queue := [][2]int{}
     queue = append(queue, [2]int{startR, startC})
-    step := 0
+    level := 0
     
     for len(queue) > 0 {
         curLen := len(queue)
@@ -38,7 +38,7 @@ func getFood(grid [][]byte) int {
             poll := queue[0]
             queue = queue[1:]
             x, y := poll[0], poll[1]
-            if grid[x][y] == byte('#') { return step }
+            //if grid[x][y] == byte('#') { return level }
             //travel to adj cell
             for cell:=0; cell < 4; cell++ { 
                 newX, newY := x + dirRowOps[cell], y + dirColOps[cell]
@@ -48,11 +48,14 @@ func getFood(grid [][]byte) int {
                 } 
                 //already visited or an obstacle
                 if visited[newX][newY] || grid[newX][newY] == byte('X') { continue }
+                if grid[newX][newY] == byte('#') {
+                    return level+1
+                }
                 queue = append(queue, [2]int{newX, newY})
                 visited[newX][newY] = true
             }
         }
-        step++    
+        level++
     } 
     return -1
 }
