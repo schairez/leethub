@@ -3,22 +3,12 @@ import (
     "fmt"
 )
 
+/*
+time: sorting O(nlogn); two for loops for the dp bottom up subproblems O(L^2) where L=len max word
+
+*/
 
 
-//checks candidate word
-//w2 is subset of w1
-func isValidPredecessor(w1, w2 string) bool {
-    fmt.Println(w1, w2)
-    fmt.Println(len(w1), len(w2))
-    i, j := 0, 0
-    for j < len(w1) && i < len(w2) {
-        if w1[j] == w2[i] {
-            i++
-        }
-        j++
-    }
-    return i == len(w2)
-}
 
 type ByLen []string
  
@@ -32,6 +22,25 @@ func (a ByLen) Less(i, j int) bool {
  
 func (a ByLen) Swap(i, j int) {
    a[i], a[j] = a[j], a[i]
+}
+/*
+
+//checks candidate word
+//predecessorCandidate is subset of successorWord
+
+true if predecessorCandidate is a predecessor of successorWord
+
+*/
+
+func isValidPredecessor(successorWord, predecessorCandidate string) bool {
+    cntMatchPredecessor, successorCharIdx := 0, 0
+    for successorCharIdx < len(successorWord) && cntMatchPredecessor < len(predecessorCandidate) {
+        if successorWord[successorCharIdx] == predecessorCandidate[cntMatchPredecessor] {
+            cntMatchPredecessor++
+        }
+        successorCharIdx++
+    }
+    return cntMatchPredecessor == len(predecessorCandidate)
 }
 
 
@@ -48,15 +57,17 @@ func longestStrChain(words []string) int {
         dp[i] = 1
     }
     for i:=1; i < n; i++ {
+        successor := words[i]
         for j:=i-1; j>=0; j-- {
-            if len(words[j]) + 1 < len(words[i]) {
+            predecessorCand := words[j]
+            //only consider words with one less char in len
+            if len(predecessorCand) + 1 < len(successor) {
                 break
             } 
-            if len(words[j]) == len(words[i]) {
+            if len(predecessorCand) == len(successor) {
                 continue
             }
-            if isValidPredecessor(words[i], words[j]) {
-                fmt.Println("check")
+            if isValidPredecessor(successor, predecessorCand) {
                 dp[i] = max(dp[i], dp[j]+1)
                 res = max(res, dp[i])
             }
