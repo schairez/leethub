@@ -1,3 +1,5 @@
+//time: O(m*n); m=text1len; n=text2len
+//space: O(m*n)
 
 
 //state transition fn
