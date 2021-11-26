@@ -1,3 +1,49 @@
+//topSort Kahn's bfs
+//time: O(V+E); space: O(V+E)
+
+func findOrder(numCourses int, prerequisites [][]int) []int {
+    graph := make([][]int, numCourses)
+    numVisitNodes := 0
+    inDegree := make([]int, numCourses)
+    queue := []int{}
+    for i := range prerequisites {
+        dst, src := prerequisites[i][0], prerequisites[i][1]
+        graph[src] = append(graph[src], dst)
+        inDegree[dst]++
+    }
+    for nodeID := range inDegree {
+        if inDegree[nodeID] == 0 {
+            queue = append(queue, nodeID)
+        }
+    }
+    if len(queue) == 0 { return []int{} }
+    
+    res := make([]int, 0, len(prerequisites))
+    for len(queue) != 0 {
+        numVisitNodes++
+        var nodeID int
+        nodeID, queue = queue[0], queue[1:]
+        res = append(res, nodeID)
+        neighbors := graph[nodeID]
+        for _, nei := range neighbors {
+            inDegree[nei]--
+            if inDegree[nei] == 0 {
+                queue = append(queue, nei)
+            }
+        }
+    }
+    if numCourses == numVisitNodes {
+        return res
+    }
+    return []int{}
+}
+
+
+
+
+//////////////////////////////////////////
+
+//topSort postorder dfs 
 
 type Status uint
 
@@ -25,7 +71,7 @@ func NewGraph(prereqs [][]int, n int) *Graph {
     return &Graph{adj}
 }
 
-func findOrder(numCourses int, prerequisites [][]int) []int {
+func findOrderDFS(numCourses int, prerequisites [][]int) []int {
     n := len(prerequisites)
     if n == 0 {
         res := make([]int, numCourses)
