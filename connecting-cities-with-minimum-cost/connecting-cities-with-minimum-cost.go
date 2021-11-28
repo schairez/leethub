@@ -1,3 +1,13 @@
+/*
+
+N cities and E edges/connections
+time: O(E*logE); for sorting ElogE; for uf union and find operations
+the find takes logN time, but since the runtime of this operation never exceeds 5 for 10^600 ops, we can see this as virtually O(1)
+therefore O(ElogE) is the runtime
+space: O(2N) ~ O(n)
+
+*/
+
 import "sort"
 
 type ByWeight [][]int
@@ -63,7 +73,7 @@ func (uf *UF) Union(v, w int) {
 func minimumCost(n int, connections [][]int) int {
     uf := NewUF(n+1) //1 <= xi, yi <= n
     sort.Sort(ByWeight(connections))
-    //fmt.Println(connections)
+    
     res := 0
     for _, conn := range connections {
         cityA, cityB := conn[0], conn[1]
@@ -76,15 +86,7 @@ func minimumCost(n int, connections [][]int) int {
             }
         }
     }
-    fmt.Println(uf.CntUnions())
-    return -1
-    /*
-    graph := make([][]int, n)
-    for i := range graph {
-        graph[i] = make([]int,)
-    }
-    */
-    return -1
     
+    return -1
 }
 
