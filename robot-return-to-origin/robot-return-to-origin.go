@@ -1,3 +1,6 @@
+//time: O(n)
+//space: O(1); pt x and y vars are modified in place
+
 type Point struct {
     x, y int
 }
@@ -7,20 +10,20 @@ moves only contains the characters 'U', 'D', 'L' and 'R'.
 */
 
 func judgeCircle(moves string) bool {
-    start := &Point{0,0} 
+    cell := &Point{0,0} 
     for _, move := range []byte(moves) {
         switch move {
         case 'U':
-            start.y++
+            cell.y++
         case 'D':
-            start.y--
+            cell.y--
         case 'L':
-            start.x--
+            cell.x--
         case 'R':
-            start.x++
+            cell.x++
         }
     } 
-    return start.x == 0 && start.y == 0
+    return cell.x == 0 && cell.y == 0
 }
 /*
 "LDRRLRUULR"
