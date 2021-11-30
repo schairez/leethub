@@ -1,3 +1,7 @@
+//time: O((9!*K)/(9-K)!)
+//space: O(K)
+
+
 
 
 func combinationSum3(k int, n int) [][]int {
