@@ -1,11 +1,12 @@
 //time: O(numR*numC); we iterate through all matrix cells
 //space: O(1); no aux d.s. used
+//
 
 func matrixReshape(mat [][]int, r int, c int) [][]int {
     numR, numC := len(mat), len(mat[0])
     totalNums := numR*numC
     if totalNums != r*c {
-        return mat
+        return mat //can't reshape if new matrix cell cnt differs
     }
     reshapedMatrix := make([][]int, r)
     for i := range reshapedMatrix {
