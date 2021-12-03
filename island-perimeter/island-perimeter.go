@@ -1,5 +1,6 @@
 //time: O(m*n)
 //space: O(1)
+// island * 4 - neighbor * 2;
 
 func islandPerimeter(grid [][]int) int {
     res := 0
@@ -7,27 +8,25 @@ func islandPerimeter(grid [][]int) int {
     numCols := len(grid[0])
     for r:=0; r< numRows; r++ {
         for c:=0; c < numCols; c++ {
-            if grid[r][c]==1 {
+            if grid[r][c]== 1 {
                 res +=4
-                if c > 0 && grid[r][c] == grid[r][c-1] {//left
-                    res -= 2
+                if r-1 >= 0 && grid[r-1][c] == 1 { 
+                    res-- 
                 }
-                if r > 0 && grid[r][c] == grid[r-1][c] {//down
-                    res -= 2
+                if r+1 <= numRows-1 && grid[r+1][c] == 1 { 
+                    res-- 
+                }
+                if c-1 >= 0 && grid[r][c-1] == 1  { 
+                    res-- 
+                }
+                if c+1 <= numCols-1 && grid[r][c+1] == 1 { 
+                    res-- 
                 }
             }
         }
     }
     return res
 }    
-
-
-
-
-
-
-
-
 
 
 
