@@ -45,6 +45,8 @@ func climbStairsDP(n int) int {
     }
     return dp[n]
 }
+//time: O(n)
+//space: O(1)
 //to derive f(n) we can keep track of three vars
 // ptr1 = n-1; ptr2 = n-2; and the result var as the sum of the prev two
 //we only need to keep track of the two previous values
