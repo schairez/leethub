@@ -2,20 +2,22 @@
 //space: O(1)
 
 func pivotIndex(nums []int) int {
-    sumVals := func() int {
+    totalSum := func() int {
         v := 0
         for i := range nums {
             v += nums[i]
         }
         return v
-    }
+    }()
+    
     res := -1
-    totalSum := sumVals() 
     leftSum := 0
-    for idx := range nums {
-        num := nums[idx]
-        rightSum := totalSum - num - leftSum
-        if leftSum == rightSum { return idx }
+    //rightSum := totalSum - num - leftSum
+    for idx, num := range nums {
+        totalSum -= num
+        if leftSum == totalSum {
+            return idx
+        }
         leftSum += num
     }
     return res
