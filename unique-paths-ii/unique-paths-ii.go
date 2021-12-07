@@ -2,7 +2,7 @@
 //time: O(m*n)
 //space: O(m*n)
 
-func uniquePathsWithObstacles(obstacleGrid [][]int) int {
+func uniquePathsWithObstaclesMemo(obstacleGrid [][]int) int {
     numR, numC := len(obstacleGrid), len(obstacleGrid[0])
     if obstacleGrid[0][0] == 1 { return 0 }
     memo := make([][]int, numR)
@@ -26,4 +26,38 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
     }
     
     return dfs(numR-1, numC-1)
+}
+
+//bottom up DP 2D
+//time: O(m*n)
+//space: O(m*n)
+func uniquePathsWithObstacles(obstacleGrid [][]int) int {
+    numR, numC := len(obstacleGrid), len(obstacleGrid[0])
+    if obstacleGrid[0][0] == 1 { return 0 }
+    dp := make([][]int, numR)
+    for row := range dp {
+        dp[row] = make([]int, numC)
+    }
+    for row := range dp {
+        if obstacleGrid[row][0] == 1 {
+            break
+        }
+        dp[row][0] = 1
+    }
+    for col := 0; col < numC; col++ {
+        if obstacleGrid[0][col] == 1 {
+            break
+        }
+        dp[0][col] = 1
+    }
+    for row := 1; row < numR; row++ {
+        for col := 1; col < numC; col++ {
+            if obstacleGrid[row][col] == 1 {
+                dp[row][col] = 0
+                continue
+            }
+            dp[row][col] = dp[row-1][col] + dp[row][col-1]
+        }
+    }
+    return dp[numR-1][numC-1]
 }
