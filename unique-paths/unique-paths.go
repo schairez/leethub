@@ -1,7 +1,33 @@
+//recursive top-down version
+//space: O(m*n)
+//time: O(m*n)
+func uniquePathsMemo(m int, n int) int {
+    memo := make([][]int, m) 
+    for row := range memo {
+        memo[row] = make([]int, n)
+    }
+    var dfs func(int, int) int
+    dfs = func(r, c int) int {
+        if numPaths := memo[r][c]; numPaths !=0 {
+            return numPaths
+        } 
+        switch {
+        case r == 0 && c == 0:
+            return 0
+        case r == 0 || c == 0:
+            return 1
+        }
+        memo[r][c] = dfs(r-1, c) + dfs(r, c-1)
+        return memo[r][c]
+    }
+    return dfs(m-1, n-1)
+}
+
+
 //bottom up 2D tabular approach
 //time: O(m*n)
 //space: O(m*n)
-func uniquePaths(m int, n int) int {
+func uniquePaths2D(m int, n int) int {
     dp := make([][]int, m)
     
     for i:=0; i < m; i++ {
@@ -20,13 +46,44 @@ func uniquePaths(m int, n int) int {
     return dp[m-1][n-1]
 }
 
+/*
+reduced to O(n) space bottom up DP version
+- we only need to reserve space for each col in our dp table
+- taking care of initializing our dp arr with vals = 1,
+  this marks the iteration of traversing right bound on row0
+- when iterating through each remaining (r,c) pair row-wise,
+  we increment the store at that dp idx by the unique paths from the left
+  of the dp idx; recurrence relation: dp[i] = dp[i] + dp[i-1] i elem of {1,n-1}
+- after each row traversal, our dp array stores results for unique paths
+  up to that row
+for m=3, n=7 ex
+[1, 1, 1, 1, 1, 1, 1] after row=0 traversal
+[1, 2, 3, 4, 5, 6, 7] after row=1 traversal
+[1, 3, 6, 10, 15, 21, 28] after row=2 traversal; res =28
 
+time: O(m*n)
+space: O(n)
+*/
+
+func uniquePaths(m int, n int) int {
+    dp := make([]int, n)
+    for idx := range dp {
+        dp[idx] = 1
+    }
+    for row := 1; row < m; row++ {
+        for col := 1; col < n; col++ {
+            dp[col] += dp[col-1]
+        } 
+    }
+    fmt.Println(dp)
+    return dp[n-1]
+}
 
 
 /*
-prev version
+prev version; 11/22/2021
 time: O(m*n) number of nodes in graph
-space: O(n) for aux memo + O(n) for recursion stack
+space: O(m*n) for aux memo + O(n) for recursion stack
 */
 
 /*
