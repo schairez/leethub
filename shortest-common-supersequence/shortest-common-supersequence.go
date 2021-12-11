@@ -17,7 +17,7 @@ space: O(n*m)
 func max(a, b int) int { if a >= b { return a}; return b }
 
 func shortestCommonSupersequence(str1 string, str2 string) string {
-    //get lcs len
+    //get lcs
     lenStr1, lenStr2 := len(str1), len(str2)
     dp := make([][]int, lenStr1+1)
     for row := range dp {
@@ -67,7 +67,7 @@ func shortestCommonSupersequence(str1 string, str2 string) string {
             }
         }
     }
-    //rev in place
+    
     reversedVersion := sb.String()
     
     var sbOrdered strings.Builder
