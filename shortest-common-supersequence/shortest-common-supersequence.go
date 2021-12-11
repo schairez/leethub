@@ -57,7 +57,8 @@ func shortestCommonSupersequence(str1 string, str2 string) string {
             currIdxStr1--
             currIdxStr2--
         default:
-            if dp[currIdxStr1+1][currIdxStr2] >= dp[currIdxStr1][currIdxStr2+1] {
+            if dp[currIdxStr1+1][currIdxStr2] >= 
+                dp[currIdxStr1][currIdxStr2+1] {
                 sb.WriteByte(str2[currIdxStr2])
                 currIdxStr2--
             } else {
@@ -129,7 +130,6 @@ i = m-1
 j = n-1
 for i != -1 || j != -1 {
     //t != f || f != t
-    //res += (i < 0) ? str2[j--] : str1[i--];
     if (i < 0) != (j < 0) {
         if i < 0 { res += str2[j]; j--}
         else { res+=str1[i]; i--}
