@@ -22,17 +22,12 @@ func shortestCommonSupersequence(str1 string, str2 string) string {
     dp := make([][]int, lenStr1+1)
     for row := range dp {
         dp[row] = make([]int, lenStr2+1)
-        dp[row][0] = 0
-    }
-    for col := 0; col < len(dp[0]); col++ {
-        dp[0][col] = 0
     }
     for row := 1; row <= lenStr1; row++ {
         for col :=1; col <= lenStr2; col++ {
-            switch {
-            case str1[row-1] == str2[col-1]:
+            if str1[row-1] == str2[col-1] {
                 dp[row][col] = dp[row-1][col-1] + 1
-            default:
+            } else {
                 fromLeft := dp[row][col-1]
                 fromAbove := dp[row-1][col]
                 dp[row][col] = max(fromLeft, fromAbove)
