@@ -1,6 +1,5 @@
 //space optimized patience sort method
 //we just need to keep track of the heads of each patience sorted bucket
-// and only make a new bucket if heads[i] 
 /*
 Input: nums = [10,9,2,5,3,7,101,18]
 @idx0
@@ -52,7 +51,7 @@ b1  b2  b3  b4
 note: 4 buckets; therefore len -> 4
 
 */
-
+///////////////////////////////////////////////////
 
 //patience sorting algo 
 //reminiscent of solitaire and of the card game patience
@@ -115,7 +114,7 @@ func binSearchInsertIdx(heads []int, target int ) int {
 
 
 
-///////////////////////////////
+////////////////////////////////////
 //DP Version
 
 //1 <= nums.length <= 2500
