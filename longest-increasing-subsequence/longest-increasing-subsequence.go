@@ -1,7 +1,39 @@
-//patience sorting algo 
-//reminiscent of solitaire and of the card game patience
+//space optimized patience sort method
+//we just need to keep track of the heads of each patience sorted bucket
+// and only make a new bucket if heads[i] 
+/*
+Input: nums = [10,9,2,5,3,7,101,18]
+@idx0
+10
+@idx1
+9
+@idx3
+2    5
+
+@idx6
+2    3   7 101 
+after last idx
+2    3  7  18
+
+*/
+
 //time: O(nlogn)
 //space: O(n)
+
+func lengthOfLIS(nums []int) int {
+    n := len(nums)
+    if n == 1 { return n }
+    var piles []int
+    for _, num := range nums {
+        idx := binSearchInsertIdx(piles, num)
+        if idx == len(piles) {
+            piles = append(piles, num)
+        }
+        piles[idx] = num
+        
+    }
+    return len(piles)
+}
 
 /*
 make new pile of cards if head of deque < nums[i]
@@ -22,7 +54,11 @@ note: 4 buckets; therefore len -> 4
 */
 
 
-func lengthOfLIS(nums []int) int {
+//patience sorting algo 
+//reminiscent of solitaire and of the card game patience
+//time: O(nlogn)
+//space: O(n^2)
+func lengthOfLISPatienceSort(nums []int) int {
     n := len(nums)
     if n == 1 { return n }
     piles := NewPiles()
