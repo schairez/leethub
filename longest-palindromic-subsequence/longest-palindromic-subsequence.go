@@ -28,7 +28,7 @@ func max(a, b int) int { if a >= b { return a}; return b}
 // space: O(n^2 + n) ~ O(n^2)
 
 //memoized top-down approach
-func longestPalindromeSubseq(s string) int {
+func longestPalindromeSubseqMemo(s string) int {
     //constraint: 1 <= s.length <= 1000
     n := len(s)
     if n == 1 { return 1}
@@ -57,4 +57,31 @@ func longestPalindromeSubseq(s string) int {
     return dfs(i, j)
     
 }
+
+
+
+//bottom up dp table
+//time: O(n^2)
+//space: O(n^2)
+func longestPalindromeSubseq(s string) int {
+    n := len(s)
+    if n == 1 { return 1 }
+    dp := make([][]int, n)
+    for row := range dp {
+        dp[row] = make([]int, n)
+    }
+    for row := n-1; row >= 0; row-- {
+        dp[row][row] = 1
+        for col := row+1; col < n; col++ {
+            if s[row] == s[col] {
+                dp[row][col] = 2 + dp[row+1][col-1]
+            } else {
+                dp[row][col] = max(dp[row+1][col], dp[row][col-1])
+            }
+        }
+    }
+    return dp[0][n-1]
+}
+
+
 
