@@ -1,12 +1,36 @@
+/*
+ 
+[[4, 3, 2,-1]]
+[[4, 3, 2,-1]]
+ [3, 2, 1,-1]
+ [1, 1, -1,-2]
+ 
+ [-1,-1,-2,-3]]
+         <----
+ [3, 2, 1,-1]
+        V
+ [1, 1, -1,-2]
+  <------V
+ [-1,-1,-2,-3]]
+*/
 
-//leftMost negative
-//      V
-//[3,2,-1,-2]
-//hi = 4; lo = 0
-//mid = 2; arr[2] = -1; hi = mid; hi = 2
-//mid = 0 + 2//2 = 1; arr[mid]>=0; lo = mid+1 = 2
-//leftMost negative @ idx 2
-//numC - target = numNeg ?
+//search space reduction v
+//time : O(m + n)
+//space: O(1)
+func countNegatives(grid [][]int) int {
+    numR := len(grid)
+    numC := len(grid[0])
+    res := 0
+    col := len(grid[0])-1
+    for row := 0; row < numR; row++ {
+        for col >= 0 && grid[row][col] < 0 {
+            col--
+        }
+        res += numC-1 - col
+    }
+    return res
+}
+
 
 //[4,3,2,-1,-2]
 //hi = 5, lo = 0; 
@@ -17,10 +41,10 @@
 //mid = 3 + (4-3)//2 = 3; arr[mid] < 0; hi = 3
 //leftMost neg @ idx 3
 //numNeg at row = 5 - 3 = 2 
-
+//binSearch approach
 //time:  O(nlog(m))
 //space: O(1)
-func countNegatives(grid [][]int) int {
+func countNegativesBinSearch(grid [][]int) int {
     numR, numC := len(grid), len(grid[0])
     
     //returns num neg vals at curR
