@@ -12,7 +12,7 @@ type RandomizedSet struct {
 
 
 func Constructor() RandomizedSet {
-    return RandomizedSet{ map[int]int{}, []int{} }
+    return RandomizedSet{ make(map[int]int), []int{} }
 }
 
 
