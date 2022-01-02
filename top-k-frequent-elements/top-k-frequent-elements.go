@@ -23,19 +23,20 @@ func topKFrequent(nums []int, k int) []int {
     //inverse frequency
     //maps freq cnt's to arrlist of nums
     invFreq := map[int][]int{}
-    for numKey, cntVal := range freqMap {
-        if _, ok := invFreq[cntVal]; !ok {
-            invFreq[cntVal] = []int{}
+    for numKey, freqVal := range freqMap {
+        if _, ok := invFreq[freqVal]; !ok {
+            invFreq[freqVal] = []int{}
         } 
-        invFreq[cntVal] = append(invFreq[cntVal], numKey)
+        invFreq[freqVal] = append(invFreq[freqVal], numKey)
     }
     res := make([]int, 0, k)
     for currFreq := maxFreq; currFreq >=0; currFreq-- {
-        if len(res) == k {
-            break
-        }
         if freqElemsArr, ok := invFreq[currFreq]; ok {
-            res = append(res, freqElemsArr...)
+            for i := len(freqElemsArr)-1; i >= 0 && k > 0; i-- {
+                res = append(res, freqElemsArr[i])
+                k--
+            }
+            if k == 0 { break }
         }
     }
     
