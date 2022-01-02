@@ -1,142 +1,110 @@
-//time: O(1)
-//space: O(n)
 
-type KeyNode struct {
+type Node struct {
     cnt int
-    vals map[string]struct{}
-    prev, next *KeyNode
+    keySet map[string]struct{}
+    prev, next *Node
 }
+//condition: no nil inputs
+func (currNode *Node) InsertNode(newNode *Node) {
+    if currNode == nil { return }
+    nodeAfterNewNode := currNode.next
+    newNode.prev = currNode
+    currNode.next = newNode
+    newNode.next = nodeAfterNewNode
+    nodeAfterNewNode.prev = newNode
+}
+
+func DeleteNode(delNode *Node) {
+    prev := delNode.prev
+    next := delNode.next
+    prev.next = next
+    next.prev = prev
+}
+
 
 type AllOne struct {
-    keySet map[string]*KeyNode
-    head, tail *KeyNode
+    nodeKeySet map[string]*Node
+    nodeListHeader *Node
 }
 
-var maxInt32 int = (1 << 31) - 1
+
 
 func Constructor() AllOne {
-    keySet := make(map[string]*KeyNode)
-    head := &KeyNode{cnt: 0}
-    tail := &KeyNode{cnt: maxInt32}
-    head.next = tail
-    tail.prev = head
-    return AllOne{keySet: keySet, head: head, tail: tail}
+    list := &Node{}
+    list.cnt = 0
+    list.keySet = make(map[string]struct{})
+    list.prev = list
+    list.next = list
+    return AllOne{nodeKeySet: make(map[string]*Node),
+                  nodeListHeader: list,
+                 }
 }
 
 
 func (this *AllOne) Inc(key string)  {
-    var keyFreqNode *KeyNode
-    if _, exists := this.keySet[key]; !exists {
-        keyFreqNode = this.addToHead(key)
+    if oldNode, exists := this.nodeKeySet[key]; exists {
+        if oldNode.next.cnt != oldNode.cnt + 1 {
+            oldNode.InsertNode(&Node{
+                cnt: oldNode.cnt + 1,
+                keySet: make(map[string]struct{}),
+            })
+        }
+        newNode := oldNode.next
+        newNode.keySet[key] = struct{}{}
+        this.nodeKeySet[key] = newNode
+        delete(oldNode.keySet, key)
+        if len(oldNode.keySet) == 0 {
+            DeleteNode(oldNode)
+        }
     } else {
-        keyFreqNode = this.addToNextFreq(key)
-    } 
-    this.keySet[key] = keyFreqNode
-}
-func (this *AllOne) removeNode(node *KeyNode) {
-    currPrev := node.prev
-    currNext := node.next
-    node.prev.next = nil
-    node.next.prev = nil
-    currPrev.next = currNext
-    currNext.prev = currPrev
-}
-//assumes key we're incrementing not in keyset
-func (this *AllOne) addToHead(key string) *KeyNode {
-    currNextHeadNode := this.head.next 
-    if currNextHeadNode.cnt != 1 {
-        //currNextNode := this.head.next
-        newNextNode := &KeyNode{cnt: 1, vals: make(map[string]struct{})}
-        newNextNode.vals[key] = struct{}{}
-        newNextNode.next = this.head.next
-        this.head.next = newNextNode
-        newNextNode.next.prev = newNextNode
-        newNextNode.prev = this.head
-        return newNextNode
-    }
-    currNextHeadNode.vals[key] = struct{}{}
-    return currNextHeadNode
-}
-    
-func (this *AllOne) addToNextFreq(key string) *KeyNode {
-    var returnNode *KeyNode
-    currNode := this.keySet[key]
-    currNextFreqNode := currNode.next
-    currKeyFreq := currNode.cnt
-    expNextFreq := currKeyFreq+1
-    if currNode.next.cnt != expNextFreq {
-        newNextNode := &KeyNode{cnt: expNextFreq, vals: make(map[string]struct{})}
-        newNextNode.next = currNode.next
-        currNode.next = newNextNode
-        newNextNode.next.prev = newNextNode
-        newNextNode.prev = currNode
-        returnNode = newNextNode
-    } else {
-        returnNode = currNextFreqNode
-    }
-    currNode.next.vals[key] = struct{}{}
-    delete(currNode.vals, key)
-    if len(currNode.vals) == 0 {
-        this.removeNode(currNode)
-    }
-    return returnNode
-}
-//condition: guaranteed key exists
-func (this *AllOne) Dec(key string)  {
-    currNode := this.keySet[key]
-    prevNode := currNode.prev
-    //nextNode := currNode.next
-    currNodeFreq := currNode.cnt
-    expDecrFreq := currNodeFreq-1
-    delete(currNode.vals, key)
-    if expDecrFreq == 0 {
-        delete(this.keySet, key)
-    } else if expDecrFreq == prevNode.cnt {
-        prevNode.vals[key] = struct{}{}
-        this.keySet[key] = prevNode
-    } else {
-        newPrevNode := &KeyNode{cnt: expDecrFreq, vals: make(map[string]struct{})}
-        newPrevNode.vals[key] = struct{}{}
-        this.keySet[key] = newPrevNode
-        currNode.prev.next = nil
-        currNode.prev = newPrevNode
-        newPrevNode.prev = prevNode
-        prevNode.next = newPrevNode
-        newPrevNode.next = currNode
-    }
-    if len(currNode.vals) == 0 {
-        this.removeNode(currNode)
+        if this.nodeListHeader.next.cnt != 1 {
+            this.nodeListHeader.InsertNode(&Node{
+                cnt: 1,
+                keySet: make(map[string]struct{}),
+            })
+        }
+        newNode := this.nodeListHeader.next 
+        newNode.keySet[key] = struct{}{}
+        this.nodeKeySet[key] = newNode
     }
 }
 
+
+func (this *AllOne) Dec(key string)  {
+    if oldNode, exists := this.nodeKeySet[key]; exists {
+        if oldNode.cnt == 1 {
+            delete(this.nodeKeySet, key)
+        } else {
+            if oldNode.prev.cnt != oldNode.cnt - 1 {
+                oldNode.prev.InsertNode(&Node{
+                    cnt: oldNode.cnt -1,
+                    keySet: make(map[string]struct{}),
+                })
+            }
+            newNode := oldNode.prev
+            newNode.keySet[key] = struct{}{}
+            this.nodeKeySet[key] = newNode
+        }
+        delete(oldNode.keySet, key)
+        if len(oldNode.keySet) == 0 {
+            DeleteNode(oldNode)
+        }
+    }
+}
 
 func (this *AllOne) GetMaxKey() string {
-    var maxKey string
-    sentinel := ""
-    maxNode := this.tail.prev
-    if maxNode == this.head {
-        maxKey = sentinel
-    } else {
-        for key := range maxNode.vals {
-            maxKey = key
-            break
-        }
+    for key, _ := range this.nodeListHeader.prev.keySet {
+        return key
     }
-    return maxKey
+    return ""
 }
+
+
 func (this *AllOne) GetMinKey() string {
-    var minKey string
-    sentinel := ""
-    minNode := this.head.next
-    if minNode == this.tail {
-        minKey = sentinel
-    } else {
-        for key := range minNode.vals {
-            minKey = key
-            break
-        }
+    for key, _ := range this.nodeListHeader.next.keySet {
+        return key
     }
-    return minKey
+    return ""
 }
 
 
