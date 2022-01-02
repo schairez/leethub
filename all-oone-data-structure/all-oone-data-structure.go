@@ -1,3 +1,6 @@
+//doubly linkedlist nodes as buckets of key sets
+//time: O(1)
+//space: O(n)
 
 type Node struct {
     cnt int
