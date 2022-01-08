@@ -18,14 +18,13 @@ func maxPoints(points [][]int) int64 {
     }
     //max coords at level
     dp := make([]int64, numCols)
-    prev := make([]int64, numCols)
     for idx, pt := range points[0] {
         dp[idx] = int64(pt)
-        //prev[idx] = int64(pt)
     }
     fromLeft := make([]int64, numCols)
     fromRight := make([]int64, numCols)
     for row := 1; row < numRows; row++ {
+        prev := make([]int64, numCols)
         copy(prev, dp)
         fromLeft[0] = prev[0]
         for col := 1; col < len(points[row]); col++ {
