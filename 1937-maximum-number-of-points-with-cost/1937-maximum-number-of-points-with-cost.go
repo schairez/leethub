@@ -7,10 +7,10 @@ space: O(numC)
 func max(a, b int64) int64 { if a >= b { return a}; return b }
 
 func maxPoints(points [][]int) int64 {
+    var maxVal int64
     numRows := len(points)
     numCols := len(points[0])
     if numRows == 1 {
-        var maxVal int64
         for _, val := range points[0] {
             maxVal = max(maxVal, int64(val))
         }
@@ -42,7 +42,6 @@ func maxPoints(points [][]int) int64 {
                           fromRight[col]) + int64(points[row][col])
         }
     }  
-    var maxVal int64
     //max number of pts with cost candidates
     for _, val := range dp {
         maxVal = max(maxVal, val)
