@@ -1,10 +1,15 @@
+/*
+<https://leetcode.com/problems/student-attendance-record-ii/>
 //constraints
 //1 <= n <= 105
 
-/*
+'A': Absent.
+'L': Late.
+'P': Present.
+
 Given an integer n, return the number of possible attendance records of
 length n that make a student eligible for an attendance award.
-The answer may be very large, so return it modulo 109 + 7.
+The answer may be very large, so return it modulo 10^9 + 7.
 
 notice that we can:
 - have  <= 1 day absent and no more than <= 3 consecutive late days
