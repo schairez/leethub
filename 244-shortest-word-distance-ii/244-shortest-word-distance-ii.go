@@ -4,9 +4,11 @@ type pair struct {
 
 type WordDistance struct {
     wordsLocMap map[string][]int
-    cacheMinDist map[pair]int
+    //cacheMinDist map[pair]int
 }
 
+//time: O(n)
+//space: O(n) where n = size of constructor input 
 
 func Constructor(wordsDict []string) WordDistance {
     wordsLocMap := make(map[string][]int)
@@ -18,25 +20,32 @@ func Constructor(wordsDict []string) WordDistance {
         }
     }
     return WordDistance{wordsLocMap: wordsLocMap,
-                        cacheMinDist: make(map[pair]int),
+                      //  cacheMinDist: make(map[pair]int),
                        }
     
 }
 
 
 /*
-At most 5000 calls will be made to shortest.
+note: At most 5000 calls will be made to shortest.
 - it's good to cache the distances and not repeat the same calculation again
 
+
+time: O(lenW1locs + lenW2locs) where m = lenW1 idx locs; n = lenW2locs
+space: O(1)
 */
 
 func (this *WordDistance) Shortest(word1 string, word2 string) int {
+    //Q: should we cache the min distance? question does not make clear whether
+    //we'll have repeated queries or not
+    /*
     if _, ok := this.cacheMinDist[pair{word1, word2}]; ok {
         return this.cacheMinDist[pair{word1, word2}]
     }
     if _, ok := this.cacheMinDist[pair{word2, word1}]; ok {
         return this.cacheMinDist[pair{word2, word1}]
     }
+    */
     
     shortestDist := (1 << 31)-1
     //word1 and word2 are in wordsDict.
@@ -55,7 +64,7 @@ func (this *WordDistance) Shortest(word1 string, word2 string) int {
             w2Idx++
         }
     }
-    this.cacheMinDist[pair{word1, word2}] = shortestDist
+   // this.cacheMinDist[pair{word1, word2}] = shortestDist
     
     return shortestDist
     
