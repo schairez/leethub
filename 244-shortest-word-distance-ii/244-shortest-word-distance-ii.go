@@ -12,9 +12,10 @@ func Constructor(wordsDict []string) WordDistance {
     wordsLocMap := make(map[string][]int)
     for idx, word := range wordsDict {
         if _, ok := wordsLocMap[word]; !ok {
-            wordsLocMap[word] = []int{}
+            wordsLocMap[word] = []int{idx}
+        } else {
+            wordsLocMap[word] = append(wordsLocMap[word], idx)
         }
-        wordsLocMap[word] = append(wordsLocMap[word], idx)
     }
     return WordDistance{wordsLocMap: wordsLocMap,
                         cacheMinDist: make(map[pair]int),
