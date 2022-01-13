@@ -1,4 +1,4 @@
-//time: O(N)
+//time: O(|V| + |E|); in this case O(N) since rooted tree we just visit each node once
 //space: O(N)
 
 /*
