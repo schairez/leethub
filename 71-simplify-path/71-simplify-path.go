@@ -34,16 +34,3 @@ func simplifyPath(path string) string {
     }
     return res
 }
-
-
-/*
- "/home//foo/"
- 
- -
- foo
- -
- -
- home
- -
- 
-*/
