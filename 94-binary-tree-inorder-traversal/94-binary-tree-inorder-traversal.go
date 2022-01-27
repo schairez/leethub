@@ -7,9 +7,10 @@
  * }
  */
 
+
 //morris traversal
 //time: O(2n) ~ O(n)
-//space: O(heightTree) ~ O(n)
+//space: O(1)
 
 func inorderTraversal(root *TreeNode) []int {
     if root == nil {
@@ -50,6 +51,7 @@ func inorderTraversal(root *TreeNode) []int {
 
 //iterative
 //time:O(n); space:O(n)
+//space: O(heightTree) ~ O(n)
 
 func inorderTraversalStackIter(root *TreeNode) []int {
     res := []int{}
