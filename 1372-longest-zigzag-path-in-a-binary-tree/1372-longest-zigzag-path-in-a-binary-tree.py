@@ -6,8 +6,8 @@
 #         self.right = right
 
 
-#time: O(n)
-#space: O(treeHeight); Omega(logn); O(n) worst case
+#time: O(n); numNodes
+#space: O(treeHeight); Omega(logn) if height balanced; O(n) worst case if skewed
 
 class Solution:
     def longestZigZag(self, root: Optional[TreeNode]) -> int:
