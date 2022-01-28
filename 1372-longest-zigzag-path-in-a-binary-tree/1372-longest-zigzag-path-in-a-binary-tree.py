@@ -4,6 +4,11 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
+#time: O(n)
+#space: O(treeHeight); Omega(logn); O(n) worst case
+
 class Solution:
     def longestZigZag(self, root: Optional[TreeNode]) -> int:
         if root is None:
@@ -11,6 +16,9 @@ class Solution:
         
         max_path = 0
         def dfs(node: TreeNode, is_left: bool) -> int:
+            """
+            postorder dfs approach LRD
+            """
             nonlocal max_path
             if node is None:
                 return 0
