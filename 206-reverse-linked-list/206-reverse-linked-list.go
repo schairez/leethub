@@ -9,13 +9,29 @@
  * }
  */
 
-/*
-1 -> 2 
-
-
-*/
-
+//time: O(n)
+//space: O(n)
 func reverseList(head *ListNode) *ListNode {
+    if head == nil {
+        return head
+    }
+    
+    var recurseRev func(prev, curr *ListNode) *ListNode
+    recurseRev = func(prev, curr *ListNode) *ListNode {
+        if curr == nil {
+            return prev
+        }
+        tmp := curr.Next
+        curr.Next = prev
+        return recurseRev(curr, tmp)
+    }
+    
+    return recurseRev(nil, head)
+}
+    
+//time: O(n)
+//space: O(1)
+func reverseListIter(head *ListNode) *ListNode {
     if head == nil || head.Next == nil {
         return head
     }
@@ -28,29 +44,6 @@ func reverseList(head *ListNode) *ListNode {
 }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
