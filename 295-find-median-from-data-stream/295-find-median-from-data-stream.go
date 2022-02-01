@@ -41,6 +41,8 @@ func Constructor() MedianFinder {
     maxHeap := NewHeap(func(a, b int) bool {
         return a > b
     })
+    heap.Init(minHeap)
+    heap.Init(maxHeap)
     return MedianFinder{smallerNums : maxHeap, 
                         largerNums : minHeap}
 }
