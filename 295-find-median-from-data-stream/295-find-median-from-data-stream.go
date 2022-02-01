@@ -25,7 +25,9 @@ to find the median
   median is @ top of maxHeap
 
 */
-
+//time to addNum: O(logn)
+//time to getMedian: O(1)
+//space: O(n)
 
 type MedianFinder struct {
     smallerNums *IntHeap
@@ -46,16 +48,18 @@ func Constructor() MedianFinder {
                         largerNums : minHeap}
 }
 
-
+//time: O(5logn) ~ O(logn)
 func (this *MedianFinder) AddNum(num int)  {
+    
     heap.Push(this.smallerNums, num)
     heap.Push(this.largerNums, heap.Pop(this.smallerNums))
+    
     if this.smallerNums.Len() < this.largerNums.Len() {
         heap.Push(this.smallerNums, heap.Pop(this.largerNums))
     }
 }
 
-
+//time: O(1)
 func (this *MedianFinder) FindMedian() float64 {
     n := this.smallerNums.Len() + this.largerNums.Len()
     if n % 2 == 0 {
