@@ -1,4 +1,3 @@
-//import "container/heap"
 
 /*
 - the median is the middle pt in our sequence
