@@ -13,6 +13,7 @@
  *     }
  * }
  */
+
 class Solution {
     func upsideDownBinaryTree(_ root: TreeNode?) -> TreeNode? {
         if root == nil || root?.left == nil && root?.right == nil {
