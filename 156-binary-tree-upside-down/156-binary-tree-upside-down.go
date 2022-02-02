@@ -7,11 +7,29 @@
  * }
  */
 
+func upsideDownBinaryTree(root *TreeNode) *TreeNode {
+    if root == nil {
+        return nil
+    }
+    if root.Left == nil && root.Right == nil {
+        return root
+    }
+    finalRoot := upsideDownBinaryTree(root.Left)
+    nextRoot := root.Left
+    nextRoot.Left, nextRoot.Right  = root.Right, root
+    root.Left, root.Right = nil, nil
+    return finalRoot
+} 
+    
 
 //newRoot = prevLeft
 //newRoot.Right = prevRoot
 //newRoot.Left = prevRoot.Right
 
+//iterative approach
+//time: O(n)
+//space:O(1)
+/*
 func upsideDownBinaryTree(root *TreeNode) *TreeNode {
     if root == nil || root.Left == nil && root.Right == nil {
         return root
@@ -35,7 +53,7 @@ func upsideDownBinaryTree(root *TreeNode) *TreeNode {
     return currNode
 } 
     
-    
+ */   
     
     
     
