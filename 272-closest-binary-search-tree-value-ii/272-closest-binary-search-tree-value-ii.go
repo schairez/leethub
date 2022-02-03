@@ -20,13 +20,11 @@ func closestKValues(root *TreeNode, target float64, k int) []int {
         inorder(node.Left)
         if len(res) < k {
             res = append(res, node.Val)
+        } else if abs(float64(node.Val) - target) < abs(float64(res[0])-target) {
+            res = res[1:]
+            res = append(res, node.Val)
         } else {
-            diff := abs(float64(node.Val) - target)
-            oldDiff := abs(float64(res[0]) - target)
-            if diff < oldDiff {
-                res = res[1:]
-                res = append(res, node.Val)
-            }
+            return
         }
         inorder(node.Right)
     }
