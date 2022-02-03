@@ -5,6 +5,8 @@
  *     Next *ListNode
  * }
  */
+//time: O(n)
+//space: O(1)
 
 func isPalindrome(head *ListNode) bool {
     if head.Next == nil {
