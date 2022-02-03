@@ -5,6 +5,7 @@
  *     Next *ListNode
  * }
  */
+
 //time: O(n)
 //space: O(1)
 
@@ -12,17 +13,22 @@ func isPalindrome(head *ListNode) bool {
     if head.Next == nil {
         return true
     }
+    var res bool = true
     midNode := getMidNode(head)
     //reverse 2nd half of list
     reversedHalf := reverseList(midNode.Next)
-    for reversedHalf != nil {
-        if reversedHalf.Val != head.Val {
-            return false
+    p1 := head
+    p2 := reversedHalf
+    for res == true && p2 != nil {
+        if p2.Val != p1.Val {
+            res = false
         }
-        reversedHalf = reversedHalf.Next
-        head = head.Next
+        p2 = p2.Next
+        p1 = p1.Next
     }
-    return true
+    //undo mutation
+    midNode.Next = reverseList(reversedHalf)
+    return res
 }
 func getMidNode(head *ListNode) *ListNode {
     //if even len, returns first mid node
