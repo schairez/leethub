@@ -7,11 +7,64 @@
  * }
  */
 
+
+func kthSmallest(root *TreeNode, k int) int {
+    kthVal := k
+    var (
+        res int
+    )
+    checkKthFn := func(val int) {
+        kthVal--
+        if kthVal == 0 {
+            res = val
+        }
+    }
+    morrisTraversal(root, checkKthFn)
+    return res
+}
+
+//iterative approach
+//morris traversal
+
+func morrisTraversal(root *TreeNode, checkKthFn func(val int)) {
+    var (
+        successorNode *TreeNode
+        predNode *TreeNode
+    )
+    successorNode = root
+    for successorNode != nil {
+        if successorNode.Left != nil {
+            predNode = successorNode.Left
+            for predNode.Right != nil && predNode.Right != successorNode {
+                predNode = predNode.Right
+            }
+            if predNode.Right == nil {
+                predNode.Right = successorNode
+                successorNode = successorNode.Left
+            } else {
+                checkKthFn(successorNode.Val)
+                predNode.Right = nil
+                successorNode = successorNode.Right
+            }
+        } else {
+            checkKthFn(successorNode.Val)
+            successorNode = successorNode.Right
+        }
+    }
+}
+
+
+
+
+
+
+
+
 //time: O(logn + k) if balanced tree; O(n+k) if skewed 
 //space: O(logn + k) if balanced tree; O(n+k) if skewed 
 
-
-func kthSmallest(root *TreeNode, k int) int {
+//recursive
+func kthSmallestRec(root *TreeNode, k int) int {
     kthVal := k
     var res int
     inorder(root, func(val int) bool {
