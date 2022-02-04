@@ -51,6 +51,10 @@ func (trie *TrieNode) AddWord(word string) {
     trie.IsWord = true
 }
 
+//time: O(lenWord) if alpha bytes input; 
+// O(26^N) where N = lenWord if '.' in bytesequence
+//space: O(N) N = lenWord  
+
 func (trie *TrieNode) Search(word string) bool {
     wordLen := len(word)
     
