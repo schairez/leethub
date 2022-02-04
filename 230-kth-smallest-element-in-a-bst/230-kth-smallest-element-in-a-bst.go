@@ -6,6 +6,11 @@
  *     Right *TreeNode
  * }
  */
+
+//time: O(logn + k) if balanced tree; O(n+k) if skewed 
+//space: O(logn + k) if balanced tree; O(n+k) if skewed 
+
+
 func kthSmallest(root *TreeNode, k int) int {
     kthVal := k
     var res int
