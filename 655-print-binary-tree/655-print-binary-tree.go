@@ -7,11 +7,15 @@
  * }
  */
 
+
+//LC auto imports stdlib now :o
 //import "strconv"
 
 func max(a, b int) int {if a >= b { return a}; return b}
 
 //constraint: numNodes in [1, 2^10]
+//time: avg -> O(logn+n); worst -> O(n+n) ~ O(n)
+//space: avg -> O(logn+n); worst -> O(n+n) ~ O(n)
 
 func printTree(root *TreeNode) [][]string {
     height := getTreeHeight(root)
@@ -21,13 +25,14 @@ func printTree(root *TreeNode) [][]string {
         res[r] = make([]string, numCols)
     }
     preorder(root, height, 0, (numCols-1) >> 1, func(val, r, c int) {
-        fmt.Println(val, r, c)
         res[r][c] = strconv.Itoa(val)
     })
     return res
 }
 
 //DLR
+//time: O(n) we process all nodes
+//space: O(logn) if balanced tree; O(n) if skewed
 func preorder(node *TreeNode, height, row, col int, addToResFn func(val, row, col int)) {
     if node == nil {
         return
