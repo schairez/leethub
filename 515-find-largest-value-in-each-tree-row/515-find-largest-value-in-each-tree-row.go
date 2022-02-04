@@ -6,6 +6,10 @@
  *     Right *TreeNode
  * }
  */
+
+// time: O(n)
+// space: O(heightTree) if skewed O(n)
+
 func largestValues(root *TreeNode) []int {
     if root == nil {
         return []int{}
