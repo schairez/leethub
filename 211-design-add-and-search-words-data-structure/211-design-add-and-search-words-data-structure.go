@@ -59,8 +59,7 @@ func (trie *TrieNode) Search(word string) bool {
         if wordIdx == wordLen {
             return node.IsWord
         }
-        switch {
-        case word[wordIdx] == '.':
+        if word[wordIdx] == '.' {
             for i :=0; i < 26; i++ {
                 if node.Children[i] == nil {
                     continue
@@ -69,7 +68,7 @@ func (trie *TrieNode) Search(word string) bool {
                     return true
                 }
             }
-        case node.Children[word[wordIdx] - 'a'] != nil :
+        } else if node.Children[word[wordIdx] - 'a'] != nil {
             node = node.Children[word[wordIdx] - 'a']
             return dfs(wordIdx+1, node)
         }
