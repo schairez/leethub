@@ -7,6 +7,12 @@
  * }
  */
 
+//iterative approach
+//morris traversal approach
+//space optimized version
+//overkill for this problem x_X
+// time: O(n)
+//space: O(1)
 
 func kthSmallest(root *TreeNode, k int) int {
     kthVal := k
@@ -23,8 +29,6 @@ func kthSmallest(root *TreeNode, k int) int {
     return res
 }
 
-//iterative approach
-//morris traversal
 
 func morrisTraversal(root *TreeNode, checkKthFn func(val int)) {
     var (
