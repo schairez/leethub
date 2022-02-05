@@ -26,6 +26,8 @@ func sortTransformedArray(nums []int, a int, b int, c int) []int {
     quadFn := quadWithCoeff(a, b, c)
     idx := n-1
     //upside down parabola
+    //if upside down parabola; tails are min values
+    //else: tails are max values
     invParabolaCond := a < 0
     if invParabolaCond {
         idx = 0
