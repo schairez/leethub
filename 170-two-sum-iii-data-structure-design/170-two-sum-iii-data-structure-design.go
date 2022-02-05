@@ -20,7 +20,7 @@ func (this *TwoSum) Add(number int)  {
 //space: O(numKeys)
 func (this *TwoSum) Find(value int) bool {
     //since duplicate keys
-    //if complement == value; we'd need freq cnts >= 2;
+    //if complement == k; we'd need freq cnts >= 2;
     //if we traverse the whole tbl and fail to find two sum
     //return false
     for key := range this.hashTable {
