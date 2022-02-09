@@ -4,6 +4,8 @@ type BrowserHistory struct {
     pages []string
 }
 
+
+//D.S. holds O(n) space; traversal time is O(steps) forward and back
 func Constructor(homepage string) BrowserHistory {
     return BrowserHistory{ currIdx: 0, 
                           pages: []string{homepage},
@@ -62,13 +64,12 @@ type DoublyListNode struct {
 }
 
 
+//D.S. holds O(n) space; traversal time is O(steps) forward and back
 type BrowserHistoryNodeVersion struct {
     CurrPage *DoublyListNode
 }
 
 
-//time: O(1)
-//space:O(n)
 func ConstructorNodeVersion(homepage string) BrowserHistoryNodeVersion {
     node := &DoublyListNode{Website: homepage,
                             Next: nil, Prev: nil}
@@ -77,8 +78,6 @@ func ConstructorNodeVersion(homepage string) BrowserHistoryNodeVersion {
 }
 
 
-//time: O(1)
-//space:O(n)
 func (this *BrowserHistoryNodeVersion) Visit(url string)  {
     updatedCurrPage := &DoublyListNode{Website: url}
     prevPage := this.CurrPage
@@ -94,9 +93,6 @@ func (this *BrowserHistoryNodeVersion) Visit(url string)  {
 }
 
 
-
-//time: O(steps)
-//space:O(n)
 func (this *BrowserHistoryNodeVersion) Back(steps int) string {
     i := 0
     for i != steps {
@@ -110,8 +106,6 @@ func (this *BrowserHistoryNodeVersion) Back(steps int) string {
 }
 
 
-//time: O(steps)
-//space:O(n)
 func (this *BrowserHistoryNodeVersion) Forward(steps int) string {
     i := 0
     for i != steps {
