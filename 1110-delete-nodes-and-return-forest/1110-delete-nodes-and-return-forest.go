@@ -7,6 +7,70 @@
  * }
  */
 func delNodes(root *TreeNode, to_delete []int) []*TreeNode {
+    if root == nil {
+        return []*TreeNode{}
+    }
+    delNodesMap := make(map[int]struct{}, len(to_delete))
+    for _, val := range to_delete {
+        delNodesMap[val] = struct{}{}
+    }
+    res := make([]*TreeNode, 0)
+    if _, delRootCond := delNodesMap[root.Val]; !delRootCond {
+        res = append(res, root)
+    } 
+    preorder(root, delNodesMap, func(node *TreeNode) {
+        res = append(res, node)
+    })
+    return res
+}
+
+func preorder(node *TreeNode, delNodesMap map[int]struct{}, appendResFn func(node *TreeNode) ) *TreeNode {
+    if node == nil {
+        return nil
+    }
+    nextLeftNode := node.Left
+    nextRightNode := node.Right
+    if _, delNodeCond := delNodesMap[node.Val]; delNodeCond {
+        node = nil
+        if nextLeftNode != nil {
+            if _, delNextLeftCond := delNodesMap[nextLeftNode.Val]; !delNextLeftCond {
+                appendResFn(nextLeftNode)
+            }
+        }
+        if nextRightNode != nil {
+            if _, delNextRightCond := delNodesMap[nextRightNode.Val]; !delNextRightCond {
+                appendResFn(nextRightNode)
+            }
+        }
+        preorder(nextLeftNode, delNodesMap, appendResFn)
+        preorder(nextRightNode, delNodesMap, appendResFn)
+        return nil
+    }
+    node.Left = preorder(nextLeftNode, delNodesMap, appendResFn)
+    node.Right = preorder(nextRightNode, delNodesMap, appendResFn)
+    return node
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+func delNodes(root *TreeNode, to_delete []int) []*TreeNode {
     delNodesMap := make(map[int]struct{},0)
     for _, val := range to_delete {
         delNodesMap[val] = struct{}{}
@@ -56,3 +120,4 @@ func preorder(node *TreeNode, delNodesMap map[int]struct{},
         }
     }
 }
+*/
