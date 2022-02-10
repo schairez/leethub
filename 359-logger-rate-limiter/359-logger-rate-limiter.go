@@ -1,3 +1,6 @@
+//time: O(1)
+//space: O(n)
+
 type Logger struct {
     KVStore map[string]int
 }
