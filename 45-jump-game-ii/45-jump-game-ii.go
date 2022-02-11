@@ -13,8 +13,7 @@ func jump(nums []int) int {
         return 0
     }
     lastIdx := len(nums) - 1
-    numSteps := 0
-    currNode := 0
+    currNode, numSteps := 0, 0
     visited := make([]bool, n)
     visited[0] = true
     //enqueue startNode @ idx=0
