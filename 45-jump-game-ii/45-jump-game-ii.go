@@ -7,6 +7,37 @@
 
 func min(a, b int) int { if a <= b { return a}; return b}
 
+
+func jump(nums []int) int {
+    n := len(nums)
+    if n == 1 {
+        return 0
+    }
+    distToNode := make([]int, n) //dp array
+    lastIdx := len(nums) - 1
+    visited := make([]bool, n)
+    nextIdxToJump := 0
+    visited[nextIdxToJump] = true
+    distToNode[nextIdxToJump] = 0
+    for idx, val := range nums {
+        nextIdxToJump = min(val + idx, lastIdx)
+        for nextIdxToJump != idx {
+            if !visited[nextIdxToJump] {
+                distToNode[nextIdxToJump] = distToNode[idx] + 1
+                visited[nextIdxToJump] = true
+            } 
+            if nextIdxToJump == lastIdx {
+                return distToNode[idx] + 1
+            }
+            nextIdxToJump--
+            //numJumpsFromIdx--
+        }
+    }
+    return distToNode[lastIdx]
+}
+
+
+/*
 func jump(nums []int) int {
     n := len(nums)
     if n == 1 {
@@ -40,3 +71,4 @@ func jump(nums []int) int {
     }
     return numSteps+1
 }
+*/
