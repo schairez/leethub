@@ -23,14 +23,13 @@ func jump(nums []int) int {
         nextIdxToJump = min(val + idx, lastIdx)
         for nextIdxToJump != idx {
             if !visited[nextIdxToJump] {
+                if nextIdxToJump == lastIdx {
+                    return distToNode[idx] + 1
+                }
                 distToNode[nextIdxToJump] = distToNode[idx] + 1
                 visited[nextIdxToJump] = true
             } 
-            if nextIdxToJump == lastIdx {
-                return distToNode[idx] + 1
-            }
             nextIdxToJump--
-            //numJumpsFromIdx--
         }
     }
     return distToNode[lastIdx]
