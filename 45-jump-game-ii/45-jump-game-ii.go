@@ -1,12 +1,13 @@
 // explore based on number of steps taken
 // shortest path approach is a marker for BFS
-//
-//
-//
-//
+
 
 func min(a, b int) int { if a <= b { return a}; return b}
 
+
+//BFS w/o queue approach
+//time: O(n) 
+//space: O(n)
 
 func jump(nums []int) int {
     n := len(nums)
@@ -37,6 +38,9 @@ func jump(nums []int) int {
 
 
 /*
+//BFS with queue approach
+//time: O(n) 
+//space: O(n)
 func jump(nums []int) int {
     n := len(nums)
     if n == 1 {
