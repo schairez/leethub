@@ -1,3 +1,81 @@
+//func(a=5,b=10) = 
+func min(a, b int) int {
+    if a < b {
+        return a
+    } 
+    return b
+}
+
+//condition: len(nums) >=1 ...
+func jump(nums []int) int {
+    n := len(nums)
+    if n == 1 {
+        return 0 
+    }
+    numSteps := make([]int, n)
+    visited := make([]bool, n)
+    lastIdx := n-1
+    queue := []int{0}
+    numSteps[0] = 0
+    visited[0] = true
+    var node int
+    for len(queue) != 0 {
+        node, queue = queue[0], queue[1:]
+        numJumps := nums[node]
+        nextIdx := min(numJumps+node, lastIdx)
+        for nextIdx > node {
+            if !visited[nextIdx] {
+                visited[nextIdx] = true
+                numSteps[nextIdx] = numSteps[node] + 1
+                if nextIdx == lastIdx {
+                    return numSteps[lastIdx]
+                }
+                queue = append(queue, nextIdx)
+            }
+            nextIdx--
+        }
+    } 
+    return numSteps[lastIdx]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
 // explore based on number of steps taken
 // shortest path approach is a marker for BFS
 
@@ -36,7 +114,8 @@ func jump(nums []int) int {
     return distToNode[lastIdx]
 }
 
-
+*/
+    
 /*
 //BFS with queue approach
 //time: O(n) 
