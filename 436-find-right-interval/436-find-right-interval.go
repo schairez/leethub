@@ -13,11 +13,12 @@ func findRightInterval(intervals [][]int) []int {
         return intervalData[i][0] < intervalData[j][0]
     })
     res := make([]int, n)
+    maxInt32 := 1 << 31 - 1
     for i :=0; i < n; i++ {
         idx := intervalData[i][2]
         endI := intervalData[i][1]
         val := -1
-        min := 1 << 31 - 1
+        min := maxInt32
         lo, hi := 0, n
         for lo < hi {
             mid := lo + (hi - lo) >> 1
@@ -29,7 +30,7 @@ func findRightInterval(intervals [][]int) []int {
                 lo = mid+1
             } 
         }
-        if min != 1 << 31 -1 {
+        if min != maxInt32 {
             val = intervalData[lo][2]
         }
         res[idx] = val
