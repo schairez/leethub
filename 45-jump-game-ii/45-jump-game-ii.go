@@ -1,14 +1,16 @@
+//time: O(n)
+//space: O(1)
+
 func max(a, b int) int {if a >= b { return a}; return b}
 
 func jump(nums []int) int {
-    var numSteps, maxJumpLoc, furthestIdx int
+    //furthestIdx in current jump
+    var numSteps, currJumpEnd, farthestIdx int
     for i := range nums[:len(nums)-1] {
-        if i <= maxJumpLoc {
-            maxJumpLoc = max(maxJumpLoc, i + nums[i])
-            if i == furthestIdx {
-                furthestIdx = maxJumpLoc
-                numSteps++
-            }
+        farthestIdx = max(farthestIdx, i + nums[i])
+        if i == currJumpEnd {
+            numSteps++
+            currJumpEnd = farthestIdx
         }
     }
     return numSteps
