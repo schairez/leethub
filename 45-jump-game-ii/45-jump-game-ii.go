@@ -11,10 +11,10 @@ func jump(nums []int) int {
         farthestIdx = max(farthestIdx, i + nums[i])
         if i == currJumpEnd {
             numSteps++
-            currJumpEnd = farthestIdx
-            if currJumpEnd >= dst {
+            if farthestIdx >= dst {
                 return numSteps
             }
+            currJumpEnd = farthestIdx
         }
     }
     return numSteps
