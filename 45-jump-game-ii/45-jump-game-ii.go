@@ -8,13 +8,13 @@ func jump(nums []int) int {
     //furthestIdx in current jump
     var numSteps, currJumpEnd, farthestIdx int
     for i := range nums[:len(nums)-1] {
-        if currJumpEnd >= dst {
-            return numSteps
-        }
         farthestIdx = max(farthestIdx, i + nums[i])
         if i == currJumpEnd {
             numSteps++
             currJumpEnd = farthestIdx
+            if currJumpEnd >= dst {
+                return numSteps
+            }
         }
     }
     return numSteps
