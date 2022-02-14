@@ -1,4 +1,9 @@
 
+//436. Find Right Interval
+
+//time: O(nlogn)
+//space: O(n)
+
 func findRightInterval(intervals [][]int) []int {
     n := len(intervals)
     if n == 1 {
