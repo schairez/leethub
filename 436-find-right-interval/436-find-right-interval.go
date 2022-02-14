@@ -1,10 +1,82 @@
+
+func findRightInterval(intervals [][]int) []int {
+    n := len(intervals)
+    if n == 1 {
+        return []int{-1}
+    }
+    intervalData := make([][3]int, 0, n)
+    for idx := range intervals {
+        start, end := intervals[idx][0], intervals[idx][1]
+        intervalData = append(intervalData, [3]int{start, end, idx})
+    } 
+    sort.Slice(intervalData, func(i, j int) bool {
+        return intervalData[i][0] < intervalData[j][0]
+    })
+    res := make([]int, n)
+    for i :=0; i < n; i++ {
+        idx := intervalData[i][2]
+        endI := intervalData[i][1]
+        val := -1
+        min := 1 << 31 - 1
+        lo, hi := 0, n
+        for lo < hi {
+            mid := lo + (hi - lo) >> 1
+            startJ := intervalData[mid][0]
+            if startJ >= endI && startJ < min {
+                hi = mid
+                min = startJ
+            } else {
+                lo = mid+1
+            } 
+        }
+        if min != 1 << 31 -1 {
+            val = intervalData[lo][2]
+        }
+        res[idx] = val
+    }
+    return res
+}
+
+/*
+
+[[3,4],[2,3],[1,2]]
+[[3,4,0], [2,3,1], [1,2,2]]
+ 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //time: O(n^2)
 //space: O(n)
-
 //condition: each start := intervals[i][0] is unique
 //startJ >= endI && startJ is minimized
-
-
+/* 
 func findRightInterval(intervals [][]int) []int {
     n := len(intervals)
     if n == 1 {
@@ -39,3 +111,4 @@ func findRightInterval(intervals [][]int) []int {
     }
     return res
 }
+*/
