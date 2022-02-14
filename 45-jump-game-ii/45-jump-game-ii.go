@@ -4,9 +4,13 @@
 func max(a, b int) int {if a >= b { return a}; return b}
 
 func jump(nums []int) int {
+    dst := len(nums) - 1
     //furthestIdx in current jump
     var numSteps, currJumpEnd, farthestIdx int
     for i := range nums[:len(nums)-1] {
+        if currJumpEnd >= dst {
+            return numSteps
+        }
         farthestIdx = max(farthestIdx, i + nums[i])
         if i == currJumpEnd {
             numSteps++
