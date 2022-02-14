@@ -24,31 +24,8 @@ func jump(nums []int) int {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 
-//func(a=5,b=10) = 
 func min(a, b int) int {
     if a < b {
         return a
