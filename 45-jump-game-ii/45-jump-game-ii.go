@@ -1,3 +1,51 @@
+func max(a, b int) int {if a >= b { return a}; return b}
+
+func jump(nums []int) int {
+    var numSteps, maxJumpLoc, furthestIdx int
+    for i := range nums[:len(nums)-1] {
+        if i <= maxJumpLoc {
+            maxJumpLoc = max(maxJumpLoc, i + nums[i])
+            if i == furthestIdx {
+                furthestIdx = maxJumpLoc
+                numSteps++
+            }
+        }
+    }
+    return numSteps
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 //func(a=5,b=10) = 
 func min(a, b int) int {
     if a < b {
@@ -39,7 +87,7 @@ func jump(nums []int) int {
 }
 
 
-
+*/
 
 
 
