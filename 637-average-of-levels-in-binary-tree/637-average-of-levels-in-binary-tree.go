@@ -6,9 +6,7 @@
  *     Right *TreeNode
  * }
  */
-func avg(sum float64, n int) float64 {
-    return sum / float64(n)
-}
+
 //time: O(numNodes)
 //space: O(numNodes At maxLvl)
 
@@ -29,7 +27,8 @@ func averageOfLevels(root *TreeNode) []float64 {
                 queue = append(queue, node.Right)
             }
         }
-        res = append(res, avg(sumNodesAtLvl, n))
+        avg := sumNodesAtLvl / float64(n)
+        res = append(res, avg)
     } 
     return res
 }
