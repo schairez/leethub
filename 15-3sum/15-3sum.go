@@ -16,7 +16,11 @@ func threeSum(nums []int) [][]int {
     }
     res := make([][]int, 0)
     sort.Ints(nums) //O(nlogn) time
-    for i := 0; i < n && nums[i] <= 0; i++ {
+    for i := 0; i < n; i++ {
+        //no more valid complements to the right of pos numbers
+        if nums[i] > 0 { 
+            break
+        }
         target := - nums[i]
         start, end := i + 1, n-1
         if i == 0 || nums[i] != nums[i-1] {
