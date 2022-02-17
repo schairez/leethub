@@ -7,6 +7,7 @@ s = "00110011" = min(cnt(0),cnt(1)) + min(cnt(1), cnt(0)) + min(cnt(0),cnt(1))
 
 */
 
+
 //time: O(n)
 //space: O(1)
 
@@ -41,7 +42,7 @@ func countBinarySubstrings(s string) int {
         if iter2 == n {
             break
         }
-        char2Cnt, iter2 = getCntAndIdx(iter1, s[iter2] == '0') 
+        char2Cnt, iter2 = getCntAndIdx(iter2, s[iter2] == '0') 
         
         res += min(char1Cnt, char2Cnt)
     }
