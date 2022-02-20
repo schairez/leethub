@@ -51,7 +51,6 @@ func (h minHeap) Swap(i, j int) {
 
 func (h *minHeap) Push(v interface{}){
     (*h) = append((*h), v.(int))
-    //*h = append(*h, v.(int))
 } 
 func (h *minHeap) Pop() (interface{}) {
     n := len(*h)
