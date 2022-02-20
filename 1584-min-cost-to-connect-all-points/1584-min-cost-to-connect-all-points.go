@@ -66,10 +66,12 @@ func minCostConnectPoints(points [][]int) int {
     nodes[0].cost = 0
     heap.Fix(&pq, nodes[0].index)
     
+    numVisited := 0
     minCost := 0
-    for pq.Len() != 0 {
+    for numVisited < n && pq.Len() != 0 {
         v1 := heap.Pop(&pq).(*PrimNode)
         minCost += v1.cost
+        numVisited++
         v1.visited = true
         srcX, srcY := points[v1.vertexId][0], points[v1.vertexId][1]
         for nei := 0; nei < n; nei++ {
