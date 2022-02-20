@@ -1,4 +1,8 @@
 
+// k corrections for each stale max/min heap value pop operation we do log(n) operations
+// time: O(klogn)
+//space: O(n)
+
 type StockPrice struct {
     minHeap *RecordHeap
     maxHeap *RecordHeap
