@@ -10,6 +10,7 @@
 // if startTimej > endTimei, let's pop from our heap 
 // intuitively, this new meeting schedule can be added to the prev occupied room
 // the len(minHeap) will tell us the number of roomsHeap we require 
+
 func minMeetingRooms(intervals [][]int) int {
     
     if len(intervals) < 2 {
@@ -49,12 +50,12 @@ func (h minHeap) Swap(i, j int) {
 }
 
 func (h *minHeap) Push(v interface{}){
-    *h = append(*h, v.(int))
+    (*h) = append((*h), v.(int))
+    //*h = append(*h, v.(int))
 } 
 func (h *minHeap) Pop() (interface{}) {
-    old := *h
     n := len(*h)
-    x := old[n-1]
-    *h = old[:n-1]
-    return x
+    node := (*h)[n-1]
+    (*h) = (*h)[:n-1]
+    return node
 }
