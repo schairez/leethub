@@ -3,14 +3,16 @@
 func minKnightMoves(x int, y int) int {
     //visited := make(map[int]map[int]bool, 300)
     //visited := make(map[int]map[int]bool)
-    visited := make(map[[2]int]struct{})
+    //visited := make(map[[2]int]struct{})
+    var visited [601][601]bool
     dX := [8]int{2, 2, -2, -2, 1, -1, 1, -1}
     dY := [8]int{1, -1, 1, -1, 2, 2, -2, -2}
     numMoves := 0
     // 8 possible next moves
     //visited[0] = make(map[int]bool)
-    visited[[2]int{0,0}] = struct{}{}
+    //visited[[2]int{0,0}] = struct{}{}
     //visited[0][0] = true
+    visited[0+300][0+300] = true
     var queue [][2]int //0 -> x, 1 -> y
     queue = append(queue, [2]int{0,0})
     var node [2]int 
@@ -24,15 +26,16 @@ func minKnightMoves(x int, y int) int {
             }
             for idx := 0; idx < 8; idx++ {
                 nextX, nextY := node[0] + dX[idx], node[1] + dY[idx]
-                key := [2]int{nextX, nextY}
                 //constraint: -300 <= x, y <= 300
-                if nextX < -300 || nextY > 300 {
+                if !(nextX <= 300 && nextX >= -300 &&
+                     nextY  <= 300 && nextY >= -300) {
                     continue
                 }
-                if _, exists := visited[key]; exists {
+                if exists := visited[nextX+300][nextY+300]; exists {
                     continue
                 }
-                visited[key] = struct{}{}
+                visited[nextX+300][nextY+300] = true
+                //visited[key] = struct{}{}
                 queue = append(queue, [2]int{nextX, nextY})
             }
         }
