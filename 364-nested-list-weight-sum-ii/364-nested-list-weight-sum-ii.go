@@ -25,11 +25,15 @@
  */
 
 
+// 364. Nested List Weight Sum II
+// bfs approach
+// time: O(n)
+// space: O(n)
+
 type item struct {
     val int
     depth int
 }
-
 
 func max(a, b int) int { if a >= b { return a}; return b }
 
