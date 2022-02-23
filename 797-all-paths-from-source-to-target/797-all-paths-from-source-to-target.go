@@ -1,4 +1,9 @@
-//src = 0; sink = n-1
+
+
+// BFS approach
+// time: O(2^n); and O(n) for copy operation (likely?) ≈ O(n * 2^n)
+// space: O(2^n); longest path can store 2^n nodes and O(n) for copy operation ≈ O(n* 2^n) 
+// src = 0; sink = n-1
 func allPathsSourceTarget(graph [][]int) [][]int {
     n := len(graph)
     src, sink := 0, n-1
