@@ -24,17 +24,50 @@
  * func (n NestedInteger) GetList() []*NestedInteger {}
  */
 
-// 364. Nested List Weight Sum II
-// dfs approach
-// time: O(n)
-// space: O(n)
-
-func max(a, b int) int { if a >= b { return a}; return b }
 
 type item struct {
     val int
     depth int
 }
+
+
+func max(a, b int) int { if a >= b { return a}; return b }
+
+func depthSumInverse(nestedList []*NestedInteger) int {
+    var items []item
+    var queue [][]*NestedInteger
+    queue = append(queue, nestedList)
+    depth := 1
+    var nodeList []*NestedInteger
+    for len(queue) != 0 {
+        for currLen := len(queue); currLen != 0; currLen-- {
+            nodeList, queue = queue[0], queue[1:]
+            for _, node := range nodeList {
+                if !node.IsInteger() {
+                    queue = append(queue, node.GetList())
+                } else {
+                    items = append(items, item{node.GetInteger(), depth})
+                }
+            }
+        }
+        if len(queue) != 0 {
+            depth++
+        }
+    }
+    maxDepth := depth
+    res := 0
+    for _, item := range items {
+        weight := maxDepth - item.depth + 1
+        res += weight * item.val
+    }
+    return res
+}
+
+/*
+// 364. Nested List Weight Sum II
+// dfs approach
+// time: O(n)
+// space: O(n)
 
 func dfs(nestedList []*NestedInteger, depthSoFar int, items *[]item) int {
     maxDepth := depthSoFar
@@ -59,3 +92,4 @@ func depthSumInverse(nestedList []*NestedInteger) int {
     }
     return res
 }
+*/
