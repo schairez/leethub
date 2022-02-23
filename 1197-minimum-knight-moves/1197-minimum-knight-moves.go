@@ -1,7 +1,8 @@
 
 
 func minKnightMoves(x int, y int) int {
-    visited := make(map[int]map[int]bool, 300)
+    //visited := make(map[int]map[int]bool, 300)
+    visited := make(map[int]map[int]bool)
     dX := [8]int{2, 2, -2, -2, 1, -1, 1, -1}
     dY := [8]int{1, -1, 1, -1, 2, 2, -2, -2}
     numMoves := 0
