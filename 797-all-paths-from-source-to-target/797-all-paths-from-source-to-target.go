@@ -13,9 +13,9 @@ func allPathsSourceTarget(graph [][]int) [][]int {
             res = append(res, path)
         }
         for _, nei := range graph[dst] {
-            tmp := make([]int, len(path))
+            tmp := make([]int, len(path)+1)
             copy(tmp, path)
-            tmp = append(tmp, nei)
+            tmp[len(tmp)-1] = nei
             queue = append(queue, tmp)
         }
     }
