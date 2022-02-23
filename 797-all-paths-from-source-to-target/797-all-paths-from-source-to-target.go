@@ -11,15 +11,12 @@ func allPathsSourceTarget(graph [][]int) [][]int {
         dst := path[len(path)-1]
         if dst == sink {
             res = append(res, path)
-        } else {
-            for _, nei := range graph[dst] {
-                tmp := make([]int, len(path))
-                copy(tmp, path)
-                tmp = append(tmp, nei)
-                //path = append(path, nei)
-                queue = append(queue, tmp)
-                //path = path[:len(path)-1]
-            }
+        }
+        for _, nei := range graph[dst] {
+            tmp := make([]int, len(path))
+            copy(tmp, path)
+            tmp = append(tmp, nei)
+            queue = append(queue, tmp)
         }
     }
     return res
