@@ -1,17 +1,11 @@
 
 
 func minKnightMoves(x int, y int) int {
-    //visited := make(map[int]map[int]bool, 300)
-    //visited := make(map[int]map[int]bool)
-    //visited := make(map[[2]int]struct{})
     var visited [601][601]bool
+    // 8 possible next moves
     dX := [8]int{2, 2, -2, -2, 1, -1, 1, -1}
     dY := [8]int{1, -1, 1, -1, 2, 2, -2, -2}
     numMoves := 0
-    // 8 possible next moves
-    //visited[0] = make(map[int]bool)
-    //visited[[2]int{0,0}] = struct{}{}
-    //visited[0][0] = true
     visited[0+300][0+300] = true
     var queue [][2]int //0 -> x, 1 -> y
     queue = append(queue, [2]int{0,0})
