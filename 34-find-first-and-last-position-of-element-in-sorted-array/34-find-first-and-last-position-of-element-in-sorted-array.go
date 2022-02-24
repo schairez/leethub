@@ -19,11 +19,13 @@ func searchRange(nums []int, target int) []int {
                 end = mid
             } else {
                 // if findLeftmost and idx == target :
-                // we want to continue our search  
+                // we want to continue our search with idx as closed right boundary  
                 if findLeftMost {
                     end = mid
                     continue
                 }
+                // for finding rightmost
+                // we close our left boundary
                 start = mid
             }
         }
