@@ -19,7 +19,7 @@ func searchRange(nums []int, target int) []int {
                 end = mid
             } else {
                 // if findLeftmost and idx == target :
-                // we want to continue our search 
+                // we want to continue our search  
                 if findLeftMost {
                     end = mid
                     continue
@@ -27,18 +27,14 @@ func searchRange(nums []int, target int) []int {
                 start = mid
             }
         }
-        if findLeftMost {
-            if nums[start] == target {
-                return start
-            } else if nums[end] == target {
-                return end
-            }
-        } else {
-            if nums[end] == target {
-                return end
-            } else if nums[start] == target {
-                return start
-            }
+        if !findLeftMost {
+            start, end = end, start
+        }
+        //postprocessing
+        if nums[start] == target {
+            return start
+        } else if nums[end] == target {
+            return end
         }
         return -1
     }
