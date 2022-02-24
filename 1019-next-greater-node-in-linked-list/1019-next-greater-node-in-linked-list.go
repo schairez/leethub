@@ -27,11 +27,10 @@ func nextLargerNodes(head *ListNode) []int {
         monoStack = append(monoStack, pair{currVal, idxSoFar})
         head = head.Next
     }
-    res = res[:idxSoFar+1]
     for stackSize := len(monoStack); stackSize != 0; stackSize = len(monoStack) {
         top, monoStack = monoStack[stackSize-1], monoStack[:stackSize-1]
         res[top.idx] = 0
     }
-    return res
+    return res[:idxSoFar+1]
 }
 
