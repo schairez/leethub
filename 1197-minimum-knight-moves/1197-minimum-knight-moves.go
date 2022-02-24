@@ -1,4 +1,16 @@
 
+// 1197. Minimum Knight Moves
+
+
+// bfs approach
+// time: O((max(|x|, |y|))^2) since cells we cover has an upper bound 
+// roughly the area of the rectangle inscribed in this circle 
+
+// O(1) space for visited set since size independent of input
+// but queue size grows depending on how far the (x, y) input is from the origin 
+// space: O((max(|x|, |y|))^2) since cells we cover has an upper bound 
+// roughly the area of the rectangle inscribed in this circle 
+
 // constraint: -300 <= x, y <= 300
 // 0 <= |x| + |y| <= 300
 // var visited [601][601]bool  
