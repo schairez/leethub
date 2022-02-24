@@ -1,39 +1,43 @@
 
+// constraint: -300 <= x, y <= 300
+// 0 <= |x| + |y| <= 300
+// var visited [601][601]bool  
+// (i, j) = (0,0) is located @ visited[i+300][i+300] 
+// e.g. (-2, -1) is located @ visited[298][299] 
+// e.g. (300, 300) is located @ visited[600][600]
 
 func minKnightMoves(x int, y int) int {
-    var visited [601][601]bool
-    // 8 possible next moves
-    dX := [8]int{2, 2, -2, -2, 1, -1, 1, -1}
-    dY := [8]int{1, -1, 1, -1, 2, 2, -2, -2}
-    numMoves := 0
-    visited[0+300][0+300] = true
-    var queue [][2]int //0 -> x, 1 -> y
+    dX := [8]int{2, 2, -2, -2, 1, 1, -1, -1}
+    dY := [8]int{1, -1, 1, -1, 2, -2, 2, -2}
+    var (
+        dist int
+        r, c int
+        visited [601][601]bool
+        node [2]int
+        queue [][2]int
+    )
+    visited[0][0] = true
     queue = append(queue, [2]int{0,0})
-    var node [2]int 
-    var nextX, nextY int
-    for len(queue) != 0  {
+    for len(queue) != 0 {
         for currLen := len(queue); currLen != 0; currLen-- {
             node, queue = queue[0], queue[1:]
-            nextX, nextY = node[0], node[1]
-            if nextX == x && nextY == y {
-                return numMoves
+            r, c = node[0], node[1]
+            if r == x && c == y {
+                return dist
             }
             for idx := 0; idx < 8; idx++ {
-                nextX, nextY := node[0] + dX[idx], node[1] + dY[idx]
-                //constraint: -300 <= x, y <= 300
-                if !(nextX <= 300 && nextX >= -300 &&
-                     nextY  <= 300 && nextY >= -300) {
+                nextR, nextC := dX[idx] + r, dY[idx] + c
+                if nextR < -300 || nextR > 300 || nextC < -300 || nextC > 300 {
                     continue
                 }
-                if exists := visited[nextX+300][nextY+300]; exists {
+                if visited[nextR+300][nextC+300] {
                     continue
                 }
-                visited[nextX+300][nextY+300] = true
-                //visited[key] = struct{}{}
-                queue = append(queue, [2]int{nextX, nextY})
+                queue = append(queue, [2]int{nextR, nextC})
+                visited[nextR+300][nextC+300] = true
             }
         }
-        numMoves++
+        dist++
     }
     return -1
 }
