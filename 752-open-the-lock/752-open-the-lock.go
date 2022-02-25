@@ -1,3 +1,21 @@
+//752. Open the Lock
+// each deadend string holds D number of values of size 4 bytes each
+// to build our deadendMap time: let D = |deadends| O(4*D) space: O(4*D); since each key is a size 4 byte array
+// after we pollNode:
+// for each pollNode we enumerate through 8 further potential next level neighbor nodes
+//   for each of the 4 wheel slot options O(4)
+//     we get the next and prev slot O(2) operation 
+//       and we twice modify and create space for a key of [4]byte arr
+//         we then, compare this with our vis and deadend sets; constant op and add to vis
+// note N=4 the number of wheels in our lock; A =10; the range of vals for each wheel 
+// time: O(4*2*2*constant) ≈ O(4*4) ≈ O(N^2); space: O(4N)
+// the time complexity varies on how deep we traverse down our n-ary tree, but
+// worst case, we enumerate through all 10^4 possible permutations :/  
+// *************
+// time: O(A^N * N^2 + D) 
+// space: O(A^N + D)
+// *************
+
 
 func openLock(deadends []string, target string) int {
     slots := newWheelSlots()
@@ -68,7 +86,6 @@ func equalsTargetNode(target [4]byte) func(combo [4]byte) bool {
     }
 }
 
-
 type wheelSlots struct {
     nodes [10]byte
 }
@@ -86,11 +103,3 @@ func (sl wheelSlots) nextAndPrev(currByte byte) [2]byte {
     }
     return [2]byte{next, prev}
 }
-
-/*
-
-func (sl wheelSlots) isValid(idx int) bool {
-    return idx >= 0 && idx < 10
-}
-*/
-
