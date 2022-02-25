@@ -38,11 +38,6 @@ func openLock(deadends []string, target string) int {
             } 
             for i := 0; i < 4; i++ {
                 nextPrev  = slots.nextAndPrev(pollNode[i])
-                /*
-                if err != nil { //not idiomatic but basing off fn type for LC
-                    return -1
-                }
-                */
                 for j := 0; j < 2; j++ {
                     neiNode := pollNode
                     neiNode[i] = nextPrev[j]
@@ -81,20 +76,8 @@ func newWheelSlots() wheelSlots {
     nodes := [10]byte{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
     return wheelSlots{nodes}
 }
-/*
-func (sl wheelSlots) isValid(idx int) bool {
-    return idx >= 0 && idx < 10
-}
-*/
-
-// todo: input byte or int idx?
 func (sl wheelSlots) nextAndPrev(currByte byte) [2]byte {
     idx := currByte - '0'
-    /*
-    if !sl.isValid(idx) {
-        return [2]byte{}, fmt.Errof("byte is not a numeric ascii [%b]\n", currByte) 
-    }
-    */
     var next, prev byte
     next = sl.nodes[(idx+1) % 10]
     prev = sl.nodes[(idx-1) % 10]
@@ -104,4 +87,10 @@ func (sl wheelSlots) nextAndPrev(currByte byte) [2]byte {
     return [2]byte{next, prev}
 }
 
+/*
+
+func (sl wheelSlots) isValid(idx int) bool {
+    return idx >= 0 && idx < 10
+}
+*/
 
