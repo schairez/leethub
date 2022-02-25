@@ -46,7 +46,7 @@ func openLock(deadends []string, target string) int {
         nextPrev [2]byte  //turning wheel slot forward and backward by 1 val
     )
     queue = append(queue, srcNode)
-    visited := make(map[[4]byte]struct{})
+    visited := make(map[[4]byte]struct{}, 10000)
     visited[srcNode] = struct{}{}
     for len(queue) != 0 {
         for currLen := len(queue); currLen != 0; currLen-- {
