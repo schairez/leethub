@@ -1,4 +1,14 @@
 
+// 279. Perfect Squares
+
+
+// bfs approach
+// queue len determines the space complexity here
+// maxWidth occurs at final lvl thus, we allocate up to O(n)
+// where n is the number of nodes in our n-ary tree
+// time: O(n) where n is numNodes
+
+
 func numSquares(n int) int {
     perfectSquares := make([]int, 0, n >> 1)
     num := 1
