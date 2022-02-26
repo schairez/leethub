@@ -9,6 +9,8 @@
  */
 
 //BFS approach
+// time: O(n) n = numEmployees
+// space: O(n) for visited set
 func getImportance(employees []*Employee, id int) int {
     employeeMap := make(map[int]*Employee, len(employees))
     for _, emp := range employees {
@@ -21,7 +23,6 @@ func getImportance(employees []*Employee, id int) int {
         node    *Employee
         total  int
     )
-    
     queue = append(queue, employeeMap[id])
     for len(queue) != 0 {
         node, queue = queue[0], queue[1:]
@@ -36,16 +37,6 @@ func getImportance(employees []*Employee, id int) int {
     }
     return total
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
