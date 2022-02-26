@@ -1,9 +1,7 @@
-func max(a, b int) int {
-    if a >= b {
-        return a
-    }
-    return b
-}
+
+// time: O(m*n)
+// space: O(m*n)
+
 func maxAreaOfIsland(grid [][]int) int {
     numR, numC := len(grid), len(grid[0])
     dirR := [4]int{-1, 0, 1, 0} 
@@ -51,4 +49,11 @@ func bfs(grid [][]int, visited map[[2]int]struct{}, node [2]int, dirR, dirC [4]i
         }
     }
     return area
+}
+
+func max(a, b int) int {
+    if a >= b {
+        return a
+    }
+    return b
 }
