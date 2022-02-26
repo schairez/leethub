@@ -9,6 +9,7 @@
  * }
  */
 
+// BFS approach
 func isCousins(root *TreeNode, x int, y int) bool {
     type nodeWParent struct {
         *TreeNode
@@ -27,10 +28,7 @@ func isCousins(root *TreeNode, x int, y int) bool {
                 parent = append(parent, node.parent)
             }
             if len(parent) == 2 {
-                if parent[0] == parent[1] {
-                    return false
-                }
-                return true
+                return parent[0] != parent[1]
             }
             if node.Left != nil {
                 queue = append(queue, nodeWParent{node.Left, node.Val})
