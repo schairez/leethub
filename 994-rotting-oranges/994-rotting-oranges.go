@@ -1,3 +1,6 @@
+// time: O(m * n)
+// space: O(m * n)
+
 const (
     empty = iota
     fresh
