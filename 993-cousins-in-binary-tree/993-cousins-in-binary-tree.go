@@ -10,6 +10,8 @@
  */
 
 // BFS approach
+// time: O(n)
+// space: O(n)
 func isCousins(root *TreeNode, x int, y int) bool {
     type nodeWParent struct {
         *TreeNode
