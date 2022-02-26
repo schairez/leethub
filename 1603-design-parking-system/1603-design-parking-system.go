@@ -1,3 +1,7 @@
+
+// time: O(1)
+// space: O(3)
+
 type ParkingSystem struct {
     currSlots [3]int
     maxSlots [3]int
