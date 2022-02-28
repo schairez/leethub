@@ -22,24 +22,13 @@ func hitBricks(grid [][]int, hits [][]int) []int {
         ufParent[id] = id
     } 
     findRoot := func(v1 int) int {
-        for {
-            if v1 == ufParent[v1] {
-                break
-            }
+        for v1 != ufParent[v1] {
             ufParent[v1] = ufParent[ufParent[v1]]
-            v1 = ufParent[ufParent[v1]]
+            v1 = ufParent[v1]
         }
         return v1
     }
     union := func(v1, v2 int) {
-        /*
-        v1, v2 = findRoot(v1), findRoot(v2)
-        if v1 != v2 {
-            ufSize[v2] += ufSize[v1]
-            ufParent[v1] = v2
-        }
-        */
-        
         v1Root, v2Root := findRoot(v1), findRoot(v2)
         if v1Root == v2Root {
             return
