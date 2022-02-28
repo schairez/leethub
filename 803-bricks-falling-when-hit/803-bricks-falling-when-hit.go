@@ -1,3 +1,8 @@
+// space: O(numR*numC)
+// time: O(numR*numC*numHits* a(n))
+//by inverseAckerman find ops are O(a(n)) where a(n) < 5
+
+
 const (
     emptySpace = iota
     brick
@@ -59,7 +64,6 @@ func hitBricks(grid [][]int, hits [][]int) []int {
             }
             if x == 0 {
                 union(getNodeID(x,y), rootID)
-                //union(rootID, getNodeID(x,y))
             }
             // from above
             if x > 0 && gridCopy[x-1][y] == brick {
@@ -80,7 +84,6 @@ func hitBricks(grid [][]int, hits [][]int) []int {
         }
         prevSize := ufSize[findRoot(rootID)] 
         if x == 0 {
-            //union(rootID, getNodeID(x, y))
             union(getNodeID(x, y), rootID)
         }
         
@@ -101,12 +104,3 @@ func hitBricks(grid [][]int, hits [][]int) []int {
     return res
     
 }
-
-
-
-
-
-
-
-
-
