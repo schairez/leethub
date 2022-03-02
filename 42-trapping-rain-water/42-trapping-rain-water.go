@@ -1,6 +1,31 @@
+func trap(height []int) int {
+    var res int
+    n := len(height)
+    left, right := 0, n-1
+    var maxLeft, maxRight int
+    for left < right {
+        if height[left] < height[right] {
+            if height[left] >= maxLeft {
+                maxLeft = height[left] 
+            } else {
+                res += maxLeft - height[left]
+            }
+            left++
+        } else {
+            if height[right] >= maxRight {
+                maxRight = height[right]
+            } else {
+                res += maxRight - height[right]
+            }
+            right--
+        }
+    }
+    return res
+}
 
 func min(a, b int) int { if a <= b { return a }; return b}
 
+/*
 func trap(height []int) int {
     res := 0
     var stack []int
@@ -21,3 +46,4 @@ func trap(height []int) int {
     }
     return res
 }
+*/
