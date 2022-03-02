@@ -1,3 +1,5 @@
+// time: O(n)
+// space: O(1)
 func trap(height []int) int {
     var res int
     n := len(height)
