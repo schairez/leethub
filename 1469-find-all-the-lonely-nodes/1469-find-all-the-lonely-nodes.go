@@ -6,6 +6,11 @@
  *     Right *TreeNode
  * }
  */
+
+//BFS approach
+//time: O(n)
+// space: O(n)
+
 func getLonelyNodes(root *TreeNode) []int {
     var (
         node *TreeNode
