@@ -1,4 +1,11 @@
 
+// 407. Trapping Rain Water II
+
+// minHeap as pq approach
+// O(m*n) space for visited map and O(m*n) space for minHeap nodes
+// time: O(m*n)*log(m*n)
+//
+
 func min(a, b int) int { if a <= b { return a}; return b}
 func max(a, b int) int { if a >= b { return a}; return b}
 
