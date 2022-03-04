@@ -6,6 +6,10 @@
  *     Right *TreeNode
  * }
  */
+
+// time: O(n)
+// space: O(h) ≈ O(n)
+
 func buildTree(inorder []int, postorder []int) *TreeNode {
     n := len(inorder)
     currIdx := n-1
