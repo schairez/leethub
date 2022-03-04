@@ -1,3 +1,8 @@
+
+// 605. Can Place Flowers
+// time: O(n)
+// space: O(1)
+
 const (
     empty = iota
     planted
