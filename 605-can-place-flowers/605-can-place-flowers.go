@@ -12,11 +12,6 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
     if n == 0 {
         return true
     }
-    /*
-    if n == 0 && len(flowerbed) > 0 {
-        return false
-    }
-    */
     numLeft := n
     lastPlantedLoc := -1
     for idx := 0; idx < len(flowerbed); idx++ {
