@@ -6,6 +6,10 @@
  *     Right *TreeNode
  * }
  */
+
+// time: O(n)
+// space: O(h) ≈ O(n)
+
 func buildTree(preorder []int, inorder []int) *TreeNode {
     n := len(preorder)
     locMap := make(map[int]int, n)
@@ -16,7 +20,7 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
         currIdx int
         dfs     func(int, int) *TreeNode
     )
-    
+    //postorder dfs
     dfs = func(left, right int) *TreeNode {
         if left > right {
             return nil
@@ -29,6 +33,7 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
         root.Right = dfs(locMap[val]+1, right)
         return root
     }
+    
     return dfs(0, n-1)
 }
 
