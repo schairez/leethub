@@ -1,20 +1,26 @@
+//
+//
+
 func largestRectangleArea(heights []int) int {
-    // we append a 0 in the case that our heights input
-    // is mono increasing, we'd never pop
-    maxArea := 0
+    var maxArea int
+    var stack []int 
+    // in case we have mono increasing bars we'd end up
+    // with our stack never popping
     heights = append(heights, 0)
-    n := len(heights)
-    stack := make([]int, 0, len(heights))
-    for i := 0; i < n; i++ {
-        for len(stack) != 0 && 
-        heights[i] <= heights[stack[len(stack)-1]] {
+    for i := range heights {
+        for {
+            if len(stack) == 0 || 
+            heights[i] >= heights[stack[len(stack)-1]] {
+                break
+            }
             h := heights[stack[len(stack)-1]]
             stack = stack[:len(stack)-1]
             w := i
-            if len(stack) != 0 {
-                w = i - stack[len(stack)-1] - 1
+            if len(stack) > 0 {
+                w = i - stack[len(stack)-1] - 1 
             }
-            if localArea := h * w; localArea > maxArea {
+            localArea := h * w
+            if localArea > maxArea {
                 maxArea = localArea
             }
         }
