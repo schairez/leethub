@@ -41,7 +41,6 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
                 return numWords
             }
             cands := getCandidates(node, wordSet)
-            fmt.Println(cands)
             for _, cand := range cands {
                 queue = append(queue, cand)
                 delete(wordSet, string(cand))
