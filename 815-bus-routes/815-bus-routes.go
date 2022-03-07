@@ -1,46 +1,45 @@
+// stop to route mapping
 
 func numBusesToDestination(routes [][]int, source int, target int) int {
     graph := buildGraph(routes)
-    numRoutes := 0
+    queue := []int{source}
     visitedStops := make(map[int]struct{})
     visitedRoutes := make(map[int]struct{})
-    queue := []int{source}
+    var numBuses int
     var busStop int
     for len(queue) != 0 {
         for currLen := len(queue); currLen != 0; currLen-- {
             busStop, queue = queue[0], queue[1:]
             if busStop == target {
-                return numRoutes
+                return numBuses
             }
-            //routeIDs := graph[busStop]
-            for routeID := range graph[busStop] {
-                if _, visitedRoute := visitedRoutes[routeID]; !visitedRoute {
-                    for _, busStop := range routes[routeID] {
-                        if _, exists := visitedStops[busStop]; !exists {
-                            queue = append(queue, busStop)
-                            visitedStops[busStop] = struct{}{}
-                        }
-                    }
+            for routeId := range graph[busStop] {
+                if _, visitedRoute := visitedRoutes[routeId]; visitedRoute {
+                    continue
                 }
-                visitedRoutes[routeID] = struct{}{}
-            }  
+                for _, nextBusStop := range routes[routeId] {
+                    if _, visitedBusStop := visitedStops[nextBusStop]; visitedBusStop {
+                        continue
+                    }
+                    queue = append(queue, nextBusStop)
+                    visitedStops[nextBusStop] = struct{}{}
+                }
+                visitedRoutes[routeId] = struct{}{}
+            } 
         }
-        numRoutes++
+        numBuses++
     }
-    
     return -1
 }
 
-
 func buildGraph(routes [][]int) map[int]map[int]struct{} {
     graph := make(map[int]map[int]struct{})
-    for routeID, busStops := range routes {
-        for _, busStop := range busStops {
-            _, exists := graph[busStop]
-            if !exists {
-                graph[busStop] = make(map[int]struct{})
+    for routeId, busStops := range routes {
+        for _, stop := range busStops {
+            if _, exists := graph[stop]; !exists {
+                graph[stop] = make(map[int]struct{})
             }
-            graph[busStop][routeID] = struct{}{}
+            graph[stop][routeId] = struct{}{} 
         }
     }
     return graph
