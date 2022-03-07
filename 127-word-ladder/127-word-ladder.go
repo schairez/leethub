@@ -1,26 +1,4 @@
 
-// get next 1 degree away candidates
-func getCandidates(word []byte, wordSet map[string]struct{}) [][]byte {
-    n := len(word)
-    var cands [][]byte
-    for i := 0; i < 26; i++ {
-        for j := 0; j < len(word); j++ {
-            origChar := word[j]
-            nextChar := byte(int('a')+i)
-            if origChar != nextChar {
-                word[j] = nextChar
-                candWord := string(word)
-                if _, exists := wordSet[candWord]; exists {
-                    tmp := make([]byte, n)
-                    copy(tmp, word)
-                    cands = append(cands, tmp)
-                }
-            }
-            word[j] = origChar
-        }
-    }
-    return cands
-}
 
 func ladderLength(beginWord string, endWord string, wordList []string) int {
     wordSet := make(map[string]struct{}, len(wordList))
@@ -50,4 +28,27 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
     }
     
     return 0 
+}
+
+// get next 1 degree away candidates
+func getCandidates(word []byte, wordSet map[string]struct{}) [][]byte {
+    n := len(word)
+    var cands [][]byte
+    for i := 0; i < 26; i++ {
+        for j := 0; j < len(word); j++ {
+            origChar := word[j]
+            nextChar := byte(int('a')+i)
+            if origChar != nextChar {
+                word[j] = nextChar
+                candWord := string(word)
+                if _, exists := wordSet[candWord]; exists {
+                    tmp := make([]byte, n)
+                    copy(tmp, word)
+                    cands = append(cands, tmp)
+                }
+            }
+            word[j] = origChar
+        }
+    }
+    return cands
 }
