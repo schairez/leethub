@@ -1,4 +1,19 @@
-// stop to route mapping
+// time: O(m*n)
+// space: O(m*n)
+
+func buildGraph(routes [][]int) map[int]map[int]struct{} {
+    // stop to route mapping
+    graph := make(map[int]map[int]struct{})
+    for routeId, busStops := range routes {
+        for _, stop := range busStops {
+            if _, exists := graph[stop]; !exists {
+                graph[stop] = make(map[int]struct{})
+            }
+            graph[stop][routeId] = struct{}{} 
+        }
+    }
+    return graph
+}
 
 func numBusesToDestination(routes [][]int, source int, target int) int {
     graph := buildGraph(routes)
@@ -30,17 +45,4 @@ func numBusesToDestination(routes [][]int, source int, target int) int {
         numBuses++
     }
     return -1
-}
-
-func buildGraph(routes [][]int) map[int]map[int]struct{} {
-    graph := make(map[int]map[int]struct{})
-    for routeId, busStops := range routes {
-        for _, stop := range busStops {
-            if _, exists := graph[stop]; !exists {
-                graph[stop] = make(map[int]struct{})
-            }
-            graph[stop][routeId] = struct{}{} 
-        }
-    }
-    return graph
 }
