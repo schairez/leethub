@@ -1,3 +1,12 @@
+// 127. Word Ladder
+// BFS+hashmap approach
+// N = numWords; W = largestWordLen in wordList
+// time: 
+// O(N*W) to build wordSet
+// O(W^2) to iterate and build a word transformations out of 26 dict chars
+// and worst case we do this for every word in our wordList
+// thus, time: O(W^2*N) + O(N*W) ≈ O(W^2*N)
+// space: O(N*W)
 
 
 func ladderLength(beginWord string, endWord string, wordList []string) int {
