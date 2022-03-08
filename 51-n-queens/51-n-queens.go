@@ -1,4 +1,39 @@
 
+func solveNQueens(n int) [][]string {
+    if n == 1 {
+        return [][]string{{"Q"}}
+    }
+    if n == 2 || n == 3 {
+        return [][]string{}
+    }
+    var res [][]string
+    mat := genMatrix(n)
+    dfs(mat, &res, 0, n)
+    
+    return res
+}
+
+func dfs(matrix [][]byte, res *[][]string, x int, queensLeft int) {
+    if queensLeft == 0 {
+        n := len(matrix)
+        tmp := make([]string, n)
+        for x := range matrix {
+            tmp[x] = string(matrix[x])
+        }
+        *res = append(*res, tmp)
+        return
+    }
+    for y := 0; y < len(matrix); y++ {
+        if !isValid(matrix, x, y) {
+            continue
+        }
+        matrix[x][y] = 'Q'
+        dfs(matrix, res, x+1, queensLeft-1)
+        matrix[x][y] = '.'
+    }
+}
+
+
 
 func genMatrix(n int) [][]byte {
     rowVals := make([]byte, n)
@@ -7,7 +42,7 @@ func genMatrix(n int) [][]byte {
     }
     matrix := make([][]byte, n)
     for i := 0; i < n; i ++ {
-        //matrix[i] = rowVal
+        //matrix[i] = rowVals
         matrix[i] = make([]byte, n)
         copy(matrix[i], rowVals)
     }
@@ -16,13 +51,13 @@ func genMatrix(n int) [][]byte {
 
 func isValid(matrix [][]byte, queenLocX, queenLocY int) bool {
     n := len(matrix)
-    // check row wise
+    // check col wise
     for y := 0; y < n; y++ {
         if matrix[queenLocX][y] == 'Q' {
             return false
         }
     }
-    // check col wise
+    // check row wise
     for x := 0; x < n; x++ {
         if matrix[x][queenLocY] == 'Q' {
             return false
@@ -33,6 +68,7 @@ func isValid(matrix [][]byte, queenLocX, queenLocY int) bool {
 
     // diagonals down
     offset := 1
+    // [0,0]; 
     for x := queenLocX+1; x < n; x++ {
         diag1 := queenLocY + offset
         if diag1 >= 0 && diag1 < n {
@@ -69,48 +105,3 @@ func isValid(matrix [][]byte, queenLocX, queenLocY int) bool {
 }
     
 
-/*
-func genVisited(n int) [][]bool {
-    visited := make([][]bool, n)
-    for idx := range visited {
-        visited[idx] = make([]bool, n)
-    }
-    return visited
-}
-*/
-
-func solveNQueens(n int) [][]string {
-    if n == 1 {
-        return [][]string{{"Q"}}
-    }
-    if n == 2 || n == 3 {
-        return [][]string{}
-    }
-    var res [][]string
-    
-    var dfs func([][]byte, int, int)
-    dfs = func(matrix [][]byte, x int, queensLeft int) {
-        fmt.Println(queensLeft)
-        if queensLeft == 0 {
-            tmp := make([]string, n)
-            for x := range matrix {
-                tmp[x] = string(matrix[x])
-            }
-            res = append(res, tmp)
-            return
-        }
-        
-        for y := 0; y < n; y++ {
-            if !isValid(matrix, x, y) {
-                continue
-            }
-            matrix[x][y] = 'Q'
-            dfs(matrix, x+1, queensLeft-1)
-            matrix[x][y] = '.'
-        }
-    }
-    mat := genMatrix(n)
-    dfs(mat, 0, n)
-            
-    return res
-}
