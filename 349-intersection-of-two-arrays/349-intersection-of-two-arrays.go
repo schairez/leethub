@@ -1,3 +1,6 @@
+// binary search approach
+// time: O(nlogn) to sort + O(min(n1,n2)log(max(n1,n2)) to search for vals
+// space: logn + O(maxNumValsIntersect)
 
 func intersection(nums1 []int, nums2 []int) []int {
     binSearch := func(nums []int, target int) bool {
