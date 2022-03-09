@@ -6,6 +6,11 @@
  *     Right *TreeNode
  * }
  */
+
+// 113. Path Sum II
+// time: O(n)
+// space: O(n)
+
 func pathSum(root *TreeNode, targetSum int) [][]int {
     var (
         res   [][]int
