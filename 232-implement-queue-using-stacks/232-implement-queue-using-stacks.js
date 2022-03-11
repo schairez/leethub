@@ -1,3 +1,6 @@
+// 232. Implement Queue using Stacks
+// time: avg O(1), worst O(n) for every empty outstack pop/peek 
+// space: O(1)
 
 var MyQueue = function() {
     this.inStack = []
