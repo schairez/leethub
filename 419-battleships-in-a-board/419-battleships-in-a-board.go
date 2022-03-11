@@ -1,3 +1,7 @@
+// 419. Battleships in a Board
+// time: O(m*n)
+// space: O(m*n)
+
 func countBattleships(board [][]byte) int {
     const (
         ship = 'X'
