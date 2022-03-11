@@ -1,6 +1,6 @@
 
 // 232. Implement Queue using Stacks
-// time: avg/amortized O(1) worst O(n) for every n pus 
+// time: avg/amortized O(1) worst O(n) for every empty pop/peek 
 // space: O(n) store 
 
 type MyQueue struct {
