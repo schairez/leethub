@@ -10,7 +10,8 @@ func permute(nums []int) [][]int {
     ) 
     dfs = func(sIdx int, perm []int) {
         if sIdx == n {
-            res = append(res, append([]int(nil), perm...))
+            tmp := make([]int, 0, n)
+            res = append(res, append(tmp, perm...))
             return
         }
         for i := sIdx; i < n; i++ {
