@@ -1,6 +1,6 @@
 // 46. Permutations
 // space: O(n!)
-// time: O(n!)
+// time: O(n*n!)
 
 func permute(nums []int) [][]int {
     n := len(nums)
