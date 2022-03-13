@@ -1,69 +1,201 @@
-type Node struct {
-    m map[rune] *Node
-    isEndCounter int
-    starts int
-}
 
 type Trie struct {
-    node *Node
+    Children  [26]*Trie
+    //IsWord    bool
+    PrefixCnt int
+    WordCnt   int
 }
 
+
 func Constructor() Trie {
-    return Trie{node: &Node{make(map[rune] *Node), 0, 0}}
+    return Trie{}
 }
 
 
 func (this *Trie) Insert(word string)  {
-    root := this.node
-    root.starts++
-    
-    for _, s := range word {
-        if root.m[s] == nil {
-            root.m[s] = &Node{ m: make(map[rune] *Node), }
+    for i := 0; i < len(word); i++ {
+        if this.Children[word[i]-'a'] == nil {
+            this.Children[word[i]-'a'] = &Trie{}
         }
-        
-        root = root.m[s]
-        root.starts++
+        //this.PrefixCnt++
+        this = this.Children[word[i]-'a']
+        this.PrefixCnt++
     }
-    root.isEndCounter++
+    //this.PrefixCnt++
+    this.WordCnt++
+    fmt.Println(this.WordCnt, this.PrefixCnt)
+    /*
+    if !this.IsWord {
+        this.IsWord = true
+    }
+    */
 }
 
+func (this *Trie) findNode(word string) *Trie {
+    node := this
+    for i := 0; i < len(word); i++ {
+        if node == nil {
+            return nil
+        }
+        node = node.Children[word[i]-'a']
+    }
+    return node
+}
 
 func (this *Trie) CountWordsEqualTo(word string) int {
-    root := this.node
-    
-    for _, s := range word {
-        root = root.m[s]
-        
-        if root == nil || root.starts == 0 {
-            return 0
-        }
+    node := this.findNode(word)
+    if node == nil {
+        return 0
     }
-    return root.isEndCounter
+    fmt.Println("equal to", node.WordCnt)
+    return node.WordCnt
 }
 
 
 func (this *Trie) CountWordsStartingWith(prefix string) int {
-    root := this.node
+    node := this.findNode(prefix)
+    if node == nil {
+        return 0
+    }
     
-    for _, s := range prefix {
-        root = root.m[s]
-        
-        if root == nil || root.starts == 0 {
-            return 0
+    fmt.Println("start", node.PrefixCnt)
+    return node.PrefixCnt
+}
+
+func (this *Trie) hasChildren() bool {
+    for i := 0; i < 26; i++ {
+        if this.Children[i] != nil {
+            return true
         }
     }
-    return root.starts
+    return false
 }
-
 
 func (this *Trie) Erase(word string)  {
-    root := this.node
-    root.starts--
-    
-    for _, s := range word {
-        root = root.m[s]
-        root.starts--
+    node := this
+    for i := 0; i < len(word); i++ {
+        if node.Children[word[i]-'a'] == nil {
+            return
+        }
+        node = node.Children[word[i]-'a']
+        node.PrefixCnt--
     }
-    root.isEndCounter--
+    node.WordCnt--
+    if node.WordCnt == 0 {
+        node = this 
+        type pair struct {
+           trieNode *Trie 
+           key int
+        }
+        var key int
+        var stack []pair
+        for i := 0; i < len(word); i++ {
+            key = int(word[i] - 'a')
+            if node.Children[key] == nil {
+                break
+            }
+            next := node.Children[key]
+            if next.WordCnt == 0 && next.PrefixCnt == 0 {
+                stack = append(stack, pair{node, key})
+            }
+        }
+        for len(stack) != 0 {
+            n := len(stack)
+            p := stack[n-1].trieNode
+            c := stack[n-1].key
+            
+            stack = stack[:n-1]
+            p.Children[c] = nil
+        }
+    }
 }
+
+
+// condition: guaranteed word is in trie
+// postorder dfs traverse down the word path
+// if cnt - 1 == 0 send signal up the chain to delete
+// - this node, continue deleting until either backtrack 
+// - up the root, or break when reaching a node with
+// - isWord == true
+// else just subtract cnt and dont delete nodes and break early
+
+/*
+func (this *Trie) Erase(word string)  {
+    n := len(word)
+    var dfs func(int, *Trie) *Trie 
+    dfs = func(idx int, node *Trie) *Trie {
+        if node == nil {
+            return nil
+        }
+        node.PrefixCnt--
+        if idx == n {
+            //condition: guaranteed word is in trie
+            node.WordCnt--
+            if node.WordCnt == 0 {
+                //fmt.Println("wha")
+                //node.IsWord = false
+                if !node.hasChildren() {
+                    //erase up the chain
+                    node = nil
+                    return node
+                }
+            }
+            return node
+        }
+        
+        node.Children[word[0]-'a'] = dfs(idx+1, node.Children[word[idx]-'a'])
+        //node.PrefixCnt--
+        if !node.hasChildren() {
+            return nil
+        }
+        return node
+    }
+    this = dfs(0, this)
+    //dfs(0, this)
+}
+*/
+
+/*
+func (this *Trie) Erase(word string)  {
+    n := len(word)
+    var dfs func(int, *Trie) bool
+    dfs = func(idx int, node *Trie) bool {
+        if node == nil {
+            return false
+        }
+        node.PrefixCnt--
+        if idx == n {
+            //condition: guaranteed word is in trie
+            node.WordCnt--
+            if node.WordCnt == 0 {
+                //fmt.Println("wha")
+                //node.IsWord = false
+                if !node.hasChildren() {
+                    //erase up the chain
+                    //node = nil
+                    return true
+                }
+            }
+            return false
+        }
+        
+        //node.PrefixCnt--
+        eraseCond := dfs(idx+1, node.Children[word[idx]-'a'])
+        if eraseCond {
+            node.Children[word[0]-'a'] = nil
+        }
+        return false
+    }
+    
+    dfs(0, this)
+}
+*/
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Insert(word);
+ * param_2 := obj.CountWordsEqualTo(word);
+ * param_3 := obj.CountWordsStartingWith(prefix);
+ * obj.Erase(word);
+ */
