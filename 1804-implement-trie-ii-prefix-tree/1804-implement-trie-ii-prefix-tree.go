@@ -82,6 +82,7 @@ func (this *Trie) Erase(word string)  {
             c := stack[n-1].key
             stack = stack[:n-1]
             p.Children[c] = nil
+            
         }
     }
 }
@@ -98,7 +99,7 @@ func (this *Trie) hasChildren() bool {
 }
 
 */
-
+// dfs v not working below
 // condition: guaranteed word is in trie
 // postorder dfs traverse down the word path
 // if cnt - 1 == 0 send signal up the chain to delete
@@ -140,42 +141,6 @@ func (this *Trie) Erase(word string)  {
     }
     this = dfs(0, this)
     //dfs(0, this)
-}
-*/
-
-/*
-func (this *Trie) Erase(word string)  {
-    n := len(word)
-    var dfs func(int, *Trie) bool
-    dfs = func(idx int, node *Trie) bool {
-        if node == nil {
-            return false
-        }
-        node.PrefixCnt--
-        if idx == n {
-            //condition: guaranteed word is in trie
-            node.WordCnt--
-            if node.WordCnt == 0 {
-                //fmt.Println("wha")
-                //node.IsWord = false
-                if !node.hasChildren() {
-                    //erase up the chain
-                    //node = nil
-                    return true
-                }
-            }
-            return false
-        }
-        
-        //node.PrefixCnt--
-        eraseCond := dfs(idx+1, node.Children[word[idx]-'a'])
-        if eraseCond {
-            node.Children[word[0]-'a'] = nil
-        }
-        return false
-    }
-    
-    dfs(0, this)
 }
 */
 
