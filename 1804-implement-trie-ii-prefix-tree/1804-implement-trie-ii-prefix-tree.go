@@ -64,10 +64,7 @@ func (this *Trie) Erase(word string)  {
     node.WordCnt--
     if node.WordCnt == 0 {
         node = this 
-        type pair struct {
-           trieNode *Trie 
-           key int
-        }
+        type pair struct {trieNode *Trie; key int }
         var key int
         var stack []pair
         for i := 0; i < len(word); i++ {
