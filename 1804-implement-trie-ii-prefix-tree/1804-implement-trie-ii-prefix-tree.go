@@ -20,7 +20,6 @@ func (this *Trie) Insert(word string)  {
         this.PrefixCnt++
     }
     this.WordCnt++
-    fmt.Println(this.WordCnt, this.PrefixCnt)
 }
 
 func (this *Trie) findNode(word string) *Trie {
