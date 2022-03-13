@@ -1,4 +1,4 @@
-
+// 46. Permutations
 // space: O(n!)
 // time: O(n!)
 
@@ -10,8 +10,8 @@ func permute(nums []int) [][]int {
     ) 
     dfs = func(sIdx int, perm []int) {
         if sIdx == n {
-            tmp := make([]int, 0, n)
-            res = append(res, append(tmp, perm...))
+            //tmp := make([]int, 0, n)
+            res = append(res, append([]int(nil), perm...))
             return
         }
         for i := sIdx; i < n; i++ {
