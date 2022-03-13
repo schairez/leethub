@@ -78,12 +78,9 @@ func (this *Trie) Erase(word string)  {
             }
         }
         for len(stack) != 0 {
-            fmt.Println("wh")
             n := len(stack)
             p := stack[n-1].trieNode
-            fmt.Println(p)
             c := stack[n-1].key
-            fmt.Println(c)
             stack = stack[:n-1]
             p.Children[c] = nil
         }
