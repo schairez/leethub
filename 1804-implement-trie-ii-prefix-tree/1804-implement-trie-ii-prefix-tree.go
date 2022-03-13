@@ -1,7 +1,6 @@
 
 type Trie struct {
     Children  [26]*Trie
-    //IsWord    bool
     PrefixCnt int
     WordCnt   int
 }
@@ -17,18 +16,11 @@ func (this *Trie) Insert(word string)  {
         if this.Children[word[i]-'a'] == nil {
             this.Children[word[i]-'a'] = &Trie{}
         }
-        //this.PrefixCnt++
         this = this.Children[word[i]-'a']
         this.PrefixCnt++
     }
-    //this.PrefixCnt++
     this.WordCnt++
     fmt.Println(this.WordCnt, this.PrefixCnt)
-    /*
-    if !this.IsWord {
-        this.IsWord = true
-    }
-    */
 }
 
 func (this *Trie) findNode(word string) *Trie {
@@ -47,7 +39,6 @@ func (this *Trie) CountWordsEqualTo(word string) int {
     if node == nil {
         return 0
     }
-    fmt.Println("equal to", node.WordCnt)
     return node.WordCnt
 }
 
@@ -57,19 +48,9 @@ func (this *Trie) CountWordsStartingWith(prefix string) int {
     if node == nil {
         return 0
     }
-    
-    fmt.Println("start", node.PrefixCnt)
     return node.PrefixCnt
 }
 
-func (this *Trie) hasChildren() bool {
-    for i := 0; i < 26; i++ {
-        if this.Children[i] != nil {
-            return true
-        }
-    }
-    return false
-}
 
 func (this *Trie) Erase(word string)  {
     node := this
@@ -103,13 +84,24 @@ func (this *Trie) Erase(word string)  {
             n := len(stack)
             p := stack[n-1].trieNode
             c := stack[n-1].key
-            
             stack = stack[:n-1]
             p.Children[c] = nil
         }
     }
 }
 
+/*
+
+func (this *Trie) hasChildren() bool {
+    for i := 0; i < 26; i++ {
+        if this.Children[i] != nil {
+            return true
+        }
+    }
+    return false
+}
+
+*/
 
 // condition: guaranteed word is in trie
 // postorder dfs traverse down the word path
