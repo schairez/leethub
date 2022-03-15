@@ -28,6 +28,7 @@ func (this *NumArray) SumRange(left int, right int) int {
  * param_2 := obj.SumRange(left,right);
  */
 
+const maxL = 30000*4
 
 type SegTree struct {
     tree    []int
@@ -45,15 +46,17 @@ func NewSegTree( nums []int) SegTree {
     // build segTree nodes
     n := len(nums)
     tree := make([]int, 4*n)
+    seg := SegTree{arrSize:n, tree: tree}
     for i := 0; i < n; i++ {
-        tree[n+i] = nums[i]
+        seg.tree[n+i] = nums[i]
     }
     for i := n-1; i > 0; i-- {
-        tree[i] = tree[2*i] + tree[2*i+1]
+        seg.tree[i] = seg.tree[2*i] + seg.tree[2*i+1]
         //tree[i] = tree[i<<1] + tree[i<<1 | 1]
     }
     
-    return SegTree{tree, n}
+    return seg
+    //return SegTree{tree, n}
 }
 
 
