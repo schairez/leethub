@@ -7,6 +7,9 @@
  * }
  */
 
+// time: O(n)
+// space: O(h) h = n if unbalanced; logn if balanced
+
 func binaryTreePaths(root *TreeNode) []string {
     var res []string
     dfs(root, []byte{}, &res)
@@ -17,6 +20,7 @@ func binaryTreePaths(root *TreeNode) []string {
 The number of nodes in the tree is in the range [1, 100].
 */
 
+//preorder
 func dfs(node *TreeNode, path []byte, res *[]string) {
     path = strconv.AppendInt(path, int64(node.Val), 10)
     if node.Left == nil && node.Right == nil {
