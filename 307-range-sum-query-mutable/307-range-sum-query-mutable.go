@@ -44,7 +44,7 @@ func (seg SegTree) Build(nums []int) {
 func NewSegTree( nums []int) SegTree {
     // build segTree nodes
     n := len(nums)
-    tree := make([]int, 4*n)
+    tree := make([]int, 2*n)
     for i := 0; i < n; i++ {
         tree[n+i] = nums[i]
     }
@@ -67,14 +67,13 @@ func (seg SegTree) Update(idx, val int) {
         seg.tree[i>>1]  = seg.tree[i] + seg.tree[i^1]
     }
 }
-//[left, right)
 func (seg SegTree) Query(left, right int) int {
     //fmt.Println("query")
     //fmt.Println(seg.tree)
     n := seg.arrSize
     res := 0
     l, r := left + n, right + n
-    for l <= r {
+    for l <= r {  // [left, right] closed interval
         if l & 1 == 1 {
             res += seg.tree[l]
             l++
