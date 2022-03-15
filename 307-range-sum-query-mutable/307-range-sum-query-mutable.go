@@ -44,7 +44,7 @@ func (seg SegTree) Build(nums []int) {
 func NewSegTree( nums []int) SegTree {
     // build segTree nodes
     n := len(nums)
-    tree := make([]int, 2*n)
+    tree := make([]int, 4*n)
     for i := 0; i < n; i++ {
         tree[n+i] = nums[i]
     }
