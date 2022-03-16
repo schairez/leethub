@@ -7,6 +7,69 @@
  * }
  */
 
+// overkill rev inorder Morris traversal
+// LDR -> RDL
+// time: O(n)
+// space: O(1)
+func convertBST(root *TreeNode) *TreeNode {
+    if root == nil {
+        return root
+    }
+    currSum := 0
+    var (
+        succNode *TreeNode
+        predNode *TreeNode
+    )
+    // link succNode.Left -> predNode
+    predNode = root
+    for predNode != nil {
+        if predNode.Right != nil {
+            succNode = predNode.Right
+            for succNode.Left != nil && succNode.Left != predNode {
+                succNode = succNode.Left
+            }
+            if succNode.Left == nil {
+                succNode.Left = predNode
+                predNode = predNode.Right
+            } else {
+                succNode.Left = nil
+                nodeVal := predNode.Val
+                predNode.Val += currSum
+                currSum += nodeVal
+                predNode = predNode.Left
+            }
+        } else {
+            nodeVal := predNode.Val
+            predNode.Val += currSum
+            currSum += nodeVal
+            predNode = predNode.Left
+        }
+    }
+    
+    return root
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //rev inorder recursive approach
 //RDL
 //reversed inorder (RDL) 
@@ -16,7 +79,7 @@ if balanced tree space complexity os omega(height) = O(logn)
 time: O(numNodes) -> O(n)
 */
 
-func convertBST(root *TreeNode) *TreeNode {
+func convertBSTRecursive(root *TreeNode) *TreeNode {
     sumV := 0
     var dfs func(node *TreeNode)
     dfs = func(node *TreeNode) {
