@@ -1,24 +1,98 @@
 
 type NumArray struct {
-    seg SegTree
+    root *SegmentNode
 }
 
 
 func Constructor(nums []int) NumArray {
-    return NumArray{seg: NewSegTree(nums)}
+    return NumArray{root: NewSegTree(nums)}
 }
 
 
 func (this *NumArray) Update(index int, val int)  {
-    this.seg.Update(index, val)
+    this.root.Update(index, val)
 }
 
 
-// since [left,right] in this version
 func (this *NumArray) SumRange(left int, right int) int {
-    //right closed
-    return this.seg.Query(left, right)
+    return this.root.Query(left, right)
 }
+
+func min(a, b int) int { if a <= b { return a}; return b}
+func max(a, b int) int { if a >= b { return a}; return b}
+
+
+type SegmentNode struct {
+    sIdx, eIdx, val int
+    lChild, rChild *SegmentNode
+}
+
+func NewSegTree(nums []int) *SegmentNode {
+    n := len(nums)
+    var build func(int, int) *SegmentNode
+    
+    build = func(sIdx, eIdx int) *SegmentNode {
+        if sIdx < 0 && eIdx >= n {
+            return nil
+        }
+        if sIdx == eIdx {
+            return &SegmentNode{sIdx:sIdx, eIdx:eIdx, val: nums[sIdx]}
+        }
+        mid := sIdx + (eIdx - sIdx) >> 1
+        node := &SegmentNode{sIdx: sIdx, eIdx: eIdx}
+        node.lChild = build(sIdx, mid)
+        node.rChild = build(mid+1, eIdx)
+        node.val = node.lChild.val + node.rChild.val
+        return node
+    }
+    
+    return build(0, n-1)
+}
+// [left, right] closed interval
+func (seg *SegmentNode) Query(left, right int) int {
+    var query func(*SegmentNode, int, int) int
+    
+    query = func(node *SegmentNode, sIdx, eIdx int) int {
+        if node == nil || sIdx > eIdx || 
+        node.sIdx > eIdx || node.eIdx < sIdx {
+            return 0
+        }
+        if node.sIdx == sIdx && node.eIdx == eIdx {
+            return node.val
+        }
+        mid := node.sIdx + (node.eIdx - node.sIdx) >> 1
+        sum := 0
+        sum += query(node.lChild, sIdx, min(eIdx,mid))
+        sum += query(node.rChild, max(mid+1, sIdx), eIdx)
+        return sum
+    }
+    return query(seg, left, right)
+}
+
+
+func (seg *SegmentNode) Update(idx, newVal int) {
+    var update func(node *SegmentNode)
+    update = func(node *SegmentNode) {
+        if node == nil {
+            return
+        }
+        if node.sIdx == idx && node.eIdx == idx {
+            node.val = newVal
+            return
+        }
+        l, r := node.sIdx, node.eIdx
+        mid := l + (r-l) >> 1
+        if idx > mid {
+            update(node.rChild)
+        } else {
+            update(node.lChild)
+        }
+        node.val = node.lChild.val + node.rChild.val
+    }
+    
+    update(seg)
+}
+
 
 
 /**
@@ -27,67 +101,3 @@ func (this *NumArray) SumRange(left int, right int) int {
  * obj.Update(index,val);
  * param_2 := obj.SumRange(left,right);
  */
-
-const maxL = 30000*4
-
-type SegTree struct {
-    tree    []int
-    arrSize int
-}
-
-/*
-func (seg SegTree) Build(nums []int) {
-    
-}
-*/
-      
-
-func NewSegTree( nums []int) SegTree {
-    // build segTree nodes
-    n := len(nums)
-    tree := make([]int, 4*n)
-    //tree := make([]int, 4*3e1)
-    seg := SegTree{arrSize:n, tree: tree}
-    for i := 0; i < n; i++ {
-        seg.tree[n+i] = nums[i]
-    }
-    for i := n-1; i > 0; i-- {
-        seg.tree[i] = seg.tree[2*i] + seg.tree[2*i+1]
-        //tree[i] = tree[i<<1] + tree[i<<1 | 1]
-    }
-    
-    return seg
-    //return SegTree{tree, n}
-}
-
-
-func (seg SegTree) Update(idx, val int) {
-    //fmt.Println(seg.tree)
-    nodeIdx := idx + seg.arrSize
-    seg.tree[nodeIdx] = val 
-    
-    // update parent nodes bottom up the chain
-    for i := nodeIdx; i > 1; i = i >> 1  {
-        seg.tree[i>>1]  = seg.tree[i] + seg.tree[i^1]
-    }
-}
-func (seg SegTree) Query(left, right int) int {
-    //fmt.Println("query")
-    //fmt.Println(seg.tree)
-    n := seg.arrSize
-    res := 0
-    l, r := left + n, right + n
-    for l <= r {  // [left, right] closed interval
-        if l & 1 == 1 {
-            res += seg.tree[l]
-            l++
-        }
-        if r & 1 == 0 {
-            res += seg.tree[r]
-            r--
-        }
-        l >>= 1
-        r >>= 1
-    }
-    return res
-} 
