@@ -7,60 +7,52 @@
  * }
  */
 
-func min(a, b int) int { if a <= b { return a}; return b}
 func max(a, b int) int { if a >= b { return a}; return b}
+func min(a, b int) int { if a <= b { return a}; return b}
 
-
-
-// interval = [leftI, e]
 
 func largestBSTSubtree(root *TreeNode) int {
-    maxBSTSize := 0
+    largestBST := 0
     
-    type nodeData struct {leftI, rightI, numBSTNodes int}
-    var dfs func(*TreeNode) nodeData 
+    type nodeData struct {loBound, hiBound, numNodes int }
+    var dfs func(node *TreeNode) nodeData
     
     dfs = func(node *TreeNode) nodeData {
         if node == nil {
-            return nodeData{leftI: 1 << 31 - 1, 
-                            rightI: -1 << 31, 
-                            numBSTNodes: 0 }
+            return nodeData{
+                loBound: 1 << 31 - 1,
+                hiBound: -1 << 31,
+                numNodes: 0,
+            }
         }
-        data := nodeData{numBSTNodes: -1}
         fromL := dfs(node.Left)
         fromR := dfs(node.Right)
-        
-        validBSTNodeCond := fromL.numBSTNodes != -1 && fromR.numBSTNodes != -1 &&
-                        node.Val > fromL.rightI && node.Val < fromR.leftI 
-        
-        if validBSTNodeCond {
-            data.numBSTNodes = 1 + fromL.numBSTNodes + fromR.numBSTNodes
-            maxBSTSize = max(maxBSTSize, data.numBSTNodes)
+        data := nodeData{
+            loBound: min(node.Val, fromL.loBound),
+            hiBound: max(node.Val, fromR.hiBound),
+            numNodes: -1,
         }
-        data.leftI = min(fromL.leftI, node.Val)
-        data.rightI = max(fromR.rightI, node.Val)
+        if fromL.numNodes != -1 && fromR.numNodes != -1 &&
+        node.Val > fromL.hiBound && node.Val < fromR.loBound {
+            numNodes := 1 + fromL.numNodes + fromR.numNodes
+            largestBST = max(largestBST, numNodes)
+            data.numNodes = numNodes
+        } 
+        
         return data
     }
-    
     dfs(root)
-    return maxBSTSize
+    return largestBST
     
 }
 
 
-/*
-func dfs(node *TreeNode) NodeData {
-    if node == nil {
-        return NodeData{leftI: 1 << 31 - 1,
-                        rightI: -1 << 32,
-                        numBSTNodes: 0
-                       }
-    }
-    fromL := dfs(node.Left)
-    fromR := dfs(node.Right)
-    nodeData := NodeData{}
-    if node.Val 
-    
-    
-}
-*/
+
+
+
+
+
+
+
+
+
