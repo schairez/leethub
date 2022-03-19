@@ -54,10 +54,7 @@ func (this *FileSystem) Ls(path string) []string {
     
     getNodes := func(currFS *fsNode) []string {
         if currFS.isDir {
-            fmt.Println(currFS.children)
-            fmt.Println("are we")
             for nodeNames := range currFS.children {
-                fmt.Println(nodeNames)
                 lvlNodes = append(lvlNodes, nodeNames)
             }
         } else {
