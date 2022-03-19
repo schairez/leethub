@@ -1,6 +1,5 @@
 
-// fs --> []
-//  
+
 type fsNode struct {
     key string
     isDir bool
@@ -22,10 +21,9 @@ func (fs *fsNode) addChildNode(fsPath []string) *fsNode {
     return fs
 }
 
-    // [a, b, c]
 
 func (fs *fsNode) FindNode(path []string) *fsNode {
-    //derefenrce nil ptr
+    //condition: no derefenrce nil ptr
     for i := 0; i < len(path); i++ {
         fs = fs.children[path[i]]
     }
@@ -43,11 +41,6 @@ func Constructor() FileSystem {
                                     children: make(map[string]*fsNode)}}
 }
 
-// sort during query
-
-
-// /a/b/c
-// if node.children[c] == nil { file}
 
 func (this *FileSystem) Ls(path string) []string {
     var lvlNodes []string 
@@ -68,7 +61,6 @@ func (this *FileSystem) Ls(path string) []string {
     }
     // condition: no err in path
     pathVals := splitFilePath(path)
-    // append the subfss in this path + the filenames
     if len(pathVals) == 0 { // if rootfs
         lvlNodes = getNodes(this.root)
     } else {
@@ -79,36 +71,28 @@ func (this *FileSystem) Ls(path string) []string {
     return lvlNodes
 }
 
-// patricia trees
-// trie compact
 
-//////// vimium
-
-// condition:
 func (this *FileSystem) Mkdir(path string)  {
     pathVals := splitFilePath(path)
     this.root.addChildNode(pathVals)
     
 }
 
-
-//           V
-// [a, b, c, d]
 func (this *FileSystem) AddContentToFile(filePath string, content string)  {
     pathVals := splitFilePath(filePath)
     n := len(pathVals)
     currNode := this.root.addChildNode(pathVals[:n-1])
     fileName := pathVals[n-1] 
     fileNode, exists := currNode.children[fileName]
-    if !exists {
-        var sb strings.Builder
-        sb.WriteString(content)
-        currNode.children[pathVals[n-1]] = &fsNode{key: fileName, 
-                                                   isDir:false, 
-                                                   contents: &sb}
-    } else {
+    if exists {
         fileNode.contents.WriteString(content)
+        return
     }
+    
+    var sb strings.Builder
+    sb.WriteString(content)
+    currNode.children[pathVals[n-1]] = &fsNode{key: fileName, isDir:false, contents: &sb}
+    
 }
 
 func splitFilePath(path string) []string {
