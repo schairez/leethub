@@ -29,25 +29,32 @@ func minAreaRect(points [][]int) int {
     }
     var minArea int
     pointKeys := make([]point, 0, n)
-    pointSet := make(map[point]struct{}, n)
+    pointSet := make(map[int]map[int]struct{}, n)
+    //pointSet := make(map[point]struct{}, n)
     for _, elem := range points {
         x, y := elem[0], elem[1]
         pt := point{x,y}
-        pointSet[pt] = struct{}{}
+        if _, xExists := pointSet[x]; !xExists {
+            pointSet[x] = make(map[int]struct{})
+        }
+        pointSet[x][y] = struct{}{}
         pointKeys = append(pointKeys, pt)
     }
+    
     minArea = maxInt32
     for _, p1 := range pointKeys {
         for _, p2 := range pointKeys {
             if p1 == p2 || p1.x == p2.x || p1.y == p2.y {
                 continue
             }
-            p3Cand := point{p1.x, p2.y}
-            p4Cand := point{p2.x, p1.y}
-            if _, p3Exists := pointSet[p3Cand]; !p3Exists {
+            //p3Cand := point{p1.x, p2.y}
+            //p4Cand := point{p2.x, p1.y}
+            // for p3
+            if _, exists := pointSet[p1.x][p2.y]; !exists {
                 continue
             }
-            if _, p4Exists := pointSet[p4Cand]; !p4Exists {
+            // for p4
+            if _, exists := pointSet[p2.x][p1.y]; !exists {
                 continue
             }
             candArea := calcArea(p1, p2)
