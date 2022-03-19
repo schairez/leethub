@@ -1,7 +1,4 @@
 
-// 0ms O(1)
-
-//            
 func min(a, b int) int { if a <= b { return a}; return b}
 
 func abs(x int) int {
@@ -11,55 +8,55 @@ func abs(x int) int {
     return x
 }
 
-type Point struct {
+type point struct {
     x, y int
 }
 
 // 
-func calcArea(p1, p2 Point) int {
+func calcArea(p1, p2 point) int {
     width := abs(p1.x - p2.x)
     height := abs(p2.y - p1.y)
     return width * height
 }
 
 
+
 func minAreaRect(points [][]int) int {
+    const maxInt32 = (1 << 31) - 1
     n := len(points)
     if n < 4 {
         return 0
     }
-    pointSet := make(map[[2]int]struct{}, n)
-    for _, point := range points {
-        x, y := point[0], point[1]
-        pointSet[[2]int{x,y}] = struct{}{}
+    var minArea int
+    pointKeys := make([]point, 0, n)
+    pointSet := make(map[point]struct{}, n)
+    for _, elem := range points {
+        x, y := elem[0], elem[1]
+        pt := point{x,y}
+        pointSet[pt] = struct{}{}
+        pointKeys = append(pointKeys, pt)
     }
-    maxInt32 := (1 << 31) -1 //maxInt32
-    minArea := maxInt32
-    
-    for _, p1 := range points {
-        p1X, p1Y := p1[0], p1[1] //(1,3)  ; (3,1)
-        for _, p2 := range points { //
-            p2X, p2Y := p2[0], p2[1]
-            if p1X == p2X || p2Y == p1Y {
+    minArea = maxInt32
+    for _, p1 := range pointKeys {
+        for _, p2 := range pointKeys {
+            if p1 == p2 || p1.x == p2.x || p1.y == p2.y {
                 continue
             }
-            // check p3 and p4 in map
-            p3Cand := [2]int{p1X, p2Y}
-            p4Cand := [2]int{p2X, p1Y}
-            if _, ok := pointSet[p3Cand]; !ok {
+            p3Cand := point{p1.x, p2.y}
+            p4Cand := point{p2.x, p1.y}
+            if _, p3Exists := pointSet[p3Cand]; !p3Exists {
                 continue
             }
-            if _, ok := pointSet[p4Cand]; !ok {
+            if _, p4Exists := pointSet[p4Cand]; !p4Exists {
                 continue
             }
-            pt1 := Point{p1X, p1Y}
-            pt2 := Point{p2X, p2Y}
-            candArea := calcArea(pt1, pt2)
+            candArea := calcArea(p1, p2)
             minArea = min(minArea, candArea)
-        }
+        } 
     }
     if minArea == maxInt32 {
         return 0
     }
     return minArea
 }
+
