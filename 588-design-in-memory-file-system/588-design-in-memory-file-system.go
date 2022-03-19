@@ -90,6 +90,7 @@ func (this *FileSystem) AddContentToFile(filePath string, content string)  {
     }
     
     var sb strings.Builder
+    sb.Grow(len(content))
     sb.WriteString(content)
     currNode.children[pathVals[n-1]] = &fsNode{key: fileName, isDir:false, contents: &sb}
     
