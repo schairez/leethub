@@ -1,12 +1,19 @@
+
+
+// backtracking approach
+// time: O(n!)
+// space: O(n*n)
+
 class Solution {
 public:
     vector<vector<string>> res;
+    
     vector<vector<string>> solveNQueens(int n) {
-        //gen board
         vector<string> chessBoard(n, string(n, '.')); // O(n*n) time to create
         dfs(chessBoard, 0, n);
         return res;
     }
+    
     void dfs(vector<string> &board, int x, int queensLeft) {
         if (queensLeft == 0) {
             res.push_back(board);
@@ -21,6 +28,7 @@ public:
             board[x][y] = '.';
         } 
     }
+    
     bool isValid(vector<string> &board, int rowLoc, int colLoc) {
         int n = board.size();
         // check row and col vals
