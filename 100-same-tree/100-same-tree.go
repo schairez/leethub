@@ -8,23 +8,26 @@
  * }
  */
 
+// parallel version
 // Walk walks the tree t sending all values
 // from the tree to the channel ch.
-func walk(t *TreeNode, ch chan int, isLeft bool) {
-    if t == nil {
-        if isLeft {
-            ch <- -1
-        } else {
-            ch <- 1
+func dfs(root *TreeNode, ch chan int) {
+    var walk func(*TreeNode, chan int, bool)
+    walk = func(t *TreeNode, ch chan int, isLeft bool) {
+        if t == nil {
+            if isLeft {
+                ch <- -1
+            } else {
+                ch <- 1
+            }
+            return
         }
-        return
+        walk(t.Left, ch, isLeft)
+        ch <- t.Val
+        walk(t.Right, ch, !isLeft)
     }
-    walk(t.Left, ch, isLeft)
-    ch <- t.Val
-    walk(t.Right, ch, !isLeft)
-}
-func Walk(t *TreeNode, ch chan int) {
-	walk(t, ch, true)
+    
+	walk(root, ch, true)
 	close(ch)
 }
 
@@ -33,8 +36,8 @@ func Walk(t *TreeNode, ch chan int) {
 func isSameTree(p *TreeNode, q *TreeNode) bool {
 	ch1 := make(chan int)
 	ch2 := make(chan int)
-	go Walk(p, ch1)
-	go Walk(q, ch2)
+	go dfs(p, ch1)
+	go dfs(q, ch2)
     for {
 		select {
 		case n1, ok1 := <-ch1:
@@ -52,84 +55,6 @@ func isSameTree(p *TreeNode, q *TreeNode) bool {
         }
     }
 }
-
-
-/*
-func isSameTree(p *TreeNode, q *TreeNode) bool {
-   	ch1, ch2 := make(chan int), make(chan int)
-	go Walk(p, ch1)
-	go Walk(q, ch2)
-	v1, v2, ok1, ok2 := 0, 0, true, true
-	for ok1 && ok2 {
-		v1, ok1 = <-ch1
-		v2, ok2 = <-ch2
-		if ok1 != ok2 || v1 != v2 {
-			return false
-		}
-
-	}
-	return true
-}
-
-func Walk(t *TreeNode, ch chan int) {
-	defer close(ch)
-	var walk func(*TreeNode)
-	walk = func(t *TreeNode) {
-		if t == nil {
-            return
-		}
-        if t.Left == nil {
-           ch <- -1
-        }
-        if t.Right == nil {
-            ch <- 1
-        }
-        walk(t.Left)
-		ch <- t.Val
-		walk(t.Right)
-	}
-	walk(t)
-}
-*/
-
-/*
-
-func dfs(root *TreeNode, ch chan int) {
-    defer close(ch)
-    var inorder func(*TreeNode, chan int)
-    inorder = func(node *TreeNode, ch chan int) {
-        if node == nil {
-            ch <- -1
-            return
-        }
-        inorder(node.Left, ch)
-        ch <- node.Val
-        inorder(node, ch)
-    }
-    inorder(root, ch)
-}
-
-
-// parallel version
-
-func isSameTree(p *TreeNode, q *TreeNode) bool {
-    ch1 := make(chan int)
-    ch2 := make(chan int)
-    
-    go dfs(p, ch1)
-    go dfs(q, ch2)
-    
-    for {
-        val1, ok1 := <-ch1
-        val2, ok2 := <-ch1
-        
-        if val1 != val2 || ok1 != ok2 {
-            return false
-        }
-    }
-    return true
-}
-*/
 
 
 
