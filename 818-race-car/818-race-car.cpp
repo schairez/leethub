@@ -11,7 +11,7 @@ public:
                 pair<int, int> node = q.front();
                 q.pop();
                 int pos = node.first;
-                long int vel = node.second;
+                int vel = node.second;
                 if (pos == target) {
                     return depth;
                 }
