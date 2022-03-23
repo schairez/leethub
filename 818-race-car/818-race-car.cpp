@@ -1,11 +1,11 @@
+
 class Solution {
 public:
     int racecar(long int target) {
         queue<pair<int, int>> q;
         q.push({0, 1});
         int depth = 0;
-        while (true) {
-            //vector<pair<long int, long int>> next_q;
+        while (!q.empty()) {
             int n = q.size(); 
             for (int idx = 0; idx < n; idx++) {
                 pair<int, int> node = q.front();
@@ -15,7 +15,7 @@ public:
                 if (pos == target) {
                     return depth;
                 }
-                // 1 <= target <= 104 
+                // 1 <= target <= 10^4 
                 if (pos + vel <= 10000 && pos + vel > 0) {
                     q.push({ pos + vel, 2 * vel });
                 }
