@@ -1,31 +1,31 @@
-
-func min(a, b int) int {if a <=b { return a}; return b}
-
-
 func racecar(target int) int {
-    type nodeData struct { position, velocity, steps int }
-    var queue []nodeData
+    type pair struct {pos, vel int}
+    var queue []pair
     var (
-        currNode nodeData
-        sourceNode nodeData
+        currNode pair
+        srcNode pair
     )
-    sourceNode = nodeData{0, 1, 0}
-    queue = append(queue, sourceNode)
+    srcNode = pair{0,1}
+    queue = append(queue, srcNode)
+    
+    dist := 0 
     for len(queue) != 0 {
-        currNode, queue = queue[0], queue[1:]
-        if currNode.position == target {
-            //res = min(res, currNode.steps)
-            return currNode.steps
+        //n := len(queue)
+        for n := len(queue); n != 0; n-- {
+            currNode, queue = queue[0], queue[1:]   
+            if currNode.pos == target {
+                return dist
+            }
+            pos, vel := currNode.pos, currNode.vel
+            queue = append(queue, pair{pos+vel, vel*2})
+            if pos + vel > target && vel > 0 {
+                queue = append(queue, pair{pos, -1})
+            } else if pos + vel < target && vel < 0 {
+                queue = append(queue, pair{pos, 1})
+            }
         }
-        pos, vel, steps := currNode.position, currNode.velocity, currNode.steps
-        queue = append(queue, nodeData{pos+vel, vel*2, steps+1})
-        
-        if (pos + vel > target && vel > 0 ) {
-            queue = append(queue, nodeData{pos, -1, steps+1})
-        } else if (pos + vel < target  && vel < 0) {
-            queue = append(queue, nodeData{pos, 1, steps+1})
-        }
+        dist++
     }
+    
     return -1
 }
-
