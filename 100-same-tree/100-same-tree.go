@@ -56,7 +56,7 @@ func isSameTree(p *TreeNode, q *TreeNode) bool {
 
 /*
 func isSameTree(p *TreeNode, q *TreeNode) bool {
-   	ch1, ch2 := make(chan int, 100), make(chan int, 100)
+   	ch1, ch2 := make(chan int), make(chan int)
 	go Walk(p, ch1)
 	go Walk(q, ch2)
 	v1, v2, ok1, ok2 := 0, 0, true, true
