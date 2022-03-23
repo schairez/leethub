@@ -31,8 +31,8 @@ func Walk(t *TreeNode, ch chan int) {
 // Same determines whether the trees
 // t1 and t2 contain the same values.
 func isSameTree(p *TreeNode, q *TreeNode) bool {
-	ch1 := make(chan int, 100)
-	ch2 := make(chan int, 100)
+	ch1 := make(chan int)
+	ch2 := make(chan int)
 	go Walk(p, ch1)
 	go Walk(q, ch2)
     for {
