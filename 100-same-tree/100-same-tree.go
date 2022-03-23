@@ -12,8 +12,8 @@
 // Walk walks the tree t sending all values
 // from the tree to the channel ch.
 func dfs(root *TreeNode, ch chan int) {
-    var walk func(*TreeNode, chan int, bool)
-    walk = func(t *TreeNode, ch chan int, isLeft bool) {
+    var walk func(*TreeNode, bool)
+    walk = func(t *TreeNode,isLeft bool) {
         if t == nil {
             if isLeft {
                 ch <- -1
@@ -22,12 +22,12 @@ func dfs(root *TreeNode, ch chan int) {
             }
             return
         }
-        walk(t.Left, ch, isLeft)
+        walk(t.Left, isLeft)
         ch <- t.Val
-        walk(t.Right, ch, !isLeft)
+        walk(t.Right, !isLeft)
     }
     
-	walk(root, ch, true)
+	walk(root,true)
 	close(ch)
 }
 
