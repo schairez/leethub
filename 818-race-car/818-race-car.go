@@ -2,7 +2,7 @@
 func racecar(target int) int {
     
     type pair struct {pos, vel int}
-    queue := make([]pair, 0, target >> 1)
+    queue := make([]pair, 0, target >> 2)
    // var queue []pair
     var (
         currNode pair
