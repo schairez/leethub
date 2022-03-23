@@ -1,4 +1,14 @@
 
+// 818. Race Car
+
+// naive BFS w/o pruning would lead to O(2^n) runtime and space;
+// but here we're not enumerating the accelerate and reverse option for
+// each node; with the pruning step our bound reduces dramatically
+// as it takes some logN steps to overshoot our target and some additional
+// n steps hard cap worst case to find the shortest distance from here
+// time: O(nlogn)
+// space: O(nlogn)
+
 func racecar(target int) int {
     type pair struct {pos, vel int}
     queue := make([]pair, 0, target >> 1)
