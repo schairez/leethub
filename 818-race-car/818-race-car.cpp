@@ -11,16 +11,18 @@ public:
                 pair<int, int> node = q.front();
                 q.pop();
                 int pos = node.first;
-                long int speed = node.second;
+                long int vel = node.second;
                 if (pos == target) {
                     return depth;
                 }
-                if (pos > 2 * target) continue;
+                // 1 <= target <= 104 
+                if (pos + vel <= 10000 && pos + vel > 0) {
+                    q.push({ pos + vel, 2 * vel });
+                }
                 
-                q.push({ pos + speed, 2 * speed });
-                if (pos + speed > target && speed > 0) {
+                if (pos + vel > target && vel > 0) {
                     q.push({ pos, -1 });
-                } else if (pos + speed < target && speed < 0) {
+                } else if (pos + vel < target && vel < 0) {
                     q.push({ pos, 1 });
                 }
             }
