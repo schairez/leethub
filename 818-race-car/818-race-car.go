@@ -1,23 +1,19 @@
 
 func racecar(target int) int {
-    
     type pair struct {pos, vel int}
     queue := make([]pair, 0, target >> 1)
-   // var queue []pair
     var (
         currNode pair
         srcNode pair
     )
     srcNode = pair{0,1}
     queue = append(queue, srcNode)
-    
-    dist := 0 
+    lvl := 0 
     for len(queue) != 0 {
-        // 2 
         for n := len(queue); n != 0; n-- {
             currNode, queue = queue[0], queue[1:]   
             if currNode.pos == target {
-                return dist
+                return lvl
             }
             pos, vel := currNode.pos, currNode.vel
             if pos + vel <= 2 * target && pos + vel > 0 {
@@ -30,7 +26,7 @@ func racecar(target int) int {
                 queue = append(queue, pair{pos, 1})
             }
         }
-        dist++
+        lvl++
     }
     
     return -1
