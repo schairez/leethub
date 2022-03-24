@@ -55,7 +55,6 @@ func fourSum(nums []int, target int) [][]int {
             }
         }
     }
-    fmt.Println(keysMap)
     res = make([][]int, 0, len(keysMap))
     for key := range keysMap {
         tmp := make([]int, 0, 4)
