@@ -1,8 +1,7 @@
 
-
-// [-1,2,1,-4]
-// [-4, -1, 1, 2]
-//   ^         ^
+// 16. 3Sum Closest
+// time: sort takes O(nlogn) + O(n^2) ≈ O(n^2)
+// space: O(logn)
 
 func min(a, b int) int {
     if a <= b {
@@ -49,23 +48,3 @@ func threeSumClosest(nums []int, target int) int {
     }
     return res
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
