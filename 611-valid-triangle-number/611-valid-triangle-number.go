@@ -1,5 +1,7 @@
 
-
+// 611. Valid Triangle Number
+// time: O(nlogn) to sort + O(n^2) ≈ O(n^2)
+// space: O(logn) space depth internal sort space
 
 func triangleNumber(nums []int) int {
     n := len(nums)
@@ -8,9 +10,6 @@ func triangleNumber(nums []int) int {
     }
     sort.Ints(nums)
     res := 0
-    //for targetIdx := n-1; targetIdx > n
-    //prev := n-1
-    //init indices
     for target := n-1; target > 1; target-- {
         targetVal := nums[target]
         start, end := 0, target-1
