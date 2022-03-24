@@ -18,6 +18,9 @@ func fourSum(nums []int, target int) [][]int {
         */
         n4 := nums[fourthIdx]
         for thirdIdx := fourthIdx-1; thirdIdx > 1; thirdIdx-- {
+           if nums[fourthIdx] + nums[thirdIdx]  + nums[thirdIdx-1] + nums[thirdIdx-2] < target {
+               continue
+            }
             /*
             if thirdIdx != n-2 && nums[thirdIdx] == nums[thirdIdx+1] {
                 continue
