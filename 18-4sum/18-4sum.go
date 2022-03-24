@@ -8,9 +8,11 @@ func fourSum(nums []int, target int) [][]int {
     sort.Ints(nums)
     var res [][]int
     for fourthIdx := n-1; fourthIdx > 2; fourthIdx-- {
+        /*
        if nums[fourthIdx] + nums[fourthIdx-1]  + nums[fourthIdx-2] + nums[fourthIdx-3] < target {
            continue
         }
+        */
         /*
         if fourthIdx != n-1 && nums[fourthIdx] == nums[fourthIdx+1] {
             continue
