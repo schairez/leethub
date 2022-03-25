@@ -1,5 +1,4 @@
 
-
 func isNumeric(b byte) bool {
     if v := int(b - '0'); v >= 0 && v <= 9 {
         return true
@@ -22,9 +21,9 @@ func calculate(s string) int {
     )
     operator = '+'
     n := len(s)
-    //i := 0
-    //for  i < n {
-    for i := 0; i < n; i++ {
+    i := 0
+    for i < n {
+    //for i := 0; i < n; i++ {
         //currChar = s[i]
         for i < n && isWhitespace(s[i]) {
             i++
@@ -51,6 +50,7 @@ func calculate(s string) int {
         } else if i < n && !isWhitespace(s[i]) {
             operator = s[i]
         }
+        i++
     }
     res := 0
     for len(stack) != 0 {
