@@ -2,7 +2,6 @@
 //import "math/rand"
 
 func init() {
-    debug.SetGCPercent(-1)
     rand.Seed(time.Now().UnixNano())
 }
 
