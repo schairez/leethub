@@ -2,11 +2,13 @@
 //import "math/rand"
 
 func init() {
+    debug.SetGCPercent(-1)
     rand.Seed(time.Now().UnixNano())
 }
 
 
 // iterative quick select approach
+// random partition using boyer-yates algorithm shuffle
 
 func findKthLargest(nums []int, k int) int {
     n := len(nums)
