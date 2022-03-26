@@ -13,7 +13,7 @@ func canSeePersonsCount(heights []int) []int {
 	/// 10, 6, when at 8
 	for i := range heights {
 		for {
-			if len(stack) == 0 || heights[i] < heights[stack[len(stack)-1]] {
+			if len(stack) == 0 || heights[i] <= heights[stack[len(stack)-1]] {
 				break
 			}
 			topIdx, stack = stack[len(stack)-1], stack[:len(stack)-1]
