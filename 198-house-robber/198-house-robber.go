@@ -1,3 +1,7 @@
+
+//time: O(n)
+//space: O(n)
+
 func max(a, b int) int { if a >= b { return a}; return b}
 func rob(nums []int) int {
     n := len(nums)
