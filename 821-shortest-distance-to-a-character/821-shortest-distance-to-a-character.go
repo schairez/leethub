@@ -1,3 +1,8 @@
+
+// 821. Shortest Distance to a Character
+// time: O(n)
+// space: O(1)
+
 func abs(x int) int {
     if x < 0 {
         return -x
