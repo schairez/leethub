@@ -1,7 +1,9 @@
 
+
 // 821. Shortest Distance to a Character
 // time: O(n)
-// space: O(1)
+// space: O(1) if not counting res; O(n) if counting res as growth rate based on input
+// but no aux D.S. were used ;)
 
 func abs(x int) int {
     if x < 0 {
