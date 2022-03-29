@@ -12,19 +12,15 @@ func shortestToChar(s string, c byte) []int {
     found := false
     end := 0
     for end < n {
-        fmt.Println("what")
         if s[end] != c {
             if found {
                 res[end] = abs(end - charIdx)
             }
-            //if !found { break }
-            fmt.Println("why")
         } else {
             charIdx = end
-            found = true
-            //if !found { found = true } 
+            //found = true
+            if !found { found = true } 
             start := end -1
-            fmt.Println("we here")
             for start >= 0 && s[start] != c {
                 cand := abs(start - charIdx)
                 fmt.Println(start, cand)
