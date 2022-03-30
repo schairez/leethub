@@ -1,3 +1,5 @@
+// time: O(m*n)
+// space: O(m*n)
 func shortestPathBinaryMatrix(grid [][]int) int {
     if grid[0][0] == 1 {
         return -1
@@ -13,6 +15,7 @@ func shortestPathBinaryMatrix(grid [][]int) int {
          {1,-1}, // NE
     }
     numR, numC := len(grid), len(grid[0])
+    // hashset
     visited := make([][]bool, numR)
     for x := range visited {
         visited[x] = make([]bool, numC)
@@ -20,7 +23,7 @@ func shortestPathBinaryMatrix(grid [][]int) int {
     srcNode := [2]int{0,0}
     x, y := srcNode[0], srcNode[1]
     var (
-        queue [][2]int 
+        queue [][2]int  
         currNode [2]int
         dist     int
     )
