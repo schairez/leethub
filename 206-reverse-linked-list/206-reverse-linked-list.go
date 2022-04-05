@@ -1,6 +1,3 @@
-//recursive implementation
-// time: O(n) 
-// space: O(n) stack trace
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -9,8 +6,44 @@
  * }
  */
 
-//time: O(n)
-//space: O(n)
+// 206. Reverse Linked List
+// time: O(n)
+// space: O(1)
+func reverseList(head *ListNode) *ListNode {
+    if head == nil {
+        return nil
+    }
+    var (
+        currNode *ListNode
+        nextNode *ListNode
+        tmpNode *ListNode
+    )
+    currNode = head
+    for {
+        tmpNode = currNode.Next
+        currNode.Next = nextNode
+        nextNode = currNode
+        if tmpNode == nil {
+            break
+        }
+        currNode = tmpNode
+    }
+    return currNode
+}
+
+
+
+
+
+
+
+
+// prev versions
+
+//recursive implementation
+// time: O(n) 
+// space: O(n) stack trace
+/*
 func reverseList(head *ListNode) *ListNode {
     if head == nil {
         return head
@@ -28,9 +61,11 @@ func reverseList(head *ListNode) *ListNode {
     
     return recurseRev(nil, head)
 }
+*/
     
 //time: O(n)
 //space: O(1)
+/*
 func reverseListIter(head *ListNode) *ListNode {
     if head == nil || head.Next == nil {
         return head
@@ -42,9 +77,7 @@ func reverseListIter(head *ListNode) *ListNode {
     }
     return prev
 }
-    
-    
-
+ */   
 
 
 /*
