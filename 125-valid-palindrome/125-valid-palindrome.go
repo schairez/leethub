@@ -1,42 +1,33 @@
+// 125. Valid Palindrome
 // time: O(n)
-// space: O(n)
+// space: O(1)
 
 import "strings"
 
 func isPalindrome(s string) bool {
     alphabet := newAlphaNumTable()
     n := len(s)
-    var sb strings.Builder
-    sb.Grow(n)
-    for i := 0; i < n; i++ {
-        if alphaByte, err := alphabet.lowerAlphaIfValid(s[i]); err == nil {
-            sb.WriteByte(alphaByte)
-        } else {
-            if idx := int(s[i] - '0'); idx >= 0 && idx <= 9 {
-                sb.WriteByte(alphabet.numTbl[idx])
-            } 
-        }
-    }
-    str := sb.String()
-    return isStrPalindrome(str)
-}
-
-func isStrPalindrome(s string) bool {
-    n := len(s)
-    if n == 0 {
-        return true
-    }
-    i, j := 0, n -1 
+    i, j := 0, n -1
     for i < j {
-        if s[i] != s[j] {
+        alphaNum1, err := alphabet.alphaNumByte(s[i])
+        if err != nil {
+            i++
+            continue
+        } 
+        alphaNum2, err := alphabet.alphaNumByte(s[j])
+        if err != nil {
+            j--
+            continue
+        } 
+        if alphaNum1 != alphaNum2 {
             return false
         }
         i++
         j--
     }
-    
-    return true 
+    return true
 }
+
 
 
 type alphaNumTable struct {
@@ -55,14 +46,38 @@ func newAlphaNumTable() alphaNumTable {
     return alphaNumTable{string(alphaTbl), string(numTbl)}
 }
 
-
-func (a alphaNumTable) lowerAlphaIfValid(b byte) (byte, error) {
+// returns lower alpha char if valid
+// else returns back numeric char is valid
+// if not valid returns err
+func (a alphaNumTable) alphaNumByte(b byte) (byte, error) {
     if v := int(b - 'a'); v >= 0 && v < 26 {
         return a.alphaTbl[v], nil
     }
     if v := int(b - 'A'); v >= 0 && v < 26 {
         return a.alphaTbl[v], nil
     }
+    if idx := int(b - '0'); idx >= 0 && idx <= 9 {
+        return a.numTbl[idx], nil
+    } 
+    
     return byte('0'), fmt.Errorf("invalid alpha")
 }
 
+/*
+func isStrPalindrome(s string) bool {
+    n := len(s)
+    if n == 0 {
+        return true
+    }
+    i, j := 0, n -1 
+    for i < j {
+        if s[i] != s[j] {
+            return false
+        }
+        i++
+        j--
+    }
+    
+    return true 
+}
+*/
