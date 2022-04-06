@@ -2,7 +2,6 @@
 // time: O(n)
 // space: O(1)
 
-import "strings"
 
 func isPalindrome(s string) bool {
     alphabet := newAlphaNumTable()
@@ -62,22 +61,3 @@ func (a alphaNumTable) alphaNumByte(b byte) (byte, error) {
     
     return byte('0'), fmt.Errorf("invalid alpha")
 }
-
-/*
-func isStrPalindrome(s string) bool {
-    n := len(s)
-    if n == 0 {
-        return true
-    }
-    i, j := 0, n -1 
-    for i < j {
-        if s[i] != s[j] {
-            return false
-        }
-        i++
-        j--
-    }
-    
-    return true 
-}
-*/
