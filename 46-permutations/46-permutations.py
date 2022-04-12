@@ -10,6 +10,7 @@ class Solution:
             nonlocal n
             if idx == n:
                 res.append(nums[:])
+                return
             for i in range(idx, n):
                 nums[idx], nums[i] = nums[i], nums[idx]
                 helper(idx+1)
