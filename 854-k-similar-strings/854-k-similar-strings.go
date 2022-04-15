@@ -16,15 +16,6 @@ func kSimilarity(s1 string, s2 string) int {
         node    []byte
         //charLoc [6]map[int]struct{}
     )
-    /*
-    for i := 0; i < n; i++ {
-        idx := int(s2[i]-'a')
-        if charLoc[idx] == nil {
-            charLoc[idx] = make(map[int]struct{})
-        }
-        charLoc[idx][i] = struct{}{} 
-    }
-    */
     
     visited := make(map[string]struct{})
     visited[s1] = struct{}{}
@@ -40,42 +31,21 @@ func kSimilarity(s1 string, s2 string) int {
             for i < n && node[i] == s2[i] {
                 i++
             }
-            nIdx := i+1
-            for nIdx < n {
-                if node[nIdx] == s2[nIdx] || node[nIdx] != s2[i] {
-                    nIdx++
+            j := i+1
+            for j < n {
+                if node[j] == s2[j] || node[j] != s2[i] {
+                    j++
                     continue
                 }
-                node[i], node[nIdx] = node[nIdx], node[i]
+                node[i], node[j] = node[j], node[i]
                 permKey := string(node) 
                 if _, exists := visited[permKey]; !exists {
                     queue = append(queue, append([]byte{}, node...))
                     visited[permKey] = struct{}{}
                 }
-                node[i], node[nIdx] = node[nIdx], node[i]
-                nIdx++
+                node[i], node[j] = node[j], node[i]
+                j++
             }
-            /*
-                if node[i] == s2[i] {
-                    continue
-                }
-                chIdx := int(s1[i]-'a')
-                // find correct loc for char
-                for corrIdx := range charLoc[chIdx] {
-                    if node[corrIdx] == node[i] {
-                        continue
-                    }
-                    node[i], node[corrIdx] = node[corrIdx], node[i]
-                    
-                    permKey := string(node) 
-                    if _, exists := visited[permKey]; ! exists {
-                        queue = append(queue, append([]byte{}, node...))
-                        visited[permKey] = struct{}{}
-                    }
-                    node[i], node[corrIdx] = node[corrIdx], node[i]
-                }
-            }
-            */
         }
         lvl++
     }
