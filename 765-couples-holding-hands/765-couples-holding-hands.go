@@ -13,6 +13,8 @@ func isCouple(num1, num2 int) bool {
     }
     return true
 }
+// time: O(n^2)
+// space: O(1)
 
 func minSwapsCouples(row []int) int {
     n := len(row)
