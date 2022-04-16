@@ -1,15 +1,4 @@
 
-//
-//
-
-func abs(x int) int {
-    if x < 0 {
-        return -x
-    }
-    return x
-}
-
-// TODO: not deterministic
 func isCouple(num1, num2 int) bool {
     if num1 % 2 == 0 && num2 % 2 == 0 {
         return false
