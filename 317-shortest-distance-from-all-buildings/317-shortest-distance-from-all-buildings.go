@@ -1,32 +1,53 @@
+
 const (
     emptyLand = iota
-    building
+    house
     obstacle
 )
 
-const (
-    maxInt32 = 1 << 31 -1
-)
+// 317. Shortest Distance from All Buildings
+// BFS from buildings to empty lands approach
+// time: O(m^2 * n^2)
+// space: O(m*n)
 
 func shortestDistance(grid [][]int) int {
-    numR, numC := len(grid), len(grid[0])
-    
-    total := 0
-    for r := 0; r < numR; r++ {
-        for c := 0; c < numC; c++ {
-            if grid[r][c] == building {
-                total++
+    numX, numY := len(grid), len(grid[0])
+    // condition: 1 <= m, n <= 50
+    // enqueue all the buildings
+    var (
+        houseCoord [2]int
+        houseQueue [][2]int
+    )
+    for x := 0; x < numX; x++ {
+        for y := 0; y < numY; y++ {
+            if grid[x][y] == house {
+                houseQueue = append(houseQueue, [2]int{x, y})
             }
         }
     }
-    var minDist int = maxInt32
-    for r := 0; r < numR; r++ {
-        for c := 0; c < numC; c++ {
-            if grid[r][c] == emptyLand {
-                if candDist := bfs(grid, total, r, c); candDist < minDist {
-                    minDist = candDist
-                }
-            } 
+    // constraint: There will be at least one building in the grid.
+    totalHouses := len(houseQueue)
+    
+    distanceGrid := make([][]int, numX)
+    numReachGrid := make([][]int, numX)
+    for x := range distanceGrid {
+        distanceGrid[x] = make([]int, numY)
+        numReachGrid[x] = make([]int, numY)
+    }
+    numReachable := 1
+    for len(houseQueue) != 0 {
+        houseCoord, houseQueue = houseQueue[0], houseQueue[1:]
+        bfs(grid, distanceGrid, numReachGrid, houseCoord, numReachable)
+        numReachable++
+    }
+    const maxInt32 = 1 << 31 - 1
+    minDist := maxInt32
+    for x := 0; x < numX; x++ {
+        for y := 0; y < numY; y++ {
+            if numReachGrid[x][y] == totalHouses &&
+            distanceGrid[x][y] < minDist {
+                minDist = distanceGrid[x][y]
+            }
         }
     }
     if minDist == maxInt32 {
@@ -35,49 +56,38 @@ func shortestDistance(grid [][]int) int {
     return minDist
 }
 
-func inArea(numR, numC, r, c int) bool {
-    if r < 0 || r >= numR || c < 0 || c >= numC {
-        return false
-    }
-    return true
-}
-
-func bfs(grid [][]int, total, startR, startC int) int {
-    dX := [4]int{0,0,1,-1}
-    dY := [4]int{1,-1,0,0}
-    numR, numC := len(grid), len(grid[0])
-    totalDist, dist := 0, 0
-    numBuildings := 0
-    visited := make([][]bool, numR)
-    for r := range visited {
-        visited[r] = make([]bool, numC)
-    }
-    queue := make([][2]int, 0)
-    queue = append(queue, [2]int{startR,startC})
-    var node [2]int
-    var r, c int
-    for len(queue) != 0 && numBuildings != total {
+func bfs(grid [][]int, distanceGrid [][]int,
+         numReachGrid[][]int, houseCoord [2]int, numReachable int ) {
+    
+    numX, numY := len(grid), len(grid[0])
+    dirs := [5]int{1, 0, -1, 0, 1}
+    var (
+        node [2]int
+        queue [][2]int
+    )
+    dist := 0
+    queue = append(queue, houseCoord)
+    for len(queue) != 0 {
         for currLen := len(queue); currLen != 0; currLen-- {
             node, queue = queue[0], queue[1:]
-            r, c = node[0], node[1]
-            if grid[r][c] == building {
-                numBuildings++
-                totalDist += dist
-                continue
-            } 
-            for idx := 0; idx < 4; idx++ {
-                nextR, nextC := r + dX[idx], c + dY[idx]
-                if inArea(numR, numC, nextR, nextC) && !visited[nextR][nextC] &&
-                grid[nextR][nextC] != obstacle {
-                    queue = append(queue, [2]int{nextR, nextC})
-                    visited[nextR][nextC] = true
+            x, y := node[0], node[1]
+            distanceGrid[x][y] += dist
+            for i := 1; i < 5; i++ {
+                newX := x + dirs[i-1]
+                newY := y + dirs[i]
+                if newX < 0 || newX >= numX || newY < 0 || newY >= numY {
+                    continue
+                }
+                if grid[newX][newY] == house || grid[newX][newY] == obstacle {
+                    continue
+                }
+                if numReachGrid[newX][newY] == numReachable - 1 {
+                    queue = append(queue, [2]int{newX, newY})
+                    numReachGrid[newX][newY] = numReachable
                 }
             }
         }
         dist++
     }
-    if numBuildings != total {
-        return maxInt32
-    }
-    return totalDist
-} 
+}
+
