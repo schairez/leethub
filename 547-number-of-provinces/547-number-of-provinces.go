@@ -1,3 +1,6 @@
+// 547. Number of Provinces
+// time: O(n*n)
+// space: O(n)
 
 func findCircleNum(isConnected [][]int) int {
     n := len(isConnected)
