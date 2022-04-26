@@ -64,6 +64,9 @@ func (this *AutocompleteSystem) Input(c byte) []string {
 func (this *AutocompleteSystem) topKPrefix(k int, prefix string) []string {
     // use the indexes for a tmp vector of sentences
     n := len(this.currNode.Indexes)
+    if n == 0 {
+        return []string{}
+    }
     if n < k {
         k = n
     }
