@@ -1,6 +1,7 @@
 
 type AutocompleteSystem struct {
-    rootNode, currNode *TrieNode
+    rootNode *TrieNode
+    currNode *TrieNode
     sentenceToIdx map[string]int
     sentenceData []pair
     sb strings.Builder
@@ -42,15 +43,11 @@ func (this *AutocompleteSystem) Input(c byte) []string {
         this.currNode = this.rootNode
         return []string{}
     }
-    //fmt.Println(string(c))
-    //fmt.Println("data")
-    //fmt.Println(this.sentenceData)
     this.sb.WriteByte(c)
     idx := 26
     if c != ' ' {
         idx = int(c - 'a')
     }
-    // TODO
     if this.currNode.Children[idx] == nil {
         this.currNode.Children[idx] = &TrieNode{}
     }
@@ -81,8 +78,6 @@ func (this *AutocompleteSystem) topKPrefix(k int, prefix string) []string {
         }
         return tmpArr[i].times > tmpArr[j].times
     }) 
-    //fmt.Println(tmpArr)
-    
     for i := 0; i < k; i++ {
         res = append(res, tmpArr[i].sentence)
     }
