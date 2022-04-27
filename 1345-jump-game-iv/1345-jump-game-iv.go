@@ -1,3 +1,5 @@
+// time: O(n)
+// space: O(n)
 
 func minJumps(arr []int) int {
     n := len(arr)
