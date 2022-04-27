@@ -1,3 +1,6 @@
+// 1306. Jump Game III
+// time: O(n)
+// space: O(n)
 func canReach(arr []int, start int) bool {
     n := len(arr)
     visited := make([]bool, n)
