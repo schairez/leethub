@@ -1,10 +1,29 @@
 
+func jump(nums []int) int {
+    const maxInt32 = 1 << 31 -1
+    n := len(nums)
+    dp := make([]int, n)
+    for i := range dp {
+        dp[i] = maxInt32
+    }
+    dp[0] = 0
+    for i := 1; i < n; i++ {
+        for j := 0; j < i; j++ {
+            if nums[j] >= i - j {
+                dp[i] = min(dp[i], dp[j] + 1)
+            }
+        }
+    }
+    return dp[n-1]
+}
+
+
 func max(a, b int) int { if a >= b { return a}; return b}
 
 // 45. Jump Game II
 // time: O(n) space: O(1)
 // condition: we can reach lastIdx
-func jump(nums []int) int {
+func jumpGreedy(nums []int) int {
     n := len(nums)
     dst := n-1
     numJumps := 0
