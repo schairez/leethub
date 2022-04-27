@@ -7,16 +7,16 @@ func minJumps(arr []int) int {
         return 0
     }
     dst := n-1
-    jumpIndexes := make(map[int][]int, n)
+    graph := make(map[int][]int, 0)
     for i, v := range arr {
-        if _, ok := jumpIndexes[v]; !ok {
-            jumpIndexes[v] = make([]int, 0)
+        if _, ok := graph[v]; !ok {
+            graph[v] = make([]int, 0)
         }
-        jumpIndexes[v] = append(jumpIndexes[v], i)
+        graph[v] = append(graph[v], i)
     }
     queue := make([]int, 0, n)
     queue = append(queue, 0)
-    visited := make([]bool, n) // for visiting nodes
+    visited := make([]bool, n) 
     visited[0] = true
     lvl := 0
     var node int
@@ -34,7 +34,7 @@ func minJumps(arr []int) int {
                 queue = append(queue, nei)
                 visited[nei] = true
             }
-            neighbors, exists := jumpIndexes[arr[node]] 
+            neighbors, exists := graph[arr[node]] 
             if exists {
                 for _, nei := range neighbors {
                     if !visited[nei] {
@@ -42,7 +42,7 @@ func minJumps(arr []int) int {
                         visited[nei] = true
                     }
                 }
-                delete(jumpIndexes, arr[node])
+                delete(graph, arr[node])
             }
         }
         lvl++
@@ -57,12 +57,12 @@ func minJumps(arr []int) int {
         return 0
     }
     dst := n-1
-    jumpIndexes := make(map[int][]int, n)
+    graph := make(map[int][]int, n)
     for i, v := range arr {
-        if _, ok := jumpIndexes[v]; !ok {
-            jumpIndexes[v] = make([]int, 0)
+        if _, ok := graph[v]; !ok {
+            graph[v] = make([]int, 0)
         }
-        jumpIndexes[v] = append(jumpIndexes[v], i)
+        graph[v] = append(graph[v], i)
     }
     queue := make([]int, 0, n)
     queue = append(queue, 0)
@@ -87,7 +87,7 @@ func minJumps(arr []int) int {
             }
             if _, seenNumber := sameNumberVisited[arr[node]]; !seenNumber {
                 sameNumberVisited[arr[node]] = struct{}{}
-                neighbors := jumpIndexes[arr[node]] 
+                neighbors := graph[arr[node]] 
                 if len(neighbors) > 1 {
                     for _, nei := range neighbors {
                         if !visited[nei] {
