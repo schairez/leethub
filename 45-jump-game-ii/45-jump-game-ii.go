@@ -1,29 +1,12 @@
+// 45. Jump Game II
 
-func jump(nums []int) int {
-    const maxInt32 = 1 << 31 -1
-    n := len(nums)
-    dp := make([]int, n)
-    for i := range dp {
-        dp[i] = maxInt32
-    }
-    dp[0] = 0
-    for i := 1; i < n; i++ {
-        for j := 0; j < i; j++ {
-            if nums[j] >= i - j {
-                dp[i] = min(dp[i], dp[j] + 1)
-            }
-        }
-    }
-    return dp[n-1]
-}
-
-
+func min(a, b int) int { if a <= b { return a}; return b}
 func max(a, b int) int { if a >= b { return a}; return b}
 
-// 45. Jump Game II
+// greedy + implicit BFS (queueless) 
 // time: O(n) space: O(1)
 // condition: we can reach lastIdx
-func jumpGreedy(nums []int) int {
+func jump(nums []int) int {
     n := len(nums)
     dst := n-1
     numJumps := 0
@@ -42,7 +25,8 @@ func jumpGreedy(nums []int) int {
 }
 
 
-
+// time: O(n)
+// space: O(n)
 
 func jumpBFS(nums []int) int {
     lvl := 0
@@ -72,14 +56,36 @@ func jumpBFS(nums []int) int {
     return -1
 }
 
-func min(a, b int) int { if a <= b { return a}; return b}
+
+// time: O(n^2)
+// space: O(n)
+func jumpDP(nums []int) int {
+    const maxInt32 = 1 << 31 -1
+    n := len(nums)
+    dp := make([]int, n)
+    for i := range dp {
+        dp[i] = maxInt32
+    }
+    dp[0] = 0
+    for i := 1; i < n; i++ {
+        for j := 0; j < i; j++ {
+            if nums[j] >= i - j {
+                dp[i] = min(dp[i], dp[j] + 1)
+            }
+        }
+    }
+    return dp[n-1]
+}
+
 
 
 // top down dfs memo approach
 // time: O(n^2) space: O(n)
-func jumpDFS(nums []int) int {
+func jumpDFSMemo(nums []int) int {
     n := len(nums)
     memo := make([]int, n)
+    // constraint:
+    // 1 <= nums.length <= 10^4
     for i := range memo {
         memo[i] = 10_000
     }
