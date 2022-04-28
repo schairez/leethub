@@ -1,26 +1,20 @@
-// 46. Permutations
-// space: O(n!)
-// time: O(n*n!)
-
 func permute(nums []int) [][]int {
     n := len(nums)
     var (
+        dfs func(int)
         res [][]int
-        dfs func(int, []int)
-    ) 
-    dfs = func(sIdx int, perm []int) {
-        if sIdx == n {
-            tmp := make([]int, 0, n)
-            res = append(res, append(tmp, perm...))
+    )
+    dfs = func(idx int) {
+        if idx == n {
+            res = append(res, append([]int{}, nums...))
             return
         }
-        for i := sIdx; i < n; i++ {
-            perm[i], perm[sIdx] = perm[sIdx], perm[i]
-            dfs(sIdx+1, perm)
-            perm[sIdx], perm[i] = perm[i], perm[sIdx] 
+        for i := idx; i < n; i++ {
+            nums[idx], nums[i] = nums[i], nums[idx]
+            dfs(idx+1)
+            nums[idx], nums[i] = nums[i], nums[idx]
         }
     }
-    dfs(0, nums)
-    
+    dfs(0)
     return res
 }
