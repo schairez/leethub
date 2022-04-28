@@ -1,15 +1,14 @@
+
 // 78. Subsets
 // time: O(n*2^n)
 // space: O(n*2^n)
 
 func subsets(nums []int) [][]int {
     n := len(nums)
-    var (
-        res [][]int
-        dfs func(int)
-    )
+    // 2^n subsets
+    res := make([][]int, 0, n << 1)
     subset := make([]int, 0, n)
-    
+    var dfs func(int)
     dfs = func(idx int) {
         res = append(res, append([]int{}, subset...))
         if idx == n {
