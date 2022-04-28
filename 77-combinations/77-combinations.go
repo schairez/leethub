@@ -1,3 +1,6 @@
+
+// time: O(nCk)
+// space: O(nCk)
 func combine(n int, k int) [][]int {
     var (
         res [][]int
