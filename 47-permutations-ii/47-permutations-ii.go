@@ -1,36 +1,29 @@
-// 47. Permutations II
-// time: O(n* n!)
-// space: O(n* n!)
 
 func permuteUnique(nums []int) [][]int {
     n := len(nums)
-    freqMap := make(map[int]int)
-    for _, num := range nums {
-        freqMap[num]++
-    }
     var (
         res [][]int
-        dfs func([]int)
+        dfs func(int)
     )
-    dfs = func(perm []int) {
-        if len(perm) == n {
+    
+    dfs = func(idx int) {
+        if idx == n {
             tmp := make([]int, n)
-            copy(tmp, perm)
+            copy(tmp, nums)
             res = append(res, tmp)
-            return
-        }
-        for numKey, cntVal := range freqMap {
-            if cntVal == 0 {
-                continue
+        } 
+        
+        set := make(map[int]struct{})
+        for i := idx; i < n; i++ {
+            if _, exists := set[nums[i]]; !exists {
+                nums[i], nums[idx] = nums[idx], nums[i]
+                dfs(idx+1)
+                nums[i], nums[idx] = nums[idx], nums[i]
+                set[nums[i]] = struct{}{}
             }
-            perm = append(perm, numKey)
-            freqMap[numKey]--
-            dfs(perm)
-            freqMap[numKey]++
-            perm = perm[:len(perm)-1]
         }
     }
     
-    dfs([]int{})
+    dfs(0)
     return res
 }
