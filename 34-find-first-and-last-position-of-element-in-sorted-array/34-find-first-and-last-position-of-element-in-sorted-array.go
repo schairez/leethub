@@ -1,55 +1,49 @@
-
-// 34. Find First and Last Position of Element in Sorted Array
-//
-// time: O(2*logn) ≈ O(logn)
-// space: O(1)
+// [5,7,7,8,8,10], target = 8
 
 func searchRange(nums []int, target int) []int {
     n := len(nums)
     if n == 0 {
         return []int{-1, -1}
     }
-    binSearch := func(findLeftMost bool) int {
-        start, end := 0, n-1
-        for start + 1 < end { // terminates: start + 1 == end
-            mid := start + (end - start) >> 1
-            if nums[mid] < target {
-                start = mid
-            } else if nums[mid] > target {
-                end = mid
-            } else {
-                // if findLeftmost and idx == target :
-                // we want to continue our search with idx as closed right boundary  
-                if findLeftMost {
-                    end = mid
-                    continue
-                }
-                // for finding rightmost
-                // we close our left boundary
-                start = mid
-            }
-        }
-        if !findLeftMost {
-            start, end = end, start
-        }
-        //postprocessing
-        if nums[start] == target {
-            return start
-        } else if nums[end] == target {
-            return end
-        }
-        return -1
-    }
     res := make([]int, 2)
-    findLeft := true
-    res[0] = binSearch(findLeft)
-    if res[0] == -1 {
-        res[1] = -1
+    // search for leftmost
+    start, end := 0, n-1
+    for start + 1 < end {
+        mid := start + (end - start) >> 1
+        if nums[mid] > target {
+            end = mid
+        } else if nums[mid] == target {
+            end = mid
+        }  else {
+            start = mid
+        }
+    }
+    if nums[start] == target {
+        res[0] = start
+    } else if nums[end] == target {
+        res[0] = end
+    } else {
+        res[0], res[1] = -1, -1
         return res
     }
-    res[1] = binSearch(!findLeft)
-    if res[1] == -1 {
-        return res
+    // search rightmost
+    start, end = 0, n-1
+    for start + 1 < end {
+        mid := start + (end - start) >> 1
+        if nums[mid] > target {
+            end = mid
+        } else if nums[mid] == target {
+            start = mid
+        } else {
+            start = mid
+        }
     }
-    return res
+    if nums[end] == target {
+        res[1] = end
+    } else if nums[start] == target {
+        res[1] = start
+    } else {
+        res[0], res[1] = -1, -1
+    }
+        return res
 }
