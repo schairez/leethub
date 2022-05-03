@@ -1,3 +1,6 @@
+// 34. Find First and Last Position of Element in Sorted Array
+// time: O(2logn) ≈ O(logn)
+// space: O(1)
 // [5,7,7,8,8,10], target = 8
 
 func searchRange(nums []int, target int) []int {
