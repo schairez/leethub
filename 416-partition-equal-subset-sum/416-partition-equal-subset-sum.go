@@ -1,4 +1,28 @@
+
 func canPartition(nums []int) bool {
+    n := len(nums)
+    sumTotal := 0
+    for i := range nums {
+        sumTotal += nums[i]
+    }
+    if sumTotal % 2 == 1 {
+        return false
+    }
+    target := sumTotal >> 1
+    dp := make([]bool, target+1)
+    dp[0] = true
+    for i := 0; i < n; i++ {
+        for j := target; j >= nums[i]; j-- {
+            dp[j] = dp[j] || dp[j - nums[i]]
+        }
+    }
+    return dp[target]
+}
+
+// top down dfs approach
+// time: O(n*target)
+// space: O(n*target)
+func canPartitionMemo(nums []int) bool {
     n := len(nums)
     sumTotal := 0
     for i := range nums {
