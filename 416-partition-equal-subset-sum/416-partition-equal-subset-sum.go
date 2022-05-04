@@ -24,13 +24,13 @@ func canPartition(nums []int) bool {
         if isPossible, exists := memo[pair{idx, total}]; exists { 
             return isPossible
         }
-        incl := false
+        includeItem := false
         if total - nums[idx] >= 0 {
-            incl = dfs(idx+1, total - nums[idx])
+            includeItem = dfs(idx+1, total - nums[idx])
         }
-        excl := dfs(idx+1, total)
+        // include item or exclude item
+        memo[pair{idx, total}] = includeItem || dfs(idx+1, total)
         
-        memo[pair{idx, total}] = incl || excl
         
         return memo[pair{idx, total}]
     }
