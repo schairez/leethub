@@ -1,4 +1,7 @@
-
+// 416. Partition Equal Subset Sum
+// rolling array DP table
+// time: O(n*target)
+// space: O(target)
 func canPartition(nums []int) bool {
     n := len(nums)
     sumTotal := 0
