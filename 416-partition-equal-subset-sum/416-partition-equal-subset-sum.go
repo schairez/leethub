@@ -16,6 +16,9 @@ func canPartition(nums []int) bool {
     dp[0] = true
     for i := 0; i < n; i++ {
         for j := target; j >= nums[i]; j-- {
+            if dp[target] {
+                return true
+            }
             dp[j] = dp[j] || dp[j - nums[i]]
         }
     }
