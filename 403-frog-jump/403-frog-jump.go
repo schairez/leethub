@@ -1,3 +1,5 @@
+// time: O(n)
+// space: O()
 func canCross(stones []int) bool {
     dirs := [3]int{-1, 0, 1}
     n := len(stones)
