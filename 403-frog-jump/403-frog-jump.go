@@ -1,6 +1,6 @@
 
 // 403. Frog Jump
-// time: O(4n) ≈ O(n)
+// time: O(n^2) 
 // space: O(n^2) 
 func canCross(stones []int) bool {
     dirs := [3]int{-1, 0, 1}
