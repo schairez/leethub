@@ -1,5 +1,6 @@
-// time: O(n)
-// space: O()
+// 403. Frog Jump
+// time: O(4n) ≈ O(n)
+// space: O(2n) ≈ O(n)
 func canCross(stones []int) bool {
     dirs := [3]int{-1, 0, 1}
     n := len(stones)
@@ -18,6 +19,7 @@ func canCross(stones []int) bool {
     visited[nodeData{src,0}] = true
     queue = append(queue, nodeData{src, 0})
     for len(queue) != 0 {
+        fmt.Println(len(queue))
         for currLen := len(queue); currLen != 0; currLen-- {
             pollNode, queue = queue[0], queue[1:]
             if pollNode.loc == dst {
