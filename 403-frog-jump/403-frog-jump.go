@@ -16,7 +16,7 @@ func canCross(stones []int) bool {
         pollNode nodeData 
         queue []nodeData
     )
-    visited := make(map[nodeData]bool, n*2)
+    visited := make(map[nodeData]bool)
     visited[nodeData{src,0}] = true
     queue = append(queue, nodeData{src, 0})
     for len(queue) != 0 {
