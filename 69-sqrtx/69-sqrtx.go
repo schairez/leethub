@@ -1,9 +1,25 @@
-
 func mySqrt(x int) int {
+    if x < 2 {
+        return x
+    }
+    lo, hi := 1, x-1
+    for lo + 1 < hi {
+        mid := lo + (hi-lo) >> 1
+        if mid*mid > x {
+            hi = mid
+        } else {
+            lo = mid
+        }
+    }
+    return lo
+
+}
+
+
+func mySqrtAlt(x int) int {
     if x <= 0 {
         return 0
     }
-    //lo, hi := 1, 1 << 31 -1 
     lo, hi := 1, x-1
     for lo + 1 < hi {
         mid := lo + (hi-lo) >> 1
