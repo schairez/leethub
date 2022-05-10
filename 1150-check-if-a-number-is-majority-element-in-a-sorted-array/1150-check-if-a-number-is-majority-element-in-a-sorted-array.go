@@ -1,3 +1,6 @@
+// 1150. Check If a Number Is Majority Element in a Sorted Array
+// time: O(2logn) ≈ O(logn)
+// space: O(1)
 func isMajorityElement(nums []int, target int) bool {
     // find leftmost idx of t
     n := len(nums)
