@@ -1,23 +1,16 @@
 func findPeakElement(nums []int) int {
-    /// lo, hi
-    start, end := 0, len(nums)-1
-    //[2,1]
-    for start < end {
-        mid := start + (end-start) >> 1
-        if nums[mid] < nums[mid+1] {
-            start = mid+1
+    n := len(nums)
+    lo, hi := 0, n-1
+    for lo + 1 < hi {
+        mid := lo + (hi-lo) >> 1
+        if nums[mid] > nums[mid+1] {
+            hi = mid
         } else {
-            end = mid
+            lo = mid
         }
-            // l = mid+1
     }
-    return start
-    
+    if n == 1 || nums[lo] > nums[lo+1] {
+        return lo
+    }
+    return hi
 }
-/*
-m = 2 + (3-2)/2 = 2
-            l
-n ums = [1,2,3,1]
-          |
-          m
-*/
