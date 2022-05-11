@@ -1,3 +1,7 @@
+// 154. Find Minimum in Rotated Sorted Array II
+// time: O(n) avg O(logn)
+// space: O(1)
+
 
 func findMin(nums []int) int {
     n := len(nums)
