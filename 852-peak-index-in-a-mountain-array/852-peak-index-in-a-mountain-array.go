@@ -1,3 +1,7 @@
+
+// 852. Peak Index in a Mountain Array
+// time: O(logn)
+// space: O(1)
 func peakIndexInMountainArray(arr []int) int {
     n := len(arr)
     lo, hi := 0, n-1 
