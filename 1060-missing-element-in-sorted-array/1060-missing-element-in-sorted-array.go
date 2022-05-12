@@ -1,24 +1,26 @@
 func missingElement(nums []int, k int) int {
-    start, end := 0, len(nums)-1
-    var numMissing int
-    var mid int
-    for start <= end {
-        mid = start + (end-start) >> 1
-        numMissing = nums[mid] - (nums[0]+ mid)
-         if numMissing < k { // [start, m]
-            start = mid+1
-         } else {
-             end = mid-1
-         }
+    n := len(nums)
+    lo, hi := 0, n-1
+    numInRange := nums[hi] - nums[lo] + 1
+    numMissing := numInRange - n
+    if k > numMissing {
+        return nums[hi] + k - numMissing
+    } 
+    for lo + 1 < hi {
+        mid := lo + (hi-lo) >> 1
+        // range numElems based on vals
+        numInRange := nums[mid] - nums[lo] + 1 
+        // capture numElems based on idx
+        numInArr := mid - lo + 1
+        // how many missing positives in range?
+        numMissing := numInRange - numInArr
+        if numMissing < k {
+            lo = mid
+            k -= numMissing
+        } else {
+            hi = mid
+        }
     }
-    numMissing = nums[end] - (nums[0]+end)
-    return nums[end] + (k - numMissing)
-    
+    return nums[lo] + k
 }
 
-        //numMissing = numElemsInRange - numVals
-        //to the left num
-        // num elems in range
-        //numElemsInRange := nums[mid] - nums[start] + 1 
-        // numVals in array from left to right 
-        // numVals := mid - start + 1
