@@ -1,11 +1,11 @@
+
+// 1060. Missing Element in Sorted Array
+// time: O(logn)
+// space: O(1)
+
 func missingElement(nums []int, k int) int {
     n := len(nums)
     lo, hi := 0, n-1
-    numInRange := nums[hi] - nums[lo] + 1
-    numMissing := numInRange - n
-    if k > numMissing {
-        return nums[hi] + k - numMissing
-    } 
     for lo + 1 < hi {
         mid := lo + (hi-lo) >> 1
         // range numElems based on vals
@@ -21,6 +21,11 @@ func missingElement(nums []int, k int) int {
             hi = mid
         }
     }
-    return nums[lo] + k
+    numMissing := nums[hi] - nums[lo] + 1 - (hi - lo + 1)
+    if numMissing >= k {
+        return nums[lo] + k
+    }
+    // k > numMissing
+    return nums[hi] + k - numMissing
 }
 
