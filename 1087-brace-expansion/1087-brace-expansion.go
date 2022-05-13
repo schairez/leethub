@@ -1,9 +1,12 @@
 // 1087. Brace Expansion
 // BFS Approach
 // time: O(n) to iter string and append to lvlNodes
-// space: O(lvl*numNodes) for lvlNodes store
-// for queue
+// space: O(numLvl*numNodesAtLvl) for lvlNodes store
+// for queue BFS
 // time: O(|V| + |E|); our n-ary tree varies per input
+// we traverse through lvlNodes and append prev lvlNodes to currLvlNode edges
+// our branch factor won't be constant but we can 
+// sort takes O(nlogn) time and O(logn) space 
 // time ≈ O(n*n)
 // space ≈ O(n*n)
 
