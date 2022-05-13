@@ -3,10 +3,10 @@ func search(nums []int, target int) bool {
     n := len(nums)
     lo, hi := 0, n-1
     for lo + 1 < hi {
-        for lo < hi && nums[lo] == nums[lo+1] && nums[lo] != target {
+        for lo < hi && nums[lo] == nums[lo+1] {
             lo++
         }
-        for lo < hi && nums[hi] == nums[hi-1] && nums[hi] != target {
+        for lo < hi && nums[hi] == nums[hi-1] {
             hi--
         }
         mid := lo + (hi-lo) >> 1
