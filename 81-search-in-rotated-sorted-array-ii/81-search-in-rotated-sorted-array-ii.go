@@ -1,3 +1,7 @@
+
+//81. Search in Rotated Sorted Array II
+// time: avg: O(logn) worst: O(n)
+// space: O(1)
 // Input: nums = [2,5,6,0,0,1,2], target = 0
 func search(nums []int, target int) bool {
     n := len(nums)
@@ -10,7 +14,6 @@ func search(nums []int, target int) bool {
             hi--
         }
         mid := lo + (hi-lo) >> 1
-        fmt.Println(mid)
         if nums[mid] == target {
             return true
         }
@@ -22,6 +25,7 @@ func search(nums []int, target int) bool {
                 lo = mid
             }
         } else {
+            // nums b/w mid and end are sorted
             if nums[mid] <= target && target <= nums[hi] {
                 lo = mid
             } else {
@@ -29,7 +33,6 @@ func search(nums []int, target int) bool {
             }
         }
     }
-    fmt.Println(lo, hi)
     if nums[lo] == target {
         return true
     }
