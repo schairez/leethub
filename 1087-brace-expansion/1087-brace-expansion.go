@@ -1,3 +1,13 @@
+// 1087. Brace Expansion
+// BFS Approach
+// time: O(n) to iter string and append to lvlNodes
+// space: O(lvl*numNodes) for lvlNodes store
+// for queue
+// time: O(|V| + |E|); our n-ary tree varies per input
+// time ≈ O(n*n)
+// space ≈ O(n*n)
+
+
 func isAlpha(b byte) bool {
     return b >= 'a' && b <= 'z'
 }
@@ -32,7 +42,6 @@ func expand(s string) []string {
         node []byte
         queue [][]byte
     )
-    fmt.Println(lvlNodes)
     numLvls := len(lvlNodes)
     lvl := 0
     queue = append(queue, []byte{})
