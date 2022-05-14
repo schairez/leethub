@@ -1,10 +1,12 @@
+// 528. Random Pick with Weight
 
 type Solution struct {
     totalWt int
     prefixWtSum []int
 }
 
-
+// time: O(n)
+// space: O(n)
 func Constructor(w []int) Solution {
     n := len(w)
     totalWt := w[0]
@@ -17,6 +19,8 @@ func Constructor(w []int) Solution {
 }
 
 
+// time: O(logn)
+// space: O(1)
 func (this *Solution) PickIndex() int {
     target := rand.Intn(this.totalWt)+1
     lo, hi := 0, len(this.prefixWtSum)-1
