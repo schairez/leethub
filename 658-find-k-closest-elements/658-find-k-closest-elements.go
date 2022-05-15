@@ -1,14 +1,19 @@
+// time: O(logn + k)
+// space: O(1)
 func findClosestElements(arr []int, k int, x int) []int {
     n := len(arr)
     if k == n {
         return arr
     }
     left := closestElem(arr, x)
+    if arr[left] != x {
+        
+    }
     right := left
     for right - left + 1 < k {
-        if left-1 < 0 {
+        if left == 0 {
             right++
-        } else if (right+1 == n) {
+        } else if (right == n-1) {
             left--
         } else {
             if abs(x - arr[left-1]) <= abs(x - arr[right+1]) {
