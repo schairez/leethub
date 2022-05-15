@@ -6,9 +6,6 @@ func findClosestElements(arr []int, k int, x int) []int {
         return arr
     }
     left := closestElem(arr, x)
-    if arr[left] != x {
-        
-    }
     right := left
     for right - left + 1 < k {
         if left == 0 {
