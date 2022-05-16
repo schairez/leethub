@@ -1,4 +1,9 @@
 
+// 394. Decode String
+// k = maxNumTImes
+// time: O(k*n)
+// space: O(n)
+
 func decodeString(s string) string {
     res, _ := dfs(s, 0)
     return res
@@ -26,7 +31,6 @@ func dfs(s string, idx int) (string, int) {
             }
             numTimes = 0
             idx = nextIdx
-            //idx = idx + len(nextStr) + 2
         } else if s[idx] == ']' {
             return sb.String(), idx+1
         }
