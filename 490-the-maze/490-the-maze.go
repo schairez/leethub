@@ -1,3 +1,9 @@
+
+// 490. The Maze
+// BFS approach
+// time: O(m*n)
+// space: O(m*n)
+
 func hasPath(maze [][]int, start []int, destination []int) bool {
     // condition: start.length() == dest.length() == 2
     numR, numC := len(maze), len(maze[0])
