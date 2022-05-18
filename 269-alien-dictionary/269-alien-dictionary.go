@@ -46,6 +46,7 @@ func alienOrder(words []string) string {
         }
     }
     var sb strings.Builder
+    sb.Grow(numNodes)
     for len(queue) != 0 {
         for currLen := len(queue); currLen != 0; currLen-- {
             node, queue = queue[0], queue[1:]
