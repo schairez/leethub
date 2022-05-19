@@ -1,3 +1,4 @@
+// 1245. Tree Diameter
 // for the tree we have N-nodes and N-1 edges
 // to build the tree's adjList we iter through O(N) edge pairs and form a space of O(n)
 // we call BFS twice, our logic visits each node once and use a queue and hashmap, thus O(n) space and time for each
