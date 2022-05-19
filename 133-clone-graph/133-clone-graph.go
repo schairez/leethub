@@ -14,23 +14,23 @@ func cloneGraph(node *Node) *Node {
         return node
     }
     var (
-        currNode *Node
+        origNode *Node
         queue []*Node
-        nodeMap map[int]*Node
     )
-    nodeMap = make(map[int]*Node)
+    // Node.val is unique for each node.
+    nodeMap := make(map[int]*Node)
     srcNodeCopy := &Node{Val: node.Val}
     nodeMap[node.Val] = srcNodeCopy
     
     queue = append(queue, node)
     for len(queue) != 0 {
-        currNode, queue = queue[0], queue[1:]
-        for _, nei := range currNode.Neighbors {
+        origNode, queue = queue[0], queue[1:]
+        for _, nei := range origNode.Neighbors {
             if _, seen := nodeMap[nei.Val]; !seen {
                 nodeMap[nei.Val] = &Node{Val: nei.Val}
                 queue = append(queue, nei)
             }
-            currNodeCopy := nodeMap[currNode.Val]
+            currNodeCopy := nodeMap[origNode.Val]
             currNodeCopy.Neighbors = append(currNodeCopy.Neighbors, nodeMap[nei.Val])
         }
     }
