@@ -1,8 +1,32 @@
+// for the tree we have N-nodes and N-1 edges
+// to build the tree's adjList we iter through O(N) edge pairs and form a space of O(n)
+// we call BFS twice, our logic visits each node once and use a queue and hashmap, thus O(n) space and time for each
+// of the two runs
+// thus, time: O(n); space: O(n)
 
 type nodeData struct {
     nodeId int
     dist   int
 }
+
+func treeDiameter(edges [][]int) int {
+    n := len(edges)
+    graph := make([][]int, n+1)
+    for _, edge := range edges {
+        src, dst := edge[0], edge[1]
+        graph[src] = append(graph[src], dst)
+        graph[dst] = append(graph[dst], src)
+    }
+    // locate a node at the last level from srcId=0
+    nodeData1 := bfs(graph, 0)
+    // locate peripheral node from last lvl node and calc distance from u to v 
+    nodeData2 := bfs(graph, nodeData1.nodeId)
+    diameter := nodeData2.dist
+    
+    return diameter
+}
+
+
 
 func bfs(graph [][]int, srcNode int) nodeData { 
     n := len(graph)
@@ -31,21 +55,3 @@ func bfs(graph [][]int, srcNode int) nodeData {
     return nodeData{node, lvl}
 }
 
-func treeDiameter(edges [][]int) int {
-    n := len(edges)
-    graph := make([][]int, n+1)
-    for _, edge := range edges {
-        src, dst := edge[0], edge[1]
-        graph[src] = append(graph[src], dst)
-        graph[dst] = append(graph[dst], src)
-    }
-    // locate a node at the last level from src=0
-    nodeData1 := bfs(graph, 0)
-    fmt.Println(nodeData1)
-    // locate peripheral node from last lvl node and calc distance from u to v 
-    nodeData2 := bfs(graph, nodeData1.nodeId)
-    fmt.Println(nodeData2)
-    
-    diameter := nodeData2.dist
-    return diameter
-}
