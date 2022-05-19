@@ -9,6 +9,36 @@
  * }
  */
 
+
+func cloneGraph(node *Node) *Node {
+    if node == nil {
+        return node
+    }
+    nodeMap := make(map[*Node]*Node)
+    
+    var dfs func(*Node) *Node
+    dfs = func(origNode *Node) *Node {
+        if origNode == nil {
+            return nil
+        }
+        if nodeCopy, exists := nodeMap[origNode]; exists {
+            return nodeCopy
+        }
+        nodeCopy := &Node{ Val: origNode.Val}
+        nodeMap[origNode] = nodeCopy
+        for _, nei := range origNode.Neighbors {
+            nodeCopy.Neighbors = append(nodeCopy.Neighbors, dfs(nei))
+        }
+        return nodeCopy
+    }
+    
+    
+    
+    return dfs(node)
+}
+
+
+/*
 func cloneGraph(node *Node) *Node {
     if node == nil {
         return node
@@ -35,36 +65,8 @@ func cloneGraph(node *Node) *Node {
     }
     return srcNodeCopy
 }
-
-    /*
-func cloneGraph(node *Node) *Node {
-    // Node.val is unique for each node.
-    var (
-        visited   map[int]*Node
-        queue     [][2]*Node 
-        currNodes [2]*Node
-    )
-    srcNodeCopy := &Node{}
-    visited[node.Val] = srcNodeCopy
-    queue = append(queue, [2]*Node{node, srcNodeCopy})
-    for len(queue) != 0 {
-        currNodes, queue = queue[0], queue[1:]
-        origNode, nodeCopy := currNodes[0], currNodes[1]
-        nodeCopy.Val = origNode.Val
-        for _, nei := range origNode.Neighbors {
-            if _, seen := visited[nei.Val]; !seen {
-                visited[nei.Val] 
-            }
-            neiCopy := &Node{}
-            nodeCopy.Neighbors = append(nodeCopy.Neighbors, neiCopy)
-            queue = append(queue, [2]*Node{nei, neiCopy})
-        }
-    }
-    return srcNodeCopy
-}
-
-
 */
+
 
 
 
