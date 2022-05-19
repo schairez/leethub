@@ -13,15 +13,14 @@ func cloneGraph(node *Node) *Node {
     if node == nil {
         return node
     }
-    var (
-        origNode *Node
-        queue []*Node
-    )
     // Node.val is unique for each node.
     nodeMap := make(map[int]*Node)
     srcNodeCopy := &Node{Val: node.Val}
     nodeMap[node.Val] = srcNodeCopy
-    
+    var (
+        origNode *Node
+        queue []*Node
+    )
     queue = append(queue, node)
     for len(queue) != 0 {
         origNode, queue = queue[0], queue[1:]
