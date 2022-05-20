@@ -1,3 +1,7 @@
+// 2161. Partition Array According to Given Pivot
+// time: O(n)
+// space: O(n)
+
 func pivotArray(nums []int, pivot int) []int {
     n := len(nums)
     left, mid, right := 0, 0, n 
