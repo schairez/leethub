@@ -1,23 +1,24 @@
 func pivotArray(nums []int, pivot int) []int {
     n := len(nums)
-    res := make([]int, n)
-    idx := 0
+    left, mid, right := 0, 0, n 
     for _, v := range nums {
         if v < pivot {
-            res[idx] = v 
-            idx++
+            mid++
+        } else if v > pivot {
+            right--
         }
     }
+    res := make([]int, n)
     for _, v := range nums {
-        if v == pivot {
-            res[idx] = v 
-            idx++
-        }
-    }
-    for _, v := range nums {
-        if v > pivot {
-            res[idx] = v 
-            idx++
+        if v < pivot {
+            res[left] = v
+            left++
+        } else if v == pivot {
+            res[mid] = v
+            mid++
+        } else {
+            res[right] = v
+            right++
         }
     }
     return res
