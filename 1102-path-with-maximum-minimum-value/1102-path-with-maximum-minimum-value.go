@@ -1,6 +1,10 @@
 func max(a, b int) int { if a >= b{ return a}; return b }
 func min(a, b int) int { if a <= b { return a}; return b}
 
+// todo: 
+// k = max(numR, numC)?
+// time: O(m*n*k) 
+// space: O(m*n)
 func maximumMinimumPath(grid [][]int) int {
     dirs := [5]int{1, 0,-1, 0, 1}
     
