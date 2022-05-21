@@ -1,4 +1,7 @@
 
+func max(a, b int) int { if a >= b{ return a}; return b }
+func min(a, b int) int { if a <= b { return a}; return b}
+
 func maximumMinimumPath(grid [][]int) int {
     numR, numC := len(grid), len(grid[0])
     inArea := func(x, y int) bool {
@@ -73,28 +76,6 @@ func (pq *PriorityQueue) Pop() interface{} {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-func max(a, b int) int { if a >= b{ return a}; return b }
-func min(a, b int) int { if a <= b { return a}; return b}
 
 
 // BFS + DP approach
