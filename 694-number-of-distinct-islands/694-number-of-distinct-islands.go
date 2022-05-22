@@ -26,8 +26,8 @@ func numDistinctIslands(grid [][]int) int {
     for x := 0; x < numR; x++ {
         for y := 0; y < numC; y++ {
             if grid[x][y] == 1 && !visited[x][y] {
-                sb := strings.Builder{}
-                dfs(x, y, '_', &sb)
+                sb := &strings.Builder{}
+                dfs(x, y, '_', sb)
                 cand := sb.String()
                 if _, exists := distinctIslands[cand]; !exists {
                     distinctIslands[cand] = struct{}{}
