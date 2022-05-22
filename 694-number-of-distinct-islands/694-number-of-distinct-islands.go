@@ -1,4 +1,8 @@
 
+// 694. Number of Distinct Islands
+// time: O(m*n)
+// space: O(m*n)
+
 func numDistinctIslands(grid [][]int) int {
     numR, numC := len(grid), len(grid[0])
     inArea := func(x, y int) bool {
@@ -26,7 +30,6 @@ func numDistinctIslands(grid [][]int) int {
     for x := 0; x < numR; x++ {
         for y := 0; y < numC; y++ {
             if grid[x][y] == 1 && !visited[x][y] {
-            /////if grid[x][y] == 1 {
                 sb := &strings.Builder{}
                 dfs(x, y, '$', sb)
                 cand := sb.String()
