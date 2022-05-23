@@ -78,7 +78,6 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
             idx: -1,
         }
     }
-    fmt.Println(graph)
     pq := newPQ(func(a, b int) bool {
         return a < b
     })
