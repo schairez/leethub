@@ -50,16 +50,13 @@ func min(a, b int) int {if a <= b {return a}; return b}
 
 func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     type edge struct { dstId, cost int }
-    graph := make(map[int][]edge, n)
+    graph := make([][]edge, n)
     // check to see if any edge links to dst node
     isDstLinkable := false
     maxInt32 := 1 << 31 - 1
     for _, flight := range flights {
         // flights[i] = [fromi, toi, pricei] 
         srcId, dstId, cost := flight[0], flight[1], flight[2]
-        if _, exists := graph[srcId]; !exists {
-            graph[srcId] = make([]edge, 0)
-        }
         graph[srcId] = append(graph[srcId], edge{dstId, cost}) 
         if dstId == dst {
             isDstLinkable = true
@@ -68,7 +65,11 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     if !isDstLinkable {
         return -1
     }
-    
+    // min cost  //minimize number of stops, s.t. K
+    cost := make([]int, n) //minimize distance dV = min(dU + wUV, dV)
+    for i:=0; i < n; i++ {
+        cost[i] = maxInt32
+    }
     nodes := make([]*Node, n)
     for i := range nodes {
         nodes[i] = &Node{
@@ -84,6 +85,7 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     heap.Init(pq)
     srcNodeData := nodes[src]
     srcNodeData.cost, srcNodeData.numStops = 0, 0
+    cost[src] = 0
     heap.Push(pq, srcNodeData)
     for pq.Len() != 0 {
         nodeData := heap.Pop(pq).(*Node)
@@ -102,7 +104,9 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
             if !isFinalDst && candNumStops == k+1 {
                 continue
             }
-            if dstNodeData.idx == -1 || candCost < dstNodeData.cost || candNumStops< k+1 {
+            //if dstNodeData.idx == -1 || candCost < dstNodeData.cost || candNumStops< k+1 {
+            if dstNodeData.idx == -1 || candCost < cost[dstId] || candNumStops < k+1 {
+                cost[dstId] = min(cost[dstId], candCost)
                 if dstNodeData.idx == -1 {
                     dstNodeData.cost = candCost
                     dstNodeData.numStops = candNumStops
