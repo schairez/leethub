@@ -86,7 +86,6 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     srcNodeData.cost, srcNodeData.numStops = 0, 0
     heap.Push(pq, srcNodeData)
     for pq.Len() != 0 {
-        fmt.Println()
         nodeData := heap.Pop(pq).(*Node)
         nodeId, nodeCost := nodeData.dstId, nodeData.cost
         if nodeId == dst {
