@@ -106,7 +106,6 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
             }
             //if dstNodeData.idx == -1 || candCost < dstNodeData.cost || candNumStops< k+1 {
             if dstNodeData.idx == -1 || candCost < cost[dstId] || candNumStops < k+1 {
-                cost[dstId] = min(cost[dstId], candCost)
                 if dstNodeData.idx == -1 {
                     dstNodeData.cost = candCost
                     dstNodeData.numStops = candNumStops
@@ -119,6 +118,7 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
                     dstNodeDataCand := &Node{dstNodeData.dstId, candCost, candNumStops, -1}
                     heap.Push(pq, dstNodeDataCand)
                 }
+                cost[dstId] = min(cost[dstId], candCost)
             }
         }
     }
