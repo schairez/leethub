@@ -1,52 +1,9 @@
 
-
-type Node struct {
-    dstId, cost, numStops, idx int  
-}
-
-type PriorityQueue struct {
-    data []*Node
-    lessFn func(i, j int) bool
-}
-
-func newPQ(lessFn func(i, j int) bool) *PriorityQueue {
-    return &PriorityQueue{
-        lessFn: lessFn,
-    }
-}
-
-func (pq *PriorityQueue) Len() int {
-    return len(pq.data)
-}
-func (pq *PriorityQueue) Less(i , j int) bool {
-    return pq.lessFn(pq.data[i].cost, pq.data[j].cost)
-}
-func (pq *PriorityQueue) Swap(i, j int) {
-    pq.data[i], pq.data[j] = pq.data[j], pq.data[i]
-    pq.data[i].idx = i 
-    pq.data[j].idx = j 
-}
-func (pq *PriorityQueue) Push(v interface{}) {
-    node := v.(*Node)
-    node.idx = pq.Len()
-    pq.data = append(pq.data, node)
-}
-func (pq *PriorityQueue) Pop() interface{} {
-    n := pq.Len()
-    v := pq.data[n-1]
-    pq.data[n-1] = nil
-    v.idx = -1
-    pq.data = pq.data[:n-1]
-    return v
-}
-func (pq *PriorityQueue) Update(node *Node) {
-    heap.Fix(pq, node.idx)
-}
-
-func min(a, b int) int {if a <= b {return a}; return b}
+// 787. Cheapest Flights Within K Stops
+// time: O(|V| + |E|log|V|)
+// space: O(|V| + |E|) for the build graph and heap
 
 // prioritize cheapest cost from src to dst s.t. numStops <= k 
-
 func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     type edge struct { dstId, cost int }
     graph := make([][]edge, n)
@@ -123,3 +80,50 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     
     return -1
 }
+
+
+type Node struct {
+    dstId, cost, numStops, idx int  
+}
+
+type PriorityQueue struct {
+    data []*Node
+    lessFn func(i, j int) bool
+}
+
+func newPQ(lessFn func(i, j int) bool) *PriorityQueue {
+    return &PriorityQueue{
+        lessFn: lessFn,
+    }
+}
+
+func (pq *PriorityQueue) Len() int {
+    return len(pq.data)
+}
+func (pq *PriorityQueue) Less(i , j int) bool {
+    return pq.lessFn(pq.data[i].cost, pq.data[j].cost)
+}
+func (pq *PriorityQueue) Swap(i, j int) {
+    pq.data[i], pq.data[j] = pq.data[j], pq.data[i]
+    pq.data[i].idx = i 
+    pq.data[j].idx = j 
+}
+func (pq *PriorityQueue) Push(v interface{}) {
+    node := v.(*Node)
+    node.idx = pq.Len()
+    pq.data = append(pq.data, node)
+}
+func (pq *PriorityQueue) Pop() interface{} {
+    n := pq.Len()
+    v := pq.data[n-1]
+    pq.data[n-1] = nil
+    v.idx = -1
+    pq.data = pq.data[:n-1]
+    return v
+}
+func (pq *PriorityQueue) Update(node *Node) {
+    heap.Fix(pq, node.idx)
+}
+
+func min(a, b int) int {if a <= b {return a}; return b}
+
