@@ -11,8 +11,7 @@ func evalRPN(tokens []string) int {
         } else {
             var res int
             n := len(stack)
-            num2 := stack[n-1]
-            num1 := stack[n-2]
+            num2, num1 := stack[n-1], stack[n-2]
             stack = stack[:n-2]
             oper := tokens[i]
             switch oper {
