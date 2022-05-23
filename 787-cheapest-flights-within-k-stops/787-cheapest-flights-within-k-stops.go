@@ -82,14 +82,6 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     pq := newPQ(func(a, b int) bool {
         return a < b
     })
-    // dU + wV < dV
-    /*
-    addToPQCond := func(candCost, currDstCost, candNumStops, currDstNumStops int) bool {
-        //return candCost < currDstCost || (candNumStops <= k + 1 || candNumStops <= currDstNumStops)
-        return (candCost < currDstCost && candNumStops < k + 1) || candNumStops <= currDstNumStops
-    }
-    */
-    //res := maxInt32
     heap.Init(pq)
     srcNodeData := nodes[src]
     srcNodeData.cost, srcNodeData.numStops = 0, 0
@@ -97,13 +89,9 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
     for pq.Len() != 0 {
         fmt.Println()
         nodeData := heap.Pop(pq).(*Node)
-        fmt.Println(nodeData)
         nodeId, nodeCost := nodeData.dstId, nodeData.cost
         if nodeId == dst {
-            fmt.Println(nodeData)
             return nodeData.cost
-            //res = min(res, nodeData.cost)
-            //continue
         }
         numStops := nodeData.numStops
         candNumStops := numStops + 1
@@ -130,35 +118,8 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
                     heap.Push(pq, dstNodeDataCand)
                 }
             }
-            /*
-            
-            if addToPQCond(candCost, dstNodeData.cost, candNumStops, dstNodeData.numStops) {
-                dstNodeData.cost = candCost
-                dstNodeData.numStops = candNumStops
-                if dstNodeData.idx == -1 {
-                    heap.Push(pq, dstNodeData)
-                } else {
-                    pq.Update(dstNodeData)
-                }
-            }
-            */
         }
     }
-    /*
-    fmt.Println()
-    for _, node := range nodes {
-        fmt.Println(node)
-    }
-    */
-    /*
-    if dstCost := nodes[dst].cost; dstCost != maxInt32 {
-        return dstCost
-    }
-    
-    if res != maxInt32 {
-        return res
-    }
-    */
     
     return -1
 }
