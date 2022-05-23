@@ -104,7 +104,6 @@ func findCheapestPrice(n int, flights [][]int, src int, dst int, k int) int {
             if !isFinalDst && candNumStops == k+1 {
                 continue
             }
-            //if dstNodeData.idx == -1 || candCost < dstNodeData.cost || candNumStops< k+1 {
             if dstNodeData.idx == -1 || candCost < cost[dstId] || candNumStops < k+1 {
                 if dstNodeData.idx == -1 {
                     dstNodeData.cost = candCost
