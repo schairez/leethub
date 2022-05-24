@@ -1,3 +1,4 @@
+
 // 20. Valid Parentheses
 // time: O(n)
 // space: O(n)
@@ -13,10 +14,7 @@ func isValid(s string) bool {
         case '{':
             stack = append(stack, '}')
         case '}', ']', ')':
-            if len(stack) == 0 {
-                return false
-            }
-            if v := stack[len(stack)-1]; v != ch {
+            if len(stack) == 0 || stack[len(stack)-1] != ch {
                 return false
             }
             stack = stack[:len(stack)-1]
