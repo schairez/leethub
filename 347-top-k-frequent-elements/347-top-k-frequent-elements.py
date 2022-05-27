@@ -1,3 +1,8 @@
+# 347. Top K Frequent Elements
+# n = len(nums); m = len(freq_tbl)
+# time: O(n + m + k)
+# space: O(n + m + k)
+
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         n = len(nums)
@@ -14,8 +19,6 @@ class Solution:
             inv_freq[freq_val].append(num_key)
             max_key = max(max_key, freq_val)
        
-        print(freq_tbl)
-        print(inv_freq)
         res = []
         cap = k
         curr_key = max_key
