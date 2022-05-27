@@ -1,3 +1,4 @@
+
 # 347. Top K Frequent Elements
 # n = len(nums); m = len(freq_tbl)
 # time: O(n + m + k)
@@ -29,7 +30,7 @@ class Solution:
                 break
             elif n_key != 0:
                 res.extend(inv_freq[curr_key])
-                cap -= n_key
+            cap -= n_key
             curr_key -= 1 
             
         return res
