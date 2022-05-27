@@ -4,9 +4,9 @@ class Solution:
         if n == 1:
             return nums
         
-        freq_tbl = {}
+        freq_tbl = defaultdict(int)
         for num in nums:
-            freq_tbl[num] = freq_tbl.get(num, 0) + 1
+            freq_tbl[num] += 1
         
         inv_freq = [[] for _ in range(n+1)]
         max_key = float("-inf")
