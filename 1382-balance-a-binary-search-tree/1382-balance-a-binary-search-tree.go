@@ -8,30 +8,29 @@
  */
 
 
-func inorder(root *TreeNode) []int {
-    var res []int
+func inorder(root *TreeNode) []*TreeNode {
+    var res []*TreeNode
     var dfs func(node *TreeNode)
     dfs = func(node *TreeNode) {
         if node == nil {
             return
         }
         dfs(node.Left)
-        res = append(res, node.Val)
+        res = append(res, node)
         dfs(node.Right)
     }
     dfs(root)
     return res
 }
-func arrToBST(nodes []int) *TreeNode {
+func arrToBST(nodes []*TreeNode) *TreeNode {
     if len(nodes) == 0 {
         return nil
     }
     mid := len(nodes) >> 1
-    return &TreeNode{
-        Val: nodes[mid],
-        Left: arrToBST(nodes[:mid]),
-        Right: arrToBST(nodes[mid+1:]),
-    }
+    retNode := nodes[mid]
+    retNode.Left = arrToBST(nodes[:mid])
+    retNode.Right = arrToBST(nodes[mid+1:])
+    return retNode
 }
     
 
