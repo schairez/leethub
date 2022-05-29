@@ -19,7 +19,8 @@ func balanceBST(root *TreeNode) *TreeNode {
 }
 
 func inorder(root *TreeNode) []int {
-    var res []int
+    // constraint: The number of nodes in the tree is in the range [1, 104]
+    res := make([]int, 0, 10_000)
     var dfs func(node *TreeNode)
     dfs = func(node *TreeNode) {
         if node == nil {
