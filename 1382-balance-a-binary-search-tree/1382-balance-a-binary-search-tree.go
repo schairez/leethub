@@ -15,7 +15,7 @@
 
 func balanceBST(root *TreeNode) *TreeNode {
     nodes := inorder(root)
-    return arrToBST(nodes)
+    return arrToBST(nodes, 0, len(nodes)-1)
 }
 
 func inorder(root *TreeNode) []int {
@@ -32,14 +32,15 @@ func inorder(root *TreeNode) []int {
     dfs(root)
     return res
 }
-func arrToBST(nodes []int) *TreeNode {
-    if len(nodes) == 0 {
+
+func arrToBST(nodes []int, l, r int) *TreeNode {
+    if l > r {
         return nil
     }
-    mid := len(nodes) >> 1
+    mid := l + (r-l) >> 1
     return &TreeNode{
         Val: nodes[mid],
-        Left: arrToBST(nodes[:mid]),
-        Right: arrToBST(nodes[mid+1:]),
+        Left: arrToBST(nodes, l, mid-1),
+        Right: arrToBST(nodes, mid+1, r),
     }
 }
