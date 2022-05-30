@@ -88,11 +88,6 @@ func insertHelper(node *llrbNode, start int, end int) (*llrbNode, bool) {
     } else {
         node.left, canInsert = insertHelper(node.left, start, end)
     }
-    /*
-    if !canInsert {
-        return node, false
-    }
-    */
     // rebalance nodes
     // tree is right heavy
     if isRedFn(node.right) && !isRedFn(node.right.right) {
