@@ -1,7 +1,7 @@
-// augmented binary search tree approach
-// time: O(n)
-// space: O(n)
 
+// augmented binary search tree approach
+// time: O(logn)
+// space: O(n)
 
 
 func min(a, b int) int {if a <= b {return a}; return b}
@@ -88,9 +88,11 @@ func insertHelper(node *llrbNode, start int, end int) (*llrbNode, bool) {
     } else {
         node.left, canInsert = insertHelper(node.left, start, end)
     }
+    /*
     if !canInsert {
         return node, false
     }
+    */
     // rebalance nodes
     // tree is right heavy
     if isRedFn(node.right) && !isRedFn(node.right.right) {
@@ -103,7 +105,7 @@ func insertHelper(node *llrbNode, start int, end int) (*llrbNode, bool) {
     if isRedFn(node.left) && isRedFn(node.right) {
         flipColors(node)
     }
-    return node, true
+    return node, canInsert 
 }
 
 
