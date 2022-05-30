@@ -1,14 +1,13 @@
 
-// augmented binary search tree approach
+// augmented left-leaning red black tree approach
 // time: O(logn)
 // space: O(n)
 
 
-func min(a, b int) int {if a <= b {return a}; return b}
-func max(a, b int) int {if a >= b {return a}; return b}
-
-func overlaps(node *llrbNode, start, end int) bool {
-    return max(node.start, start) < min(node.end, end)
+type llrbNode struct {
+    start, end int
+    left, right *llrbNode
+    isRed bool
 }
 
 
@@ -24,54 +23,12 @@ func Constructor() MyCalendar {
 
 func (this *MyCalendar) Book(start int, end int) bool {
     if this.root == nil {
-        this.root = &llrbNode{start:start, end: end}
+        this.root = &llrbNode{start:start, end: end, isRed: false}
         return true
     }
     var canBook bool
     this.root, canBook = insertHelper(this.root, start, end)
-    if !canBook {
-        return false
-    }
-    return true
-}
-
-
-
-
-type llrbNode struct {
-    start, end int
-    left, right *llrbNode
-    isRed bool
-}
-func isRedFn(node *llrbNode) bool {
-    if node == nil {
-        return false
-    }
-    return node.isRed
-}
-
-func flipColors(x *llrbNode) {
-    x.isRed = true 
-    x.left.isRed = false
-    x.right.isRed = false
-}
-
-func rotateRight(x *llrbNode) *llrbNode {
-    y := x.left
-    x.left = y.right
-    y.right = x
-    y.isRed = y.right.isRed
-    y.right.isRed = true
-    return y
-}
-
-func rotateLeft(x *llrbNode) *llrbNode {
-    y := x.right
-    x.right = y.left
-    y.left = x
-    y.isRed = y.left.isRed
-    y.left.isRed = true 
-    return y
+    return canBook
 }
 
 func insertHelper(node *llrbNode, start int, end int) (*llrbNode, bool) {
@@ -104,6 +61,46 @@ func insertHelper(node *llrbNode, start int, end int) (*llrbNode, bool) {
 }
 
 
+func overlaps(node *llrbNode, start, end int) bool {
+    return max(node.start, start) < min(node.end, end)
+}
+
+
+func isRedFn(node *llrbNode) bool {
+    if node == nil {
+        return false
+    }
+    return node.isRed
+}
+
+func flipColors(x *llrbNode) {
+    x.isRed = !x.isRed 
+    x.left.isRed = !x.left.isRed
+    x.right.isRed = !x.right.isRed
+}
+
+func rotateRight(node *llrbNode) *llrbNode {
+    x := node.left
+    node.left = x.right
+    x.right = node
+    x.isRed = node.isRed
+    node.isRed = true
+    return x
+}
+
+func rotateLeft(node *llrbNode) *llrbNode {
+    x := node.right
+    node.right = x.left
+    x.left = node
+    x.isRed = node.isRed
+    node.isRed = true
+    return x
+}
+
+
+
+func min(a, b int) int {if a <= b {return a}; return b}
+func max(a, b int) int {if a >= b {return a}; return b}
 
 
 
