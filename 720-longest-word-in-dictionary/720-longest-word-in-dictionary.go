@@ -1,38 +1,4 @@
 
-func longestWord(words []string) string {
-    root := &TrieNode{}
-    for _, word := range words {
-        root.InsertWord(word)
-    }
-    var (
-        res string
-        chars []byte
-        dfs func(*TrieNode, int)
-    )
-    dfs = func(trie *TrieNode, currLen int) {
-        if currLen > len(res) {
-            res = string(chars)
-        } else if currLen == len(res) {
-            cand := string(chars)
-            if cand < res {
-                res = cand
-            }
-        }
-        for idx, childNode := range trie.Children {
-            if childNode != nil && childNode.IsWord {
-                chars = append(chars, byte(idx)+'a')
-                dfs(childNode, currLen+1)
-                chars = chars[:len(chars)-1]
-            }
-        }
-    }
-    
-    dfs(root, 0)
-    
-    return res
-}
-
-
 type TrieNode struct {
     Children [26]*TrieNode
     IsWord bool
@@ -41,12 +7,38 @@ type TrieNode struct {
 func (trie *TrieNode) InsertWord(word string) {
     n := len(word)
     for i := 0; i < n; i++ {
-        idx := int(word[i]-'a')
-        if trie.Children[idx] == nil {
-            trie.Children[idx] = &TrieNode{}
+        if trie.Children[word[i]-'a'] == nil {
+            trie.Children[word[i]-'a'] = &TrieNode{}
         }
-        trie = trie.Children[idx]
-    }
+        trie = trie.Children[word[i]-'a']
+    } 
     trie.IsWord = true
 }
 
+
+func longestWord(words []string) string {
+    sort.Strings(words)
+    root := &TrieNode{}
+    for _, word := range words {
+        root.InsertWord(word)
+    }
+    var (
+        res string
+        dfs func(*TrieNode, []byte)
+    )
+    dfs = func(node *TrieNode, currWord []byte) {
+        if len(currWord) > len(res) || 
+        len(currWord) == len(res) && string(currWord) < res {
+            res = string(currWord)
+        } 
+        for i := 0; i < 26; i++ {
+            if childNode := node.Children[i]; childNode != nil && childNode.IsWord {
+                currWord = append(currWord, byte(i+'a'))
+                dfs(node.Children[i], currWord)
+                currWord = currWord[:len(currWord)-1]
+            }
+        }
+    }
+    dfs(root, []byte{})
+    return res
+}
