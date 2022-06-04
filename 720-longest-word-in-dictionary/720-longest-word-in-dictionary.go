@@ -1,3 +1,11 @@
+// 720. Longest Word in Dictionary
+// time: O(nlogn) to sort words
+// to insert words into trie n words K = longest length of word
+// to insert into trie : O(nk)
+// to traverse dfs: we're bound to longest word with the most character growing prefix sequences O(w)
+// thus inserting into trie is our largest time bound
+// space to sort O(logn) but traversing the dfs and building the trie is the largest recursive bound
+// thus space: O(w)
 
 type TrieNode struct {
     Children [26]*TrieNode
