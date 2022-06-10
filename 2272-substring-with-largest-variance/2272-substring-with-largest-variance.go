@@ -14,7 +14,7 @@ func largestVariance(s string) int {
             keys = append(keys, byte(i + 'a'))
         }
     }
-    fmt.Println(keys)
+    //fmt.Println(keys)
     for _, char1 := range keys {
         for _, char2 := range keys {
             if char1 == char2 {
