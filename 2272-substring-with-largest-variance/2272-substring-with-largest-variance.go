@@ -8,10 +8,10 @@ func largestVariance(s string) int {
         freq[s[i]-'a']++
     }
     //fmt.Println(freq)
-    keys := make([]rune, 0, 26)
+    keys := make([]byte, 0, 26)
     for i := range freq {
         if freq[i] != 0 {
-            keys = append(keys, rune(i + 'a'))
+            keys = append(keys, byte(i + 'a'))
         }
     }
     //fmt.Println(keys)
@@ -21,7 +21,8 @@ func largestVariance(s string) int {
                 continue
             }
             diff, diffWchar2 := 0, -n
-            for _, char := range s {
+            for i := 0; i < n; i++ { 
+                char := s[i]
                 if char == char1 {
                     diff++
                     diffWchar2++
