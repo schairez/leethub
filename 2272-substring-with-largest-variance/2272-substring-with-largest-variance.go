@@ -18,12 +18,10 @@ func largestVariance(s string) int {
                 cnt2++
             }
             if cnt1 < cnt2 {
-                cnt1 = 0
-                cnt2 = 0
+                cnt1, cnt2 = 0, 0
             }
             if cnt1 != 0 && cnt2 != 0 {
-                cand := cnt1-cnt2
-                variance = max(variance, cand)
+                variance = max(variance, cnt1 - cnt2)
             }
             if isRev {
                 i--
@@ -45,42 +43,3 @@ func largestVariance(s string) int {
     }
     return res
 }
-
-
-
-
-            
-            /*
-            cnt1, cnt2 := 0, 0
-            for i := 0; i < n; i++ {
-                if s[i] == ch1 {
-                    cnt1++
-                } else if s[i] == ch2 {
-                    cnt2++
-                }
-                if cnt1 < cnt2 {
-                    cnt1 = 0
-                    cnt2 = 0
-                }
-                if cnt1 != 0 && cnt2 != 0 {
-                    cand := cnt1-cnt2
-                    res = max(res, cand)
-                }
-            } 
-            cnt1, cnt2 = 0, 0
-            for i := n-1; i >= 0; i-- {
-                if s[i] == ch1 {
-                    cnt1++
-                } else if s[i] == ch2 {
-                    cnt2++
-                }
-                if cnt1 < cnt2 {
-                    cnt1 = 0
-                    cnt2 = 0
-                }
-                if cnt1 != 0 && cnt2 != 0 {
-                    cand := cnt1-cnt2
-                    res = max(res, cand)
-                }
-            } 
-            */
