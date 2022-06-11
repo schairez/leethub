@@ -1,4 +1,12 @@
+// 2272. Substring With Largest Variance
+// |u| = len unique chars in our input string
+// u <= 26
+// time: O(|u|*|u|*n) ≈ O(n)
+// space: O(2*26) ≈ O(1)
+
+
 func max(a, b int) int {if a >= b {return a}; return b}
+
 func largestVariance(s string) int {
     n := len(s)
     var freq [26]int 
