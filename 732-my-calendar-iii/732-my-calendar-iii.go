@@ -1,42 +1,48 @@
+type val struct { a, b int }
+type tree map[int]val
+
+
 type MyCalendarThree struct {
-	date    [][]int
-	start   map[int]int
-	largest int
+    t tree
 }
+
 
 func Constructor() MyCalendarThree {
-	return MyCalendarThree{
-		date:    nil,
-		start:   make(map[int]int),
-		largest: 0,
-	}
+    return MyCalendarThree{t: map[int]val{}}
 }
 
-func (mct *MyCalendarThree) Book(start int, end int) int {
-	mct.date = append(mct.date, []int{start, end})
-	for k := range mct.start {
-		if k >= start && k < end {
-			mct.start[k]++
-			if mct.start[k] > mct.largest {
-				mct.largest = mct.start[k]
-			}
-		}
-	}
-	if _, exist := mct.start[start]; !exist {
-		current := 0
-		for _, v := range mct.date {
-			if v[0] <= start && v[1] > start {
-				current++
-			}
-		}
-		mct.start[start] = current
-		if current > mct.largest {
-			mct.largest = current
-		}
-	}
-	return mct.largest
+
+func (this *MyCalendarThree) Book(start int, end int) int {
+    var update func(i, s, t int)
+    update = func(i, s, t int) {
+        if end < s || t < start {
+            return
+        }
+        if start <= s && t <= end {
+            v := this.t[i]
+            v.a++
+            v.b++
+            this.t[i] = v
+            return
+        }
+        m := (s+t) / 2
+        update(i*2, s, m)
+        update(i*2+1, m+1, t)
+        v := this.t[i]
+        v.a = v.b + max(this.t[i*2].a, this.t[i*2+1].a)
+        this.t[i] = v
+    }
+    end--
+    update(1, 0, 1e9)
+    return this.t[1].a
 }
- 
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
 
 /**
  * Your MyCalendarThree object will be instantiated and called as such:
