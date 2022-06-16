@@ -3,6 +3,12 @@ const (
     size = 10_000 * 2 + 1 // max arr input size
 )
 
+func offset(num int) int {
+    return num + 10_000
+}
+
+// dynamic segTree approach ?
+
 type SegTree struct {
     Node [4*size]int
 }
@@ -24,9 +30,6 @@ func countSmaller(nums []int) []int {
 }
 
 
-func offset(num int) int {
-    return num + 10_000
-}
 
 func (segTree *SegTree) Update(treeIndex, lo, hi, arrIndex int) {
     if lo == hi {
