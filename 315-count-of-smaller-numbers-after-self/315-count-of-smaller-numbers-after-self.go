@@ -1,3 +1,6 @@
+// 315. Count of Smaller Numbers After Self
+// 1 <= nums.length <= 10^5
+// -10^4 <= nums[i] <= 10^4
 
 const (
     size = 10_000 * 2 + 1 // max arr input size
@@ -22,11 +25,34 @@ func countSmaller(nums []int) []int {
     segTree := &SegTree{}
     for i := n-1; i >= 0; i-- {
         index := offset(nums[i])
-        count := segTree.QueryRange(0, 0, size-1, 0, index-1)        
-        res[i] = count
+        cntLessRight := segTree.QueryRange(0, 0, size-1, 0, index-1)        
+        res[i] = cntLessRight
         segTree.Update(0, 0, size-1, index)
     }
     return res
+}
+
+
+func (segTree *SegTree) QueryRange(treeIndex, lo, hi, ql, qr int) int {
+    if qr < lo || ql > hi {
+        return 0
+    }
+    
+    if ql == lo && qr == hi {
+        return segTree.Node[treeIndex]
+    }
+    
+    mid := lo + (hi-lo)>>1
+    
+    if qr <= mid {
+        return segTree.QueryRange(2*treeIndex+1, lo, mid, ql, qr)
+    } else if ql > mid {
+        return segTree.QueryRange(2*treeIndex+2, mid+1, hi, ql, qr)
+    }
+    leftQuery := segTree.QueryRange(2*treeIndex+1, lo, mid, ql, mid)
+    rightQuery := segTree.QueryRange(2*treeIndex+2, mid+1, hi, mid+1, qr)
+    
+    return leftQuery + rightQuery
 }
 
 
@@ -44,28 +70,6 @@ func (segTree *SegTree) Update(treeIndex, lo, hi, arrIndex int) {
     }
     
     segTree.Node[treeIndex] = segTree.Node[2*treeIndex+1] + segTree.Node[2*treeIndex+2]
-}
-
-func (segTree *SegTree) QueryRange(treeIndex, lo, hi, i, j int) int {
-    if j < lo || i > hi {
-        return 0
-    }
-    
-    if i <= lo && j >= hi {
-        return segTree.Node[treeIndex]
-    }
-    
-    mid := lo + (hi-lo)>>1
-    
-    if j <= mid {
-        return segTree.QueryRange(2*treeIndex+1, lo, mid, i, j)
-    } else if i > mid {
-        return segTree.QueryRange(2*treeIndex+2, mid+1, hi, i, j)
-    }
-    leftQuery := segTree.QueryRange(2*treeIndex+1, lo, mid, i, mid)
-    rightQuery := segTree.QueryRange(2*treeIndex+2, mid+1, hi, mid+1, j)
-    
-    return leftQuery + rightQuery
 }
 
 
