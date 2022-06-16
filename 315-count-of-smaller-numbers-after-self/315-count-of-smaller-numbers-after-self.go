@@ -41,9 +41,7 @@ func (segTree *SegTree) QueryRange(treeIndex, lo, hi, ql, qr int) int {
     if ql == lo && qr == hi {
         return segTree.Node[treeIndex]
     }
-    
-    mid := lo + (hi-lo)>>1
-    
+    mid := lo + (hi-lo) >> 1
     if qr <= mid {
         return segTree.QueryRange(2*treeIndex+1, lo, mid, ql, qr)
     } else if ql > mid {
