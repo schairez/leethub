@@ -1,3 +1,75 @@
+
+const (
+    size = 10_000 * 2 + 1 // max arr input size
+)
+
+type SegTree struct {
+    Node [4*size]int
+}
+
+func countSmaller(nums []int) []int {
+    n := len(nums)
+    if n == 1 {
+        return []int{0}
+    }
+    res := make([]int, n)
+    segTree := &SegTree{}
+    for i := n-1; i >= 0; i-- {
+        index := offset(nums[i])
+        count := segTree.QueryRange(0, 0, size-1, 0, index-1)        
+        res[i] = count
+        segTree.Update(0, 0, size-1, index)
+    }
+    return res
+}
+
+
+func offset(num int) int {
+    return num + 10_000
+}
+
+func (segTree *SegTree) Update(treeIndex, lo, hi, arrIndex int) {
+    if lo == hi {
+        segTree.Node[treeIndex] += 1
+        return
+    }
+    mid := lo + (hi-lo) >> 1
+    if mid >= arrIndex {
+        segTree.Update(2*treeIndex+1, lo, mid, arrIndex)
+    } else if arrIndex > mid {
+        segTree.Update(2*treeIndex+2, mid+1, hi, arrIndex)
+    }
+    
+    segTree.Node[treeIndex] = segTree.Node[2*treeIndex+1] + segTree.Node[2*treeIndex+2]
+}
+
+func (segTree *SegTree) QueryRange(treeIndex, lo, hi, i, j int) int {
+    if j < lo || i > hi {
+        return 0
+    }
+    
+    if i <= lo && j >= hi {
+        return segTree.Node[treeIndex]
+    }
+    
+    mid := lo + (hi-lo)>>1
+    
+    if j <= mid {
+        return segTree.QueryRange(2*treeIndex+1, lo, mid, i, j)
+    } else if i > mid {
+        return segTree.QueryRange(2*treeIndex+2, mid+1, hi, i, j)
+    }
+    leftQuery := segTree.QueryRange(2*treeIndex+1, lo, mid, i, mid)
+    rightQuery := segTree.QueryRange(2*treeIndex+2, mid+1, hi, mid+1, j)
+    
+    return leftQuery + rightQuery
+}
+
+
+
+
+// augmented merge sort approach
+/*
 func countSmaller(nums []int) []int {
 	res, index := make([]int, len(nums)), make([]int, len(nums))
 	for i := 0; i < len(res); i++ {
@@ -48,13 +120,15 @@ func merge(res, index *[]int, l1, r1, l2, r2 int, nums []int) {
 		(*index)[start+i] = tmp[i]
 	}
 }
-
+*/
 /*
 Input: nums = [5,2,6,1]
 Output: [2,1,1,0]
 */
 
 /*
+// naiive BST approach; TLE's with the T.C.'s with a large size input'
+
 func countSmaller(nums []int) []int {
     n := len(nums)
     if n == 1 {
@@ -74,7 +148,7 @@ type Node struct {
     Left, Right *Node
 }
 
-// inserts node data and returns cnt smaller numbers
+// inserts Node data and returns cnt smaller numbers
 func insertNode(root *Node, val int) int {
     res := 0
     for root != nil {
