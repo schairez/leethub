@@ -7,7 +7,9 @@
  * }
  */
 
-// 0 <= Node.val <= 1000
+// 987. Vertical Order Traversal of a Binary Tree
+// time: O(nlogn) to sort
+// space: O(n)
 
 func verticalTraversal(root *TreeNode) [][]int {
     type pair struct {val, row int}
@@ -59,14 +61,4 @@ func verticalTraversal(root *TreeNode) [][]int {
     
     return res
 }
-
-
-
-
-
-
-
-
-
-
 
