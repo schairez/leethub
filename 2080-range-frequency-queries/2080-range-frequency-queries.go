@@ -54,7 +54,7 @@ func (seg *SegNode) Insert(sIdx int, val int) {
 } 
 func (seg *SegNode) QueryRange(sIdx int, eIdx int, val int) int {
     // if nil or disjoint interval
-    if seg == nil || seg.start > eIdx || seg.end < sIdx {
+    if eIdx < sIdx || seg == nil || seg.start > eIdx || seg.end < sIdx {
         return 0
     }
     if seg.start == sIdx && seg.end == eIdx {
