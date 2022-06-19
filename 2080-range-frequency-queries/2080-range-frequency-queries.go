@@ -1,3 +1,7 @@
+// 2080. Range Frequency Queries
+// time: O(logn) for query; O(n) to construct
+// space: O(n)
+
 
 const size = 1e5 
 
@@ -17,7 +21,6 @@ func Constructor(arr []int) RangeFreqQuery {
 
 func (this *RangeFreqQuery) Query(left int, right int, value int) int {
     arr := this.data[value]
-    //fmt.Println(arr)
     if len(arr) == 0 {
         return 0
     }
@@ -26,16 +29,9 @@ func (this *RangeFreqQuery) Query(left int, right int, value int) int {
         return 0
     }
     end := rightMostIdx(arr, right)
-    //fmt.Println("__", start, end)
-    /*
-    if start == -1 && end == -1 {
-        return 0
-    }
-    */
     return end - start + 1
 }
 
-//[0, 1, 2]
 func rightMostIdx(arr []int, target int) int {
     n := len(arr)
     lo, hi := 0, n-1 
@@ -54,7 +50,7 @@ func rightMostIdx(arr []int, target int) int {
     }
     return -1
 }
-// leftmost pos
+
 func leftMostIdx(arr []int, target int) int {
     n := len(arr)
     lo, hi := 0, n-1 
