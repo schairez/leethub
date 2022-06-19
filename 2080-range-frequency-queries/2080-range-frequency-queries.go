@@ -1,4 +1,92 @@
 
+const size = 1e5 
+
+type RangeFreqQuery struct {
+    data [size+1][]int // val to indices bucket mapping
+}
+
+
+func Constructor(arr []int) RangeFreqQuery {
+    rfq := RangeFreqQuery{}
+    for idx, val := range arr {
+        rfq.data[val] = append(rfq.data[val], idx)
+    }
+    return rfq
+}
+
+
+func (this *RangeFreqQuery) Query(left int, right int, value int) int {
+    arr := this.data[value]
+    //fmt.Println(arr)
+    if len(arr) == 0 {
+        return 0
+    }
+    start := leftMostIdx(arr, left)
+    if start == -1 {
+        return 0
+    }
+    end := rightMostIdx(arr, right)
+    //fmt.Println("__", start, end)
+    /*
+    if start == -1 && end == -1 {
+        return 0
+    }
+    */
+    return end - start + 1
+}
+
+//[0, 1, 2]
+func rightMostIdx(arr []int, target int) int {
+    n := len(arr)
+    lo, hi := 0, n-1 
+    for lo + 1 < hi {
+        mid := lo + (hi-lo) >> 1
+        if arr[mid] <= target {
+            lo = mid
+        } else {
+            hi = mid
+        }
+    }
+    if arr[hi] <= target {
+        return hi
+    } else if arr[lo] <= target {
+        return lo
+    }
+    return -1
+}
+// leftmost pos
+func leftMostIdx(arr []int, target int) int {
+    n := len(arr)
+    lo, hi := 0, n-1 
+    for lo + 1 < hi {
+        mid := lo + (hi-lo) >> 1
+        if arr[mid] >= target {
+            hi = mid
+        } else {
+            lo = mid
+        } 
+    }
+    if arr[lo] >= target {
+        return lo
+    } else if arr[hi] >= target {
+        return hi
+    }
+    return -1
+} 
+
+
+
+
+/**
+ * Your RangeFreqQuery object will be instantiated and called as such:
+ * obj := Constructor(arr);
+ * param_1 := obj.Query(left,right,value);
+ */
+
+
+/*
+// seg tree version
+
 type RangeFreqQuery struct {
     root *SegNode
 }
@@ -19,7 +107,6 @@ func Constructor(arr []int) RangeFreqQuery {
 func (this *RangeFreqQuery) Query(left int, right int, value int) int {
     return this.root.QueryRange(left, right, value)
 }
-
 
 
 type SegNode struct {
@@ -70,8 +157,7 @@ func (seg *SegNode) QueryRange(sIdx int, eIdx int, val int) int {
 }
 
 
-
-
+*/
 
 
 
@@ -81,3 +167,4 @@ func (seg *SegNode) QueryRange(sIdx int, eIdx int, val int) int {
  * obj := Constructor(arr);
  * param_1 := obj.Query(left,right,value);
  */
+
