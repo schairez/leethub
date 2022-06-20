@@ -1,3 +1,7 @@
+// 792. Number of Matching Subsequences
+// time: O(|s|) to append indices to mapping + O(n*wlog(s)) where n = lenWords; w = maxLenWord; s = len haystack
+// thus time ≈ O(n*wlog(s))
+// space: O(26*|s|) ≈ O(|s|)
 func numMatchingSubseq(s string, words []string) int {
     var charIdxMap [26][]int
     for idx := range s {
