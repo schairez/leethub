@@ -6,6 +6,11 @@
  *     Right *TreeNode
  * }
  */
+
+// 951. Flip Equivalent Binary Trees
+// time: O(min(n1, n2))
+// space: O(min(h1, h2))
+
 func flipEquiv(root1 *TreeNode, root2 *TreeNode) bool {
     if root1 == nil || root2 == nil {
         if root1 == nil && root2 == nil {
