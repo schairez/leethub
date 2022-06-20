@@ -13,6 +13,9 @@ func numMatchingSubseq(s string, words []string) int {
                 break
             }
             currIdx = binSearch(arr, currIdx)
+            if currIdx == -1 {
+                break
+            }
             currIdx++
         }
         if currIdx != -1 {
