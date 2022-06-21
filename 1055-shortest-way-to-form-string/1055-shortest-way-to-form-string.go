@@ -1,3 +1,7 @@
+// 1055. Shortest Way to Form String
+// time: O(tlog(s))
+// space: O(26*n) ≈ O(n)
+
 func binSearch(arr []int, target int) int {
     n := len(arr)
     lo, hi := 0, n-1
@@ -16,21 +20,6 @@ func binSearch(arr []int, target int) int {
     }
     return arr[n-1]+1 
 }
-
-/*
-src ="xyz"
-t = "xzyxz"
-
-res, curr = 0, 0
-curr = 2
-
-
-
-
-
-
-
-*/
 
 func shortestWay(source string, target string) int {
     var charIdxMap [26][]int
