@@ -94,6 +94,7 @@ func removeNode(node *TreapNode, left, right int) *TreapNode {
                 retNode = lChild
                 node.Child[0] = nil
             }
+            node = nil
             return retNode
         }
         dir := 0
