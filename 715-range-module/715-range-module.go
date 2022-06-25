@@ -1,5 +1,21 @@
 
+// 715. Range Module
+// treap probabilistically BBST approach
 // more implementations: https://github.com/schairez/leethub
+
+// queryRange
+// time: O(h) ≈ O(logn) expected time O(n) worst case but rare outcome
+// space: O(h) ≈ O(logn) expected time O(n) worst case but rare outcome
+
+
+// removeRange
+// worst case removeRange inserts 2 childNodes on each split, but since BBST exp time: O(2logn) ≈ O(logn) 
+// space: O(logn)
+
+// insertRange
+// time: O(logn)
+// space: O(logn)
+
 
 import "math/rand"
 
@@ -78,9 +94,7 @@ func removeNode(node *TreapNode, left, right int) *TreapNode {
                 retNode = lChild
                 node.Child[0] = nil
             }
-            node = nil
-            
-            return retNode 
+            return retNode
         }
         dir := 0
         if rChild.HeapKey < lChild.HeapKey {
