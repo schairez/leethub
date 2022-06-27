@@ -1,3 +1,7 @@
+// 1377. Frog Position After T Seconds
+// time: O(V+E)
+// space: O(V+E)
+
 func frogPosition(n int, edges [][]int, t int, target int) float64 {
     graph := make([]map[int]struct{}, n+1) 
     for _, edge := range edges {
