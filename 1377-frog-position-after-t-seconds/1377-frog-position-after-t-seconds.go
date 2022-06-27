@@ -27,8 +27,8 @@ func frogPosition(n int, edges [][]int, t int, target int) float64 {
                 return data.prob
             }
             numNodes := len(graph[data.nodeId])
-            nextProb := (1.0 / float64(numNodes)) * data.prob
             if numNodes > 0 {
+                nextProb := (1.0 / float64(numNodes)) * data.prob
                 for neiId := range graph[data.nodeId] {
                     queue = append(queue, nodeData{neiId, nextProb})
                     delete(graph[data.nodeId], neiId)
