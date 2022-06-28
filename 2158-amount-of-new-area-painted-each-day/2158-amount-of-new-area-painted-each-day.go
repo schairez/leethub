@@ -5,6 +5,19 @@ paint[i].length == 2
 0 <= starti < endi <= 5 * 104
 */
 
+
+func amountPainted(paint [][]int) []int {
+    n := len(paint)
+    segTree := &SegTree{}
+    res := make([]int, n)
+    for i := range paint {
+        start, end := paint[i][0], paint[i][1]
+        res[i] = segTree.Upsert(0, 0, size, start, end)
+    }
+    return res
+}
+
+
 // segTree approach
 const (
     size = 5 * 10_000 + 1
@@ -14,6 +27,7 @@ const (
 type SegTree struct {
     Node [4*size]int
 }
+
 
 func (segTree *SegTree) Upsert(nodeIdx, sIdx, eIdx, ql, qr int) int {
     if sIdx == eIdx || qr <= sIdx || ql >= eIdx {
@@ -46,16 +60,4 @@ func (segTree *SegTree) Upsert(nodeIdx, sIdx, eIdx, ql, qr int) int {
     segTree.Node[nodeIdx] += leftQuery + rightQuery
     return leftQuery + rightQuery
 }
-
-func amountPainted(paint [][]int) []int {
-    n := len(paint)
-    segTree := &SegTree{}
-    res := make([]int, n)
-    for i := range paint {
-        start, end := paint[i][0], paint[i][1]
-        res[i] = segTree.Upsert(0, 0, size, start, end)
-    }
-    return res
-}
-
 
