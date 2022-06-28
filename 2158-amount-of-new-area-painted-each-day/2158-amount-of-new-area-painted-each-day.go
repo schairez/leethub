@@ -52,7 +52,7 @@ func amountPainted(paint [][]int) []int {
     res := make([]int, n)
     for i := range paint {
         start, end := paint[i][0], paint[i][1]
-        res[i] = segTree.Upsert(0, 0, size, start, end)
+        res[i] = segTree.Upsert(0, 0, size-1, start, end)
     }
     return res
 }
