@@ -1,3 +1,8 @@
+// 329. Longest Increasing Path in a Matrix
+// kahn's top sort approach
+// time: O(V+E) ≈ O(m*n)
+// space: O(V+E) ≈ O(m*n)
+
 func max(a, b int) int {if a >= b { return a}; return b}
 
 func longestIncreasingPath(matrix [][]int) int {
