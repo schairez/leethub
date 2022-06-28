@@ -1,24 +1,11 @@
 
+// segTree approach
 /*
 1 <= paint.length <= 10^5
 paint[i].length == 2
 0 <= starti < endi <= 5 * 104
 */
 
-
-func amountPainted(paint [][]int) []int {
-    n := len(paint)
-    segTree := &SegTree{}
-    res := make([]int, n)
-    for i := range paint {
-        start, end := paint[i][0], paint[i][1]
-        res[i] = segTree.Upsert(0, 0, size, start, end)
-    }
-    return res
-}
-
-
-// segTree approach
 const (
     size = 5 * 10_000 + 1
 )
@@ -28,8 +15,19 @@ type SegTree struct {
     Node [4*size]int
 }
 
+func amountPainted(paint [][]int) []int {
+    n := len(paint)
+    segTree := &SegTree{}
+    res := make([]int, n)
+    for i := range paint {
+        start, end := paint[i][0], paint[i][1]
+        res[i] = segTree.Update(0, 0, size, start, end)
+    }
+    return res
+}
 
-func (segTree *SegTree) Upsert(nodeIdx, sIdx, eIdx, ql, qr int) int {
+
+func (segTree *SegTree) Update(nodeIdx, sIdx, eIdx, ql, qr int) int {
     if sIdx == eIdx || qr <= sIdx || ql >= eIdx {
         return 0
     }
@@ -50,12 +48,12 @@ func (segTree *SegTree) Upsert(nodeIdx, sIdx, eIdx, ql, qr int) int {
     var leftQuery, rightQuery int
     // disj cond
     if qr <= mid {
-        leftQuery = segTree.Upsert(nodeIdx*2+1, sIdx, mid, ql, qr)
+        leftQuery = segTree.Update(nodeIdx*2+1, sIdx, mid, ql, qr)
     } else if ql >= mid {
-        rightQuery = segTree.Upsert(nodeIdx*2+2, mid, eIdx, ql, qr)
+        rightQuery = segTree.Update(nodeIdx*2+2, mid, eIdx, ql, qr)
     } else {
-        leftQuery = segTree.Upsert(nodeIdx*2+1, sIdx, mid, ql, mid)
-        rightQuery = segTree.Upsert(nodeIdx*2+2, mid, eIdx, mid, qr)
+        leftQuery = segTree.Update(nodeIdx*2+1, sIdx, mid, ql, mid)
+        rightQuery = segTree.Update(nodeIdx*2+2, mid, eIdx, mid, qr)
     }
     segTree.Node[nodeIdx] += leftQuery + rightQuery
     return leftQuery + rightQuery
