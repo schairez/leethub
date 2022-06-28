@@ -36,7 +36,7 @@ func (segTree *SegTree) Upsert(nodeIdx, sIdx, eIdx, ql, qr int) int {
     // disj cond
     if qr <= mid {
         leftQuery = segTree.Upsert(nodeIdx*2+1, sIdx, mid, ql, qr)
-    } else if ql > mid {
+    } else if ql >= mid {
         rightQuery = segTree.Upsert(nodeIdx*2+2, mid, eIdx, ql, qr)
     } else {
         leftQuery = segTree.Upsert(nodeIdx*2+1, sIdx, mid, ql, mid)
