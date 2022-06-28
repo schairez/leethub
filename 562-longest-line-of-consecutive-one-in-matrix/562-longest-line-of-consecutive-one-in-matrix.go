@@ -1,3 +1,4 @@
+
 // 562. Longest Line of Consecutive One in Matrix
 // time: O(m*n*4) ≈ O(m*n)
 // space: O(m*n*4) ≈ O(m*n)
@@ -7,10 +8,7 @@ func max(a, b int) int { if a >= b { return a}; return b}
 func longestLine(mat [][]int) int {
     numR, numC := len(mat), len(mat[0])
     if numR == 1 && numC == 1 {
-        if mat[numR-1][numC-1] == 1 {
-            return 1
-        }
-        return 0
+        return mat[numR-1][numC-1]
     }
     dp := make([][][4]int, numR)
     for x := range dp {
