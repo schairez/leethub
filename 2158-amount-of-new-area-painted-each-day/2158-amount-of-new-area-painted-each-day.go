@@ -5,8 +5,9 @@ paint[i].length == 2
 0 <= starti < endi <= 5 * 104
 */
 
+// segTree approach
 const (
-    size = 5 * 100_000 + 1
+    size = 5 * 10_000 + 1
 )
 
 // reveals if nodeIdx is covered already
@@ -56,11 +57,5 @@ func amountPainted(paint [][]int) []int {
     }
     return res
 }
-
-
-
-
-
-
 
 
