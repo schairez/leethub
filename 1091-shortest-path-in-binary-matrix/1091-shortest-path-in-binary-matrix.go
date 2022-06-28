@@ -1,3 +1,7 @@
+// 1091. Shortest Path in Binary Matrix
+// time: O(m*n)
+// space: O(m*n)
+
 func shortestPathBinaryMatrix(grid [][]int) int {
     if grid[0][0] == 1 {
         return -1
