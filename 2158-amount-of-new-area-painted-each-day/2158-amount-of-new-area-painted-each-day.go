@@ -1,12 +1,8 @@
 
 /*
-
 1 <= paint.length <= 10^5
 paint[i].length == 2
 0 <= starti < endi <= 5 * 104
-
-4*end+1 ?
-
 */
 
 const (
@@ -22,15 +18,6 @@ func (segTree *SegTree) Upsert(nodeIdx, sIdx, eIdx, ql, qr int) int {
     if sIdx == eIdx || qr <= sIdx || ql >= eIdx {
         return 0
     }
-    /*
-    if eIdx - sIdx == 1 {
-        if segTree.Node[nodeIdx] == 0 {
-            segTree.Node[nodeIdx] = 1
-            return 1
-        }
-        return 0
-    }
-    */
     if segTree.Node[nodeIdx] == eIdx - sIdx {
         return 0
     }
@@ -67,12 +54,6 @@ func amountPainted(paint [][]int) []int {
         start, end := paint[i][0], paint[i][1]
         res[i] = segTree.Upsert(0, 0, size, start, end)
     }
-    /*
-    fmt.Println(segTree.Node[262143])
-    fmt.Println(segTree.Node[262144])
-    fmt.Println(segTree.Node[262145])
-    fmt.Println(segTree.Node[262146])
-    */
     return res
 }
 
