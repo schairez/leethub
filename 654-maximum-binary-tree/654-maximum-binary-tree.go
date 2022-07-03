@@ -9,8 +9,8 @@
 
 func constructMaximumBinaryTree(nums []int) *TreeNode {
     n := len(nums)
-    //stack := make([]*TreeNode, 0, n)
-    var stack []*TreeNode
+    stack := make([]*TreeNode, 0, n)
+    //var stack []*TreeNode
     // 1 <= nums.length <= 1000
     rootNode := &TreeNode{Val: nums[0]}
     stack = append(stack, rootNode) // mono decr
