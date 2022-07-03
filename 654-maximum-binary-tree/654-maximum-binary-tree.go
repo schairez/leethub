@@ -9,7 +9,8 @@
 
 func constructMaximumBinaryTree(nums []int) *TreeNode {
     n := len(nums)
-    stack := make([]*TreeNode, 0, n)
+    //stack := make([]*TreeNode, 0, n)
+    var stack []*TreeNode
     // 1 <= nums.length <= 1000
     rootNode := &TreeNode{Val: nums[0]}
     stack = append(stack, rootNode) // mono decr
@@ -36,4 +37,36 @@ func constructMaximumBinaryTree(nums []int) *TreeNode {
     return rootNode
 }
 
+/*
+func constructMaximumBinaryTree(nums []int) *TreeNode {
+    
+    if len(nums) == 0 {
+        return nil
+    }
+    idx := findIndex(nums)
+    
+    return &TreeNode{
+        Val: nums[idx],
+        Left: constructMaximumBinaryTree(nums[:idx]),
+        Right: constructMaximumBinaryTree(nums[idx+1:]),
+    }
+    
+}
+
+func findIndex(nums []int) int {
+    if len(nums) == 0 {
+        return 0
+    }
+    max := nums[0]
+    idx := 0
+    for i, v := range nums {
+        if v > max {
+            idx = i
+            max = v
+        }
+    }
+    return idx
+}
+
+*/
 
