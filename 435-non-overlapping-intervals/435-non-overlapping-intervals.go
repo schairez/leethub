@@ -1,4 +1,8 @@
 
+// 435. Non-overlapping Intervals
+// time: sort O(nlogn) + O(n) iter ≈ O(nlogn)
+// space: O(logn) for sort recursion depth
+
 func max(a, b int) int { if a >= b {return a}; return b}
 func min(a, b int) int { if a <= b {return a}; return b}
 
