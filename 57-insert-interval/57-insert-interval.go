@@ -1,6 +1,9 @@
+// 57. Insert Interval
+// time: O(n)
+// space: O(n)
+
 func max(a, b int) int { if a >= b { return a}; return b}
 func min(a, b int) int { if a <= b { return a}; return b}
-
 
 func isOverlap(interval1 []int, interval2 []int) bool {
     return max(interval1[0], interval2[0]) <= min(interval1[1], interval2[1])
