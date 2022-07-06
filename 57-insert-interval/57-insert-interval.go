@@ -13,22 +13,22 @@ func insert(intervals [][]int, newInterval []int) [][]int {
         return [][]int{newInterval}
     }
     res := make([][]int, 0, n+1)
-    i := 0
-    for i < n {
-        if isOverlap(intervals[i], newInterval) {
-            newInterval[0] = min(intervals[i][0], newInterval[0])
-            newInterval[1] = max(intervals[i][1], newInterval[1])
-        } else if intervals[i][1] < newInterval[0] {
-            res = append(res, intervals[i])
+    idx := 0
+    for idx < n {
+        if isOverlap(intervals[idx], newInterval) {
+            newInterval[0] = min(intervals[idx][0], newInterval[0])
+            newInterval[1] = max(intervals[idx][1], newInterval[1])
+        } else if intervals[idx][1] < newInterval[0] {
+            res = append(res, intervals[idx])
         } else {
             break
         }
-        i++
+        idx++
     }
     res = append(res, newInterval)
-    for i < n {
-        res = append(res, intervals[i])
-        i++
+    for idx < n {
+        res = append(res, intervals[idx])
+        idx++
     }
     return res
 }
