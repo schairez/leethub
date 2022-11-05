@@ -1,4 +1,9 @@
 
+// 1101. The Earliest Moment When Everyone Become Friends
+// time: O(N+ MlogM + Mα(N)).
+// space: O(N+logM)  
+
+
 func earliestAcq(logs [][]int, n int) int {
     // sort the logs first
     // init uf w/ n var
@@ -36,6 +41,7 @@ func newUF(n int) *UF {
     }
     return &UF{par, sze}
 }
+
 
 
 func (uf *UF) FindRoot(node int) int {
