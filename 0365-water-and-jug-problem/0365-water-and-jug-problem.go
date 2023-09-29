@@ -1,4 +1,5 @@
 
+// n = j1 + j2
 // time: O(n)
 // space: O(n)
 
